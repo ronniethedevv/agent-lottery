@@ -1,7 +1,11 @@
 # Monorepo-aware backend image. Build context is the repo root (see railway.json
 # / docker-compose). .dockerignore keeps node_modules, .env and build artifacts out.
-FROM node:20-alpine
+#
+# Debian slim (not alpine) so Prisma's engine finds libssl/openssl cleanly.
+FROM node:20-slim
 
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 RUN corepack enable && corepack prepare pnpm@9 --activate
 WORKDIR /app
 
