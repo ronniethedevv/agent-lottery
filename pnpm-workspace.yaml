@@ -1,0 +1,24 @@
+packages:
+  - "packages/*"
+allowBuilds:
+  "@prisma/client": true
+  "@prisma/engines": true
+  blake-hash: true
+  bufferutil: true
+  classic-level: true
+  esbuild: true
+  keccak: true
+  prisma: true
+  secp256k1: true
+  utf-8-validate: true
+onlyBuiltDependencies:
+  - "@prisma/client"
+  - "@prisma/engines"
+  - blake-hash
+  - bufferutil
+  - classic-level
+  - esbuild
+  - keccak
+  - prisma
+  - secp256k1
+  - utf-8-validate

@@ -1,0 +1,36 @@
+{
+  "name": "@agent-lottery/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "clean": "hardhat clean && rimraf typechain-types",
+    "deploy:testnet": "hardhat deploy --network bscTestnet",
+    "deploy:mainnet": "hardhat deploy --network bsc",
+    "typecheck": "tsc --noEmit",
+    "coverage": "hardhat coverage"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.6",
+    "@nomicfoundation/hardhat-ethers": "^3.0.6",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.10",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.0.2",
+    "@openzeppelin/contracts-upgradeable": "^5.0.2",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "chai": "^4.4.1",
+    "circomlibjs": "^0.1.7",
+    "snarkjs": "^0.7.4",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.12.0",
+    "hardhat": "^2.22.0",
+    "hardhat-deploy": "^0.12.4",
+    "hardhat-gas-reporter": "^2.1.0",
+    "rimraf": "^5.0.5",
+    "solidity-coverage": "^0.8.12",
+    "typechain": "^8.3.2",
+    "typescript": "^5.4.0"
+  }
+}

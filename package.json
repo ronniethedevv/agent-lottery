@@ -1,0 +1,27 @@
+{
+  "name": "agent-lottery",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Autonomous AI agent lottery on BNB Chain with ZK privacy and VRF randomness",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "clean": "pnpm -r clean",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "circuits:build": "pnpm --filter @agent-lottery/circuits build",
+    "contracts:compile": "pnpm --filter @agent-lottery/contracts compile",
+    "contracts:test": "pnpm --filter @agent-lottery/contracts test",
+    "contracts:deploy:testnet": "pnpm --filter @agent-lottery/contracts deploy:testnet",
+    "contracts:deploy:mainnet": "pnpm --filter @agent-lottery/contracts deploy:mainnet",
+    "agent:start": "pnpm --filter @agent-lottery/agent start",
+    "backend:start": "pnpm --filter @agent-lottery/backend start",
+    "backend:dev": "pnpm --filter @agent-lottery/backend dev",
+    "frontend:dev": "pnpm --filter @agent-lottery/frontend dev",
+    "frontend:build": "pnpm --filter @agent-lottery/frontend build"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

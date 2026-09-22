@@ -1,0 +1,20 @@
+# deps + secrets + build artifacts must never enter the image context
+**/node_modules
+.git
+.env
+.env.*
+!.env.example
+
+**/dist
+**/.next
+**/out
+**/coverage
+
+packages/circuits/build
+packages/circuits/keys
+packages/contracts/artifacts
+packages/contracts/cache
+packages/contracts/typechain-types
+packages/contracts/deployments.json
+
+**/*.log

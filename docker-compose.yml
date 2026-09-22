@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: agent_lottery
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-agent_lottery_dev}
+      POSTGRES_DB: agent_lottery
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agent_lottery"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: packages/backend/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://agent_lottery:${POSTGRES_PASSWORD:-agent_lottery_dev}@postgres:5432/agent_lottery
+      PORT: 3001
+      BSC_RPC_URL: ${BSC_RPC_URL:-https://bsc-dataseed1.binance.org/}
+      LOTTERY_FACTORY_ADDRESS: ${LOTTERY_FACTORY_ADDRESS}
+      AGENT_REGISTRY_ADDRESS: ${AGENT_REGISTRY_ADDRESS}
+      INDEX_START_BLOCK: ${INDEX_START_BLOCK:-0}
+      INDEX_POLL_INTERVAL: ${INDEX_POLL_INTERVAL:-5000}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: packages/frontend/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3001}
+      NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL:-ws://localhost:3001}
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,0 +1,895 @@
+{
+  "address": "0xC5E4B3d31139bd95070238E84f7E2Eac504d68c3",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_factory",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_protocolTreasury",
+          "type": "address"
+        },
+        {
+          "internalType": "uint16",
+          "name": "_protocolFeeRate",
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "AlreadyPaid",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ClaimNotTimedOut",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "EnforcedPause",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ExpectedPause",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotClaimable",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OnlyFactory",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OnlyLottery",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ReentrancyGuardReentrantCall",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TransferFailed",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "lottery",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Deposited",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "lottery",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "creator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "creatorFee",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "protocolFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "FeesPaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferStarted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Paused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "lottery",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "PrizePaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "lottery",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fromRound",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "toRound",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "UnclaimedRedistributed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Unpaused",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "CLAIM_TIMEOUT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "EMERGENCY_DELAY",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "balances",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "total",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "paid",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "claimableAt",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "factory",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "lottery",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "lottery",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPrizeAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "markClaimable",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paused",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "payPrize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pendingOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "protocolFeeRate",
+      "outputs": [
+        {
+          "internalType": "uint16",
+          "name": "",
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "protocolTreasury",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fromRound",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "toRound",
+          "type": "uint256"
+        }
+      ],
+      "name": "redistributeUnclaimed",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_factory",
+          "type": "address"
+        }
+      ],
+      "name": "setFactory",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "_rate",
+          "type": "uint16"
+        }
+      ],
+      "name": "setProtocolFeeRate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_treasury",
+          "type": "address"
+        }
+      ],
+      "name": "setProtocolTreasury",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0x74d9f5ad1326432f80c96f81a70c3b4078806dbc547579a93e0a0510926a9a15",
+  "receipt": {
+    "to": null,
+    "from": "0xBfaB70789367F3eF5f9cBE84608b8f62Af557614",
+    "contractAddress": "0xC5E4B3d31139bd95070238E84f7E2Eac504d68c3",
+    "transactionIndex": 4,
+    "gasUsed": "785453",
+    "logsBloom": "0x00000000400000000000004000000000000000000000000080800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000020000000000000000000800000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000001000000001000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x5d0d842729360e05ff7404320317750470bcbbd9878820f113b2ce6fc5d4fe16",
+    "transactionHash": "0x74d9f5ad1326432f80c96f81a70c3b4078806dbc547579a93e0a0510926a9a15",
+    "logs": [
+      {
+        "transactionIndex": 4,
+        "blockNumber": 132482498,
+        "transactionHash": "0x74d9f5ad1326432f80c96f81a70c3b4078806dbc547579a93e0a0510926a9a15",
+        "address": "0xC5E4B3d31139bd95070238E84f7E2Eac504d68c3",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000bfab70789367f3ef5f9cbe84608b8f62af557614"
+        ],
+        "data": "0x",
+        "logIndex": 8,
+        "blockHash": "0x5d0d842729360e05ff7404320317750470bcbbd9878820f113b2ce6fc5d4fe16"
+      }
+    ],
+    "blockNumber": 132482498,
+    "cumulativeGasUsed": "1820100",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0x0000000000000000000000000000000000000000",
+    "0xBfaB70789367F3eF5f9cBE84608b8f62Af557614",
+    200
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "ae90a05cb3beddea1e390946d0a5327f",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.24+commit.e11b9ed9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_factory\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_protocolTreasury\",\"type\":\"address\"},{\"internalType\":\"uint16\",\"name\":\"_protocolFeeRate\",\"type\":\"uint16\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"AlreadyPaid\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ClaimNotTimedOut\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"EnforcedPause\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ExpectedPause\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InsufficientBalance\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotClaimable\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"OnlyFactory\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"OnlyLottery\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"TransferFailed\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"lottery\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Deposited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"lottery\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"creatorFee\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"name\":\"FeesPaid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"lottery\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"PrizePaid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"lottery\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"fromRound\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"toRound\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"UnclaimedRedistributed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"CLAIM_TIMEOUT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EMERGENCY_DELAY\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"acceptOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"balances\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"total\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"paid\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"claimableAt\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"factory\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"lottery\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"lottery\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getPrizeAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"markClaimable\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"}],\"name\":\"payPrize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pendingOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"protocolFeeRate\",\"outputs\":[{\"internalType\":\"uint16\",\"name\":\"\",\"type\":\"uint16\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"protocolTreasury\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fromRound\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"toRound\",\"type\":\"uint256\"}],\"name\":\"redistributeUnclaimed\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_factory\",\"type\":\"address\"}],\"name\":\"setFactory\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"_rate\",\"type\":\"uint16\"}],\"name\":\"setProtocolFeeRate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_treasury\",\"type\":\"address\"}],\"name\":\"setProtocolTreasury\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"details\":\"Entry fees are deposited here. On settlement, prizes are distributed with      fee splits to the lottery creator and protocol. Unclaimed prizes can be      redistributed to subsequent rounds after a timeout.\",\"errors\":{\"EnforcedPause()\":[{\"details\":\"The operation failed because the contract is paused.\"}],\"ExpectedPause()\":[{\"details\":\"The operation failed because the contract is not paused.\"}],\"OwnableInvalidOwner(address)\":[{\"details\":\"The owner is not a valid owner account. (eg. `address(0)`)\"}],\"OwnableUnauthorizedAccount(address)\":[{\"details\":\"The caller account is not authorized to perform an operation.\"}],\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}]},\"events\":{\"Paused(address)\":{\"details\":\"Emitted when the pause is triggered by `account`.\"},\"Unpaused(address)\":{\"details\":\"Emitted when the pause is lifted by `account`.\"}},\"kind\":\"dev\",\"methods\":{\"acceptOwnership()\":{\"details\":\"The new owner accepts the ownership transfer.\"},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"paused()\":{\"details\":\"Returns true if the contract is paused, and false otherwise.\"},\"pendingOwner()\":{\"details\":\"Returns the address of the pending owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one. Can only be called by the current owner. Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer.\"}},\"title\":\"PrizePool\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"markClaimable(uint256)\":{\"notice\":\"Mark a round as claimable (called by lottery after draw)\"}},\"notice\":\"Manages prize funds for all lotteries with per-lottery-round accounting.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/core/PrizePool.sol\":\"PrizePool\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * The initial owner is set to the address provided by the deployer. This can\\n * later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    /**\\n     * @dev The caller account is not authorized to perform an operation.\\n     */\\n    error OwnableUnauthorizedAccount(address account);\\n\\n    /**\\n     * @dev The owner is not a valid owner account. (eg. `address(0)`)\\n     */\\n    error OwnableInvalidOwner(address owner);\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.\\n     */\\n    constructor(address initialOwner) {\\n        if (initialOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(initialOwner);\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        if (owner() != _msgSender()) {\\n            revert OwnableUnauthorizedAccount(_msgSender());\\n        }\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby disabling any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        if (newOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb\",\"license\":\"MIT\"},\"@openzeppelin/contracts/access/Ownable2Step.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.1.0) (access/Ownable2Step.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Ownable} from \\\"./Ownable.sol\\\";\\n\\n/**\\n * @dev Contract module which provides access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * This extension of the {Ownable} contract includes a two-step mechanism to transfer\\n * ownership, where the new owner must call {acceptOwnership} in order to replace the\\n * old one. This can help prevent common mistakes, such as transfers of ownership to\\n * incorrect accounts, or to contracts that are unable to interact with the\\n * permission system.\\n *\\n * The initial owner is specified at deployment time in the constructor for `Ownable`. This\\n * can later be changed with {transferOwnership} and {acceptOwnership}.\\n *\\n * This module is used through inheritance. It will make available all functions\\n * from parent (Ownable).\\n */\\nabstract contract Ownable2Step is Ownable {\\n    address private _pendingOwner;\\n\\n    event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Returns the address of the pending owner.\\n     */\\n    function pendingOwner() public view virtual returns (address) {\\n        return _pendingOwner;\\n    }\\n\\n    /**\\n     * @dev Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one.\\n     * Can only be called by the current owner.\\n     *\\n     * Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer.\\n     */\\n    function transferOwnership(address newOwner) public virtual override onlyOwner {\\n        _pendingOwner = newOwner;\\n        emit OwnershipTransferStarted(owner(), newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`) and deletes any pending owner.\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual override {\\n        delete _pendingOwner;\\n        super._transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev The new owner accepts the ownership transfer.\\n     */\\n    function acceptOwnership() public virtual {\\n        address sender = _msgSender();\\n        if (pendingOwner() != sender) {\\n            revert OwnableUnauthorizedAccount(sender);\\n        }\\n        _transferOwnership(sender);\\n    }\\n}\\n\",\"keccak256\":\"0xdcad8898fda432696597752e8ec361b87d85c82cb258115427af006dacf7128c\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n\\n    function _contextSuffixLength() internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n}\\n\",\"keccak256\":\"0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Pausable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.3.0) (utils/Pausable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which allows children to implement an emergency stop\\n * mechanism that can be triggered by an authorized account.\\n *\\n * This module is used through inheritance. It will make available the\\n * modifiers `whenNotPaused` and `whenPaused`, which can be applied to\\n * the functions of your contract. Note that they will not be pausable by\\n * simply including this module, only once the modifiers are put in place.\\n */\\nabstract contract Pausable is Context {\\n    bool private _paused;\\n\\n    /**\\n     * @dev Emitted when the pause is triggered by `account`.\\n     */\\n    event Paused(address account);\\n\\n    /**\\n     * @dev Emitted when the pause is lifted by `account`.\\n     */\\n    event Unpaused(address account);\\n\\n    /**\\n     * @dev The operation failed because the contract is paused.\\n     */\\n    error EnforcedPause();\\n\\n    /**\\n     * @dev The operation failed because the contract is not paused.\\n     */\\n    error ExpectedPause();\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is not paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    modifier whenNotPaused() {\\n        _requireNotPaused();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    modifier whenPaused() {\\n        _requirePaused();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns true if the contract is paused, and false otherwise.\\n     */\\n    function paused() public view virtual returns (bool) {\\n        return _paused;\\n    }\\n\\n    /**\\n     * @dev Throws if the contract is paused.\\n     */\\n    function _requireNotPaused() internal view virtual {\\n        if (paused()) {\\n            revert EnforcedPause();\\n        }\\n    }\\n\\n    /**\\n     * @dev Throws if the contract is not paused.\\n     */\\n    function _requirePaused() internal view virtual {\\n        if (!paused()) {\\n            revert ExpectedPause();\\n        }\\n    }\\n\\n    /**\\n     * @dev Triggers stopped state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    function _pause() internal virtual whenNotPaused {\\n        _paused = true;\\n        emit Paused(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Returns to normal state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    function _unpause() internal virtual whenPaused {\\n        _paused = false;\\n        emit Unpaused(_msgSender());\\n    }\\n}\\n\",\"keccak256\":\"0xdb484371dfbb848cb6f5d70464e9ac9b2900e4164ead76bbce4fef0b44bcc68f\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.5.0) (utils/ReentrancyGuard.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {StorageSlot} from \\\"./StorageSlot.sol\\\";\\n\\n/**\\n * @dev Contract module that helps prevent reentrant calls to a function.\\n *\\n * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier\\n * available, which can be applied to functions to make sure there are no nested\\n * (reentrant) calls to them.\\n *\\n * Note that because there is a single `nonReentrant` guard, functions marked as\\n * `nonReentrant` may not call one another. This can be worked around by making\\n * those functions `private`, and then adding `external` `nonReentrant` entry\\n * points to them.\\n *\\n * TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,\\n * consider using {ReentrancyGuardTransient} instead.\\n *\\n * TIP: If you would like to learn more about reentrancy and alternative ways\\n * to protect against it, check out our blog post\\n * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\\n *\\n * IMPORTANT: Deprecated. This storage-based reentrancy guard will be removed and replaced\\n * by the {ReentrancyGuardTransient} variant in v6.0.\\n *\\n * @custom:stateless\\n */\\nabstract contract ReentrancyGuard {\\n    using StorageSlot for bytes32;\\n\\n    // keccak256(abi.encode(uint256(keccak256(\\\"openzeppelin.storage.ReentrancyGuard\\\")) - 1)) & ~bytes32(uint256(0xff))\\n    bytes32 private constant REENTRANCY_GUARD_STORAGE =\\n        0x9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00;\\n\\n    // Booleans are more expensive than uint256 or any type that takes up a full\\n    // word because each write operation emits an extra SLOAD to first read the\\n    // slot's contents, replace the bits taken up by the boolean, and then write\\n    // back. This is the compiler's defense against contract upgrades and\\n    // pointer aliasing, and it cannot be disabled.\\n\\n    // The values being non-zero value makes deployment a bit more expensive,\\n    // but in exchange the refund on every call to nonReentrant will be lower in\\n    // amount. Since refunds are capped to a percentage of the total\\n    // transaction's gas, it is best to keep them low in cases like this one, to\\n    // increase the likelihood of the full refund coming into effect.\\n    uint256 private constant NOT_ENTERED = 1;\\n    uint256 private constant ENTERED = 2;\\n\\n    /**\\n     * @dev Unauthorized reentrant call.\\n     */\\n    error ReentrancyGuardReentrantCall();\\n\\n    constructor() {\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Prevents a contract from calling itself, directly or indirectly.\\n     * Calling a `nonReentrant` function from another `nonReentrant`\\n     * function is not supported. It is possible to prevent this from happening\\n     * by making the `nonReentrant` function external, and making it call a\\n     * `private` function that does the actual work.\\n     */\\n    modifier nonReentrant() {\\n        _nonReentrantBefore();\\n        _;\\n        _nonReentrantAfter();\\n    }\\n\\n    /**\\n     * @dev A `view` only version of {nonReentrant}. Use to block view functions\\n     * from being called, preventing reading from inconsistent contract state.\\n     *\\n     * CAUTION: This is a \\\"view\\\" modifier and does not change the reentrancy\\n     * status. Use it only on view functions. For payable or non-payable functions,\\n     * use the standard {nonReentrant} modifier instead.\\n     */\\n    modifier nonReentrantView() {\\n        _nonReentrantBeforeView();\\n        _;\\n    }\\n\\n    function _nonReentrantBeforeView() private view {\\n        if (_reentrancyGuardEntered()) {\\n            revert ReentrancyGuardReentrantCall();\\n        }\\n    }\\n\\n    function _nonReentrantBefore() private {\\n        // On the first call to nonReentrant, _status will be NOT_ENTERED\\n        _nonReentrantBeforeView();\\n\\n        // Any calls to nonReentrant after this point will fail\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = ENTERED;\\n    }\\n\\n    function _nonReentrantAfter() private {\\n        // By storing the original value once again, a refund is triggered (see\\n        // https://eips.ethereum.org/EIPS/eip-2200)\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Returns true if the reentrancy guard is currently set to \\\"entered\\\", which indicates there is a\\n     * `nonReentrant` function in the call stack.\\n     */\\n    function _reentrancyGuardEntered() internal view returns (bool) {\\n        return _reentrancyGuardStorageSlot().getUint256Slot().value == ENTERED;\\n    }\\n\\n    function _reentrancyGuardStorageSlot() internal pure virtual returns (bytes32) {\\n        return REENTRANCY_GUARD_STORAGE;\\n    }\\n}\\n\",\"keccak256\":\"0xa516cbf1c7d15d3517c2d668601ce016c54395bf5171918a14e2686977465f53\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/StorageSlot.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.1.0) (utils/StorageSlot.sol)\\n// This file was procedurally generated from scripts/generate/templates/StorageSlot.js.\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Library for reading and writing primitive types to specific storage slots.\\n *\\n * Storage slots are often used to avoid storage conflict when dealing with upgradeable contracts.\\n * This library helps with reading and writing to such slots without the need for inline assembly.\\n *\\n * The functions in this library return Slot structs that contain a `value` member that can be used to read or write.\\n *\\n * Example usage to set ERC-1967 implementation slot:\\n * ```solidity\\n * contract ERC1967 {\\n *     // Define the slot. Alternatively, use the SlotDerivation library to derive the slot.\\n *     bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;\\n *\\n *     function _getImplementation() internal view returns (address) {\\n *         return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;\\n *     }\\n *\\n *     function _setImplementation(address newImplementation) internal {\\n *         require(newImplementation.code.length > 0);\\n *         StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;\\n *     }\\n * }\\n * ```\\n *\\n * TIP: Consider using this library along with {SlotDerivation}.\\n */\\nlibrary StorageSlot {\\n    struct AddressSlot {\\n        address value;\\n    }\\n\\n    struct BooleanSlot {\\n        bool value;\\n    }\\n\\n    struct Bytes32Slot {\\n        bytes32 value;\\n    }\\n\\n    struct Uint256Slot {\\n        uint256 value;\\n    }\\n\\n    struct Int256Slot {\\n        int256 value;\\n    }\\n\\n    struct StringSlot {\\n        string value;\\n    }\\n\\n    struct BytesSlot {\\n        bytes value;\\n    }\\n\\n    /**\\n     * @dev Returns an `AddressSlot` with member `value` located at `slot`.\\n     */\\n    function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `BooleanSlot` with member `value` located at `slot`.\\n     */\\n    function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.\\n     */\\n    function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Uint256Slot` with member `value` located at `slot`.\\n     */\\n    function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Int256Slot` with member `value` located at `slot`.\\n     */\\n    function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `StringSlot` with member `value` located at `slot`.\\n     */\\n    function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `StringSlot` representation of the string storage pointer `store`.\\n     */\\n    function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := store.slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `BytesSlot` with member `value` located at `slot`.\\n     */\\n    function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.\\n     */\\n    function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := store.slot\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xcf74f855663ce2ae00ed8352666b7935f6cddea2932fdf2c3ecd30a9b1cd0e97\",\"license\":\"MIT\"},\"contracts/core/PrizePool.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\nimport {Ownable2Step, Ownable} from \\\"@openzeppelin/contracts/access/Ownable2Step.sol\\\";\\nimport {ReentrancyGuard} from \\\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\\\";\\nimport {Pausable} from \\\"@openzeppelin/contracts/utils/Pausable.sol\\\";\\nimport {IPrizePool} from \\\"../interfaces/IPrizePool.sol\\\";\\n\\n/// @title PrizePool\\n/// @notice Manages prize funds for all lotteries with per-lottery-round accounting.\\n/// @dev Entry fees are deposited here. On settlement, prizes are distributed with\\n///      fee splits to the lottery creator and protocol. Unclaimed prizes can be\\n///      redistributed to subsequent rounds after a timeout.\\ncontract PrizePool is IPrizePool, Ownable2Step, ReentrancyGuard, Pausable {\\n    struct RoundBalance {\\n        uint256 total;\\n        bool paid;\\n    }\\n\\n    // lottery address => round id => balance\\n    mapping(address => mapping(uint256 => RoundBalance)) public balances;\\n\\n    address public factory;\\n    address public protocolTreasury;\\n    uint16 public protocolFeeRate; // basis points\\n\\n    uint256 public constant CLAIM_TIMEOUT = 48 hours;\\n    uint256 public constant EMERGENCY_DELAY = 72 hours;\\n\\n    // lottery => round => timestamp when claimable period started\\n    mapping(address => mapping(uint256 => uint64)) public claimableAt;\\n\\n    error OnlyFactory();\\n    error OnlyLottery();\\n    error AlreadyPaid();\\n    error NotClaimable();\\n    error InsufficientBalance();\\n    error TransferFailed();\\n    error ClaimNotTimedOut();\\n\\n    modifier onlyFactory() {\\n        if (msg.sender != factory) revert OnlyFactory();\\n        _;\\n    }\\n\\n    constructor(\\n        address _factory,\\n        address _protocolTreasury,\\n        uint16 _protocolFeeRate\\n    ) Ownable(msg.sender) {\\n        factory = _factory;\\n        protocolTreasury = _protocolTreasury;\\n        protocolFeeRate = _protocolFeeRate;\\n    }\\n\\n    /// @inheritdoc IPrizePool\\n    function deposit(uint256 roundId) external payable override whenNotPaused {\\n        balances[msg.sender][roundId].total += msg.value;\\n        emit Deposited(msg.sender, roundId, msg.value);\\n    }\\n\\n    /// @notice Mark a round as claimable (called by lottery after draw)\\n    function markClaimable(uint256 roundId) external {\\n        claimableAt[msg.sender][roundId] = uint64(block.timestamp);\\n    }\\n\\n    /// @inheritdoc IPrizePool\\n    function payPrize(\\n        uint256 roundId,\\n        address recipient\\n    ) external override nonReentrant whenNotPaused {\\n        RoundBalance storage bal = balances[msg.sender][roundId];\\n        if (bal.paid) revert AlreadyPaid();\\n        if (bal.total == 0) revert InsufficientBalance();\\n\\n        bal.paid = true;\\n\\n        uint256 total = bal.total;\\n        uint256 protocolFee = (total * protocolFeeRate) / 10000;\\n        uint256 prize = total - protocolFee;\\n\\n        // Pay prize to winner\\n        (bool success, ) = recipient.call{value: prize}(\\\"\\\");\\n        if (!success) revert TransferFailed();\\n\\n        // Pay protocol fee\\n        if (protocolFee > 0) {\\n            (bool feeSuccess, ) = protocolTreasury.call{value: protocolFee}(\\\"\\\");\\n            if (!feeSuccess) revert TransferFailed();\\n        }\\n\\n        emit PrizePaid(msg.sender, roundId, recipient, prize);\\n        emit FeesPaid(msg.sender, roundId, address(0), 0, protocolFee);\\n    }\\n\\n    /// @inheritdoc IPrizePool\\n    function redistributeUnclaimed(\\n        uint256 fromRound,\\n        uint256 toRound\\n    ) external override nonReentrant {\\n        uint64 claimStart = claimableAt[msg.sender][fromRound];\\n        if (claimStart == 0) revert NotClaimable();\\n        if (block.timestamp < claimStart + CLAIM_TIMEOUT) revert ClaimNotTimedOut();\\n\\n        RoundBalance storage fromBal = balances[msg.sender][fromRound];\\n        if (fromBal.paid || fromBal.total == 0) revert InsufficientBalance();\\n\\n        uint256 amount = fromBal.total;\\n        fromBal.total = 0;\\n        fromBal.paid = true;\\n\\n        balances[msg.sender][toRound].total += amount;\\n\\n        emit UnclaimedRedistributed(msg.sender, fromRound, toRound, amount);\\n    }\\n\\n    /// @inheritdoc IPrizePool\\n    function getBalance(\\n        address lottery,\\n        uint256 roundId\\n    ) external view override returns (uint256) {\\n        return balances[lottery][roundId].total;\\n    }\\n\\n    /// @inheritdoc IPrizePool\\n    function getPrizeAmount(\\n        address lottery,\\n        uint256 roundId\\n    ) external view override returns (uint256) {\\n        uint256 total = balances[lottery][roundId].total;\\n        uint256 fee = (total * protocolFeeRate) / 10000;\\n        return total - fee;\\n    }\\n\\n    // --- Admin ---\\n\\n    function setFactory(address _factory) external onlyOwner {\\n        factory = _factory;\\n    }\\n\\n    function setProtocolTreasury(address _treasury) external onlyOwner {\\n        protocolTreasury = _treasury;\\n    }\\n\\n    function setProtocolFeeRate(uint16 _rate) external onlyOwner {\\n        protocolFeeRate = _rate;\\n    }\\n\\n    function pause() external onlyOwner {\\n        _pause();\\n    }\\n\\n    function unpause() external onlyOwner {\\n        _unpause();\\n    }\\n\\n    receive() external payable {}\\n}\\n\",\"keccak256\":\"0xafcb54cf276e9025125a461e444ba7f2288d8928a3fd9a55a348ca354fbd8231\",\"license\":\"MIT\"},\"contracts/interfaces/IPrizePool.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface IPrizePool {\\n    event Deposited(address indexed lottery, uint256 roundId, uint256 amount);\\n    event PrizePaid(address indexed lottery, uint256 roundId, address recipient, uint256 amount);\\n    event FeesPaid(address indexed lottery, uint256 roundId, address creator, uint256 creatorFee, uint256 protocolFee);\\n    event UnclaimedRedistributed(address indexed lottery, uint256 fromRound, uint256 toRound, uint256 amount);\\n\\n    function deposit(uint256 roundId) external payable;\\n    function markClaimable(uint256 roundId) external;\\n    function payPrize(uint256 roundId, address recipient) external;\\n    function redistributeUnclaimed(uint256 fromRound, uint256 toRound) external;\\n    function getBalance(address lottery, uint256 roundId) external view returns (uint256);\\n    function getPrizeAmount(address lottery, uint256 roundId) external view returns (uint256);\\n}\\n\",\"keccak256\":\"0x3ee236cbb594aa13fdf0b772ccfd7ba8282a51622a27096bea458b59b8a4bac2\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60803461013b57601f610d3938819003918201601f19168301916001600160401b038311848410176101405780849260609460405283398101031261013b5761004781610156565b90604061005660208301610156565b91015161ffff8116810361013b57331561012257600180546001600160a01b0319908116909155600080543381841681178355604051966001600160a01b03949385939192918416907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09080a360017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055600380549093169116179055600480546001600160b01b031916919093161760a09190911b61ffff60a01b16179055610bce908161016b8239f35b604051631e4fbdf760e01b815260006004820152602490fd5b600080fd5b634e487b7160e01b600052604160045260246000fd5b51906001600160a01b038216820361013b5756fe60406080815260049081361015610020575b5050361561001e57600080fd5b005b600091823560e01c80630c5a61f814610a095780632b04e840146109c85780632e551c35146109835780633d0d8322146107cc5780633f4ba83a1461075d578063440a9cfc1461060c5780635066c893146105c057806358f858801461059b5780635bb47808146105565780635c975abb1461052f578063715018a6146104ca57806379ba509714610448578063803db96d1461042157806382944e2d146104035780638456cb59146103a25780638da5cb5b1461037a57806393f6fd141461031c578063b6b55f25146102b1578063c45a015514610288578063cbf1304d14610237578063e30c39781461020e578063f2fde38b1461019e578063f5f5dd411461017c5763f6d222b2146101355750610011565b3461017857602036600319011261017857338352600560205281832090358352602052812067ffffffffffffffff421667ffffffffffffffff1982541617905580f35b8280fd5b50503461019a578160031936011261019a57602090516202a3008152f35b5080fd5b833461020b57602036600319011261020b576101b8610a4a565b6101c0610b09565b600180546001600160a01b0319166001600160a01b0392831690811790915582549091167f38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e227008380a380f35b80fd5b50503461019a578160031936011261019a5760015490516001600160a01b039091168152602090f35b50503461019a578060031936011261019a579081906001600160a01b0361025c610a4a565b168152600260205281812060243582526020522060ff6001825492015416825191825215156020820152f35b50503461019a578160031936011261019a5760035490516001600160a01b039091168152602090f35b506020366003190112610178577f73a19dd210f1a7f902193214c0ee91dd35ee5b4d920cba8d519eca65a7b488ca9035916102ea610b77565b3384526002602052808420838552602052808420610309348254610afc565b905580519283523460208401523392a280f35b50346101785781600319360112610178576103739061271061036c61ffff8560209760018060a01b0361034d610a4a565b16815260028952818120602435825289522054935460a01c1683610a65565b0490610a8e565b9051908152f35b50503461019a578160031936011261019a57905490516001600160a01b039091168152602090f35b50503461019a578160031936011261019a5760207f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258916103e0610b09565b6103e8610b77565b6001805460ff60a01b1916600160a01b17905551338152a180f35b50503461019a578160031936011261019a57602090516203f4808152f35b50346101785782600319360112610178575490516001600160a01b03909116815260209150f35b509034610178578260031936011261017857600154916001600160a01b039133838516036104b35750506001600160a01b031991821660015582543392811683178455167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08380a380f35b60249250519063118cdaa760e01b82523390820152fd5b833461020b578060031936011261020b576104e3610b09565b600180546001600160a01b03199081169091558154908116825581906001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b50503461019a578160031936011261019a5760209060ff60015460a01c1690519015158152f35b833461020b57602036600319011261020b57610570610a4a565b610578610b09565b60018060a01b03166bffffffffffffffffffffffff60a01b600354161760035580f35b50913461020b578060031936011261020b575061ffff6020925460a01c169051908152f35b50503461019a578060031936011261019a5760209167ffffffffffffffff9082906001600160a01b036105f1610a4a565b16815260058552818120602435825285522054169051908152f35b503461017857816003193601126101785780359160243561062b610b35565b338552602060058152828620858752815267ffffffffffffffff8387205416801561074d576202a300810180911161073a57421061072b5733865260028152828620858752815282862093600185019081549060ff82168015610722575b6107145750600190888754975560ff19161790553386526002815282862082875281528286206106ba858254610afc565b905582519485528401528201527f755a9b04f05ab6a632abd7846c314a78d41224b97d4678030219aaf9ef25cdce60603392a260017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005580f35b8551631e9acf1760e31b8152fd5b50865415610689565b50505163b57dfbc360e01b8152fd5b634e487b7160e01b875260118552602487fd5b50505051633123d42760e11b8152fd5b5034610178578260031936011261017857610776610b09565b6001549060ff8260a01c16156107be575060ff60a01b1916600155513381527f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa90602090a180f35b8251638dfc202b60e01b8152fd5b50346101785781600319360112610178578035916001600160a01b03916024358381169182820361097f576107ff610b35565b610807610b77565b3387526002602052838720868852602052838720946001860180549660ff881661096f575496871561095f5760019060ff19161790558780808061086161271061085961ffff895460a01c168d610a65565b04809b610a8e565b80975af161086d610a9b565b5015610950579085889594939281610918575b5050508251918683526020830152828201527fb68db3305340f78d94a7bbb8af41c055527ec936e5e4550cde089ac7335c945160603392a2805193845281602085015283015260608201527fd04fc375066a01661b22acc9f579141020f7226c9cdca5219ef2be45e40e55ce60803392a260017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005580f35b95808093949596979281938654165af1610930610a9b565b50156109425790818588959493610880565b83516312171d8360e31b8152fd5b5083516312171d8360e31b8152fd5b8651631e9acf1760e31b81528490fd5b8651630d70a0e360e41b81528490fd5b8680fd5b83823461019a57602036600319011261019a57803561ffff81168103610178576109ab610b09565b815461ffff60a01b191660a09190911b61ffff60a01b1617905580f35b50503461019a578060031936011261019a5760209181906001600160a01b036109ef610a4a565b168152600284528181206024358252845220549051908152f35b83823461019a57602036600319011261019a57610a24610a4a565b610a2c610b09565b81546001600160a01b0319166001600160a01b039190911617905580f35b600435906001600160a01b0382168203610a6057565b600080fd5b81810292918115918404141715610a7857565b634e487b7160e01b600052601160045260246000fd5b91908203918211610a7857565b3d15610af75767ffffffffffffffff903d828111610ae15760405192601f8201601f19908116603f0116840190811184821017610ae15760405282523d6000602084013e565b634e487b7160e01b600052604160045260246000fd5b606090565b91908201809211610a7857565b6000546001600160a01b03163303610b1d57565b60405163118cdaa760e01b8152336004820152602490fd5b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f006002815414610b655760029055565b604051633ee5aeb560e01b8152600490fd5b60ff60015460a01c16610b8657565b60405163d93c066560e01b8152600490fdfea2646970667358221220a341b3bc584c5fb955fece0c170a44abf7d0028a99a15e565e9214e3dd18ccbd64736f6c63430008180033",
+  "deployedBytecode": "0x60406080815260049081361015610020575b5050361561001e57600080fd5b005b600091823560e01c80630c5a61f814610a095780632b04e840146109c85780632e551c35146109835780633d0d8322146107cc5780633f4ba83a1461075d578063440a9cfc1461060c5780635066c893146105c057806358f858801461059b5780635bb47808146105565780635c975abb1461052f578063715018a6146104ca57806379ba509714610448578063803db96d1461042157806382944e2d146104035780638456cb59146103a25780638da5cb5b1461037a57806393f6fd141461031c578063b6b55f25146102b1578063c45a015514610288578063cbf1304d14610237578063e30c39781461020e578063f2fde38b1461019e578063f5f5dd411461017c5763f6d222b2146101355750610011565b3461017857602036600319011261017857338352600560205281832090358352602052812067ffffffffffffffff421667ffffffffffffffff1982541617905580f35b8280fd5b50503461019a578160031936011261019a57602090516202a3008152f35b5080fd5b833461020b57602036600319011261020b576101b8610a4a565b6101c0610b09565b600180546001600160a01b0319166001600160a01b0392831690811790915582549091167f38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e227008380a380f35b80fd5b50503461019a578160031936011261019a5760015490516001600160a01b039091168152602090f35b50503461019a578060031936011261019a579081906001600160a01b0361025c610a4a565b168152600260205281812060243582526020522060ff6001825492015416825191825215156020820152f35b50503461019a578160031936011261019a5760035490516001600160a01b039091168152602090f35b506020366003190112610178577f73a19dd210f1a7f902193214c0ee91dd35ee5b4d920cba8d519eca65a7b488ca9035916102ea610b77565b3384526002602052808420838552602052808420610309348254610afc565b905580519283523460208401523392a280f35b50346101785781600319360112610178576103739061271061036c61ffff8560209760018060a01b0361034d610a4a565b16815260028952818120602435825289522054935460a01c1683610a65565b0490610a8e565b9051908152f35b50503461019a578160031936011261019a57905490516001600160a01b039091168152602090f35b50503461019a578160031936011261019a5760207f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258916103e0610b09565b6103e8610b77565b6001805460ff60a01b1916600160a01b17905551338152a180f35b50503461019a578160031936011261019a57602090516203f4808152f35b50346101785782600319360112610178575490516001600160a01b03909116815260209150f35b509034610178578260031936011261017857600154916001600160a01b039133838516036104b35750506001600160a01b031991821660015582543392811683178455167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08380a380f35b60249250519063118cdaa760e01b82523390820152fd5b833461020b578060031936011261020b576104e3610b09565b600180546001600160a01b03199081169091558154908116825581906001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b50503461019a578160031936011261019a5760209060ff60015460a01c1690519015158152f35b833461020b57602036600319011261020b57610570610a4a565b610578610b09565b60018060a01b03166bffffffffffffffffffffffff60a01b600354161760035580f35b50913461020b578060031936011261020b575061ffff6020925460a01c169051908152f35b50503461019a578060031936011261019a5760209167ffffffffffffffff9082906001600160a01b036105f1610a4a565b16815260058552818120602435825285522054169051908152f35b503461017857816003193601126101785780359160243561062b610b35565b338552602060058152828620858752815267ffffffffffffffff8387205416801561074d576202a300810180911161073a57421061072b5733865260028152828620858752815282862093600185019081549060ff82168015610722575b6107145750600190888754975560ff19161790553386526002815282862082875281528286206106ba858254610afc565b905582519485528401528201527f755a9b04f05ab6a632abd7846c314a78d41224b97d4678030219aaf9ef25cdce60603392a260017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005580f35b8551631e9acf1760e31b8152fd5b50865415610689565b50505163b57dfbc360e01b8152fd5b634e487b7160e01b875260118552602487fd5b50505051633123d42760e11b8152fd5b5034610178578260031936011261017857610776610b09565b6001549060ff8260a01c16156107be575060ff60a01b1916600155513381527f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa90602090a180f35b8251638dfc202b60e01b8152fd5b50346101785781600319360112610178578035916001600160a01b03916024358381169182820361097f576107ff610b35565b610807610b77565b3387526002602052838720868852602052838720946001860180549660ff881661096f575496871561095f5760019060ff19161790558780808061086161271061085961ffff895460a01c168d610a65565b04809b610a8e565b80975af161086d610a9b565b5015610950579085889594939281610918575b5050508251918683526020830152828201527fb68db3305340f78d94a7bbb8af41c055527ec936e5e4550cde089ac7335c945160603392a2805193845281602085015283015260608201527fd04fc375066a01661b22acc9f579141020f7226c9cdca5219ef2be45e40e55ce60803392a260017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005580f35b95808093949596979281938654165af1610930610a9b565b50156109425790818588959493610880565b83516312171d8360e31b8152fd5b5083516312171d8360e31b8152fd5b8651631e9acf1760e31b81528490fd5b8651630d70a0e360e41b81528490fd5b8680fd5b83823461019a57602036600319011261019a57803561ffff81168103610178576109ab610b09565b815461ffff60a01b191660a09190911b61ffff60a01b1617905580f35b50503461019a578060031936011261019a5760209181906001600160a01b036109ef610a4a565b168152600284528181206024358252845220549051908152f35b83823461019a57602036600319011261019a57610a24610a4a565b610a2c610b09565b81546001600160a01b0319166001600160a01b039190911617905580f35b600435906001600160a01b0382168203610a6057565b600080fd5b81810292918115918404141715610a7857565b634e487b7160e01b600052601160045260246000fd5b91908203918211610a7857565b3d15610af75767ffffffffffffffff903d828111610ae15760405192601f8201601f19908116603f0116840190811184821017610ae15760405282523d6000602084013e565b634e487b7160e01b600052604160045260246000fd5b606090565b91908201809211610a7857565b6000546001600160a01b03163303610b1d57565b60405163118cdaa760e01b8152336004820152602490fd5b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f006002815414610b655760029055565b604051633ee5aeb560e01b8152600490fd5b60ff60015460a01c16610b8657565b60405163d93c066560e01b8152600490fdfea2646970667358221220a341b3bc584c5fb955fece0c170a44abf7d0028a99a15e565e9214e3dd18ccbd64736f6c63430008180033",
+  "devdoc": {
+    "details": "Entry fees are deposited here. On settlement, prizes are distributed with      fee splits to the lottery creator and protocol. Unclaimed prizes can be      redistributed to subsequent rounds after a timeout.",
+    "errors": {
+      "EnforcedPause()": [
+        {
+          "details": "The operation failed because the contract is paused."
+        }
+      ],
+      "ExpectedPause()": [
+        {
+          "details": "The operation failed because the contract is not paused."
+        }
+      ],
+      "OwnableInvalidOwner(address)": [
+        {
+          "details": "The owner is not a valid owner account. (eg. `address(0)`)"
+        }
+      ],
+      "OwnableUnauthorizedAccount(address)": [
+        {
+          "details": "The caller account is not authorized to perform an operation."
+        }
+      ],
+      "ReentrancyGuardReentrantCall()": [
+        {
+          "details": "Unauthorized reentrant call."
+        }
+      ]
+    },
+    "events": {
+      "Paused(address)": {
+        "details": "Emitted when the pause is triggered by `account`."
+      },
+      "Unpaused(address)": {
+        "details": "Emitted when the pause is lifted by `account`."
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "acceptOwnership()": {
+        "details": "The new owner accepts the ownership transfer."
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "paused()": {
+        "details": "Returns true if the contract is paused, and false otherwise."
+      },
+      "pendingOwner()": {
+        "details": "Returns the address of the pending owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one. Can only be called by the current owner. Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer."
+      }
+    },
+    "title": "PrizePool",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "markClaimable(uint256)": {
+        "notice": "Mark a round as claimable (called by lottery after draw)"
+      }
+    },
+    "notice": "Manages prize funds for all lotteries with per-lottery-round accounting.",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 8,
+        "contract": "contracts/core/PrizePool.sol:PrizePool",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 156,
+        "contract": "contracts/core/PrizePool.sol:PrizePool",
+        "label": "_pendingOwner",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address"
+      },
+      {
+        "astId": 966,
+        "contract": "contracts/core/PrizePool.sol:PrizePool",
+        "label": "_paused",
+        "offset": 20,
+        "slot": "1",
+        "type": "t_bool"
+      },
+      {
+        "astId": 3311,
+        "contract": "contracts/core/PrizePool.sol:PrizePool",
+        "label": "balances",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(RoundBalance)3304_storage))"
+      },
+      {
+        "astId": 3313,
+        "contract": "contracts/core/PrizePool.sol:PrizePool",
+        "label": "factory",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_address"
+      },
+      {
+        "astId": 3315,
+        "contract": "contracts/core/PrizePool.sol:PrizePool",
+        "label": "protocolTreasury",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_address"
+      },
+      {
+        "astId": 3317,
+        "contract": "contracts/core/PrizePool.sol:PrizePool",
+        "label": "protocolFeeRate",
+        "offset": 20,
+        "slot": "4",
+        "type": "t_uint16"
+      },
+      {
+        "astId": 3329,
+        "contract": "contracts/core/PrizePool.sol:PrizePool",
+        "label": "claimableAt",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint64))"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_mapping(t_uint256,t_struct(RoundBalance)3304_storage))": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => mapping(uint256 => struct PrizePool.RoundBalance))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_uint256,t_struct(RoundBalance)3304_storage)"
+      },
+      "t_mapping(t_address,t_mapping(t_uint256,t_uint64))": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => mapping(uint256 => uint64))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_uint256,t_uint64)"
+      },
+      "t_mapping(t_uint256,t_struct(RoundBalance)3304_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct PrizePool.RoundBalance)",
+        "numberOfBytes": "32",
+        "value": "t_struct(RoundBalance)3304_storage"
+      },
+      "t_mapping(t_uint256,t_uint64)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => uint64)",
+        "numberOfBytes": "32",
+        "value": "t_uint64"
+      },
+      "t_struct(RoundBalance)3304_storage": {
+        "encoding": "inplace",
+        "label": "struct PrizePool.RoundBalance",
+        "members": [
+          {
+            "astId": 3301,
+            "contract": "contracts/core/PrizePool.sol:PrizePool",
+            "label": "total",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 3303,
+            "contract": "contracts/core/PrizePool.sol:PrizePool",
+            "label": "paid",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_bool"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_uint16": {
+        "encoding": "inplace",
+        "label": "uint16",
+        "numberOfBytes": "2"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      },
+      "t_uint64": {
+        "encoding": "inplace",
+        "label": "uint64",
+        "numberOfBytes": "8"
+      }
+    }
+  }
+}

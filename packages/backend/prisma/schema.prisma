@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LotteryStatus {
+  ACTIVE
+  PAUSED
+  CLOSED
+}
+
+enum RoundStatus {
+  OPEN
+  DRAWING
+  CLAIMABLE
+  SETTLED
+}
+
+model Lottery {
+  id            String        @id @default(cuid())
+  address       String        @unique
+  creator       String
+  entryFee      String
+  maxTickets    Int
+  drawInterval  Int
+  maxRounds     Int           @default(0)
+  creatorFeeRate Int          @default(300)
+  status        LotteryStatus @default(ACTIVE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  blockNumber   Int
+
+  rounds        Round[]
+
+  @@index([creator])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Round {
+  id            String      @id @default(cuid())
+  lotteryId     String
+  roundNumber   Int
+  prizePool     String      @default("0")
+  ticketCount   Int         @default(0)
+  merkleRoot    String?
+  winnerIndex   Int?
+  claimed       Boolean     @default(false)
+  status        RoundStatus @default(OPEN)
+  startedAt     DateTime    @default(now())
+  drawnAt       DateTime?
+  claimedAt     DateTime?
+  blockNumber   Int
+
+  lottery       Lottery     @relation(fields: [lotteryId], references: [id])
+  tickets       Ticket[]
+  draw          Draw?
+  claim         Claim?
+
+  @@unique([lotteryId, roundNumber])
+  @@index([status])
+  @@index([startedAt])
+}
+
+model Ticket {
+  id              String   @id @default(cuid())
+  roundId         String
+  commitmentHash  String
+  leafIndex       Int
+  txHash          String
+  insertedAt      DateTime @default(now())
+  blockNumber     Int
+
+  round           Round    @relation(fields: [roundId], references: [id])
+
+  @@index([roundId])
+  @@index([commitmentHash])
+}
+
+model Agent {
+  id            String   @id @default(cuid())
+  address       String   @unique
+  stake         String
+  reputation    Int      @default(0)
+  isActive      Boolean  @default(true)
+  registeredAt  DateTime @default(now())
+  txHash        String
+  blockNumber   Int
+
+  @@index([isActive])
+  @@index([reputation])
+}
+
+model Draw {
+  id            String   @id @default(cuid())
+  roundId       String   @unique
+  vrfRequestId  String   @unique
+  randomNumber  String?
+  winningIndex  Int?
+  requestTxHash String
+  fulfillTxHash String?
+  requestedAt   DateTime @default(now())
+  fulfilledAt   DateTime?
+  blockNumber   Int
+
+  round         Round    @relation(fields: [roundId], references: [id])
+}
+
+model Claim {
+  id            String   @id @default(cuid())
+  roundId       String   @unique
+  nullifierHash String   @unique
+  recipient     String
+  amount        String
+  txHash        String
+  claimedAt     DateTime @default(now())
+  blockNumber   Int
+
+  round         Round    @relation(fields: [roundId], references: [id])
+
+  @@index([recipient])
+}
+
+model IndexerState {
+  id              String @id @default("singleton")
+  lastBlockNumber Int    @default(0)
+  updatedAt       DateTime @updatedAt
+}

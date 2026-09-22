@@ -1,0 +1,82 @@
+# ─────────────────────────────────────────────────────────────
+# Agent Lottery — agent runtime configuration
+#
+# Copy this file to `agents.yaml` (same directory) and edit it:
+#   cp agents.example.yaml agents.yaml
+#
+# `agents.yaml` is gitignored because it can contain a mnemonic.
+# Prefer setting the mnemonic via the AGENT_MNEMONIC env var instead
+# of committing it here.
+# ─────────────────────────────────────────────────────────────
+
+# BIP-39 mnemonic. Each agent below uses a wallet derived at index 0,1,2…
+# (m/44'/60'/0'/0/{index}). Every derived wallet must hold BNB to pay gas +
+# the registration stake (0.1 BNB) + entry fees.
+# Leave blank to fall back to the AGENT_MNEMONIC environment variable.
+mnemonic: ""
+
+# RPC endpoint. Falls back to BSC_RPC_URL, then a local node.
+rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545/"
+
+# Where compiled circuits (wasm + zkey) live. Relative to the agent package.
+circuitBasePath: "../circuits"
+
+# Local LevelDB directory for ticket secrets/nullifiers (needed to claim).
+dataDir: "./data"
+
+# ─────────────────────────────────────────────────────────────
+# Agents. One wallet per entry, in order (index 0, 1, 2 …).
+#
+# strategy.type is one of:
+#   AlwaysEnter      — enter every open lottery
+#   MinJackpot       — enter when jackpot >= minJackpot (BNB)
+#   MaxParticipants  — enter when participants <= maxParticipants
+#   ExpectedValue    — enter when jackpot >= threshold(BNB) * participants
+#   Composite        — MinJackpot AND MaxParticipants together
+#
+# Amounts in BNB are written as decimal strings ("0.5"); they are parsed to
+# wei automatically. Counts are plain integers.
+#
+# maxBalancePercentage caps entry fee at that % of the wallet balance
+# (bankroll management). tickIntervalMs is how often the agent re-evaluates.
+# ─────────────────────────────────────────────────────────────
+agents:
+  - name: AlphaBot
+    strategy:
+      type: AlwaysEnter
+    maxBalancePercentage: 10
+    tickIntervalMs: 30000
+    autoClaimEnabled: true
+
+  - name: BetaBot
+    strategy:
+      type: MinJackpot
+      minJackpot: "0.5"          # enter once the pot reaches 0.5 BNB
+    maxBalancePercentage: 15
+    tickIntervalMs: 30000
+    autoClaimEnabled: true
+
+  - name: GammaBot
+    strategy:
+      type: MaxParticipants
+      maxParticipants: 50        # only enter thinly-contested rounds
+    maxBalancePercentage: 20
+    tickIntervalMs: 45000
+    autoClaimEnabled: true
+
+  - name: DeltaBot
+    strategy:
+      type: ExpectedValue
+      threshold: "0.02"          # jackpot must be >= 0.02 BNB * participants
+    maxBalancePercentage: 25
+    tickIntervalMs: 60000
+    autoClaimEnabled: true
+
+  - name: EpsilonBot
+    strategy:
+      type: Composite
+      minJackpot: "0.1"          # pot >= 0.1 BNB …
+      maxParticipants: 20        # … and <= 20 participants
+    maxBalancePercentage: 30
+    tickIntervalMs: 30000
+    autoClaimEnabled: true

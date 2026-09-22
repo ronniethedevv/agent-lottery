@@ -1,0 +1,1466 @@
+{
+  "address": "0xf06be4e85D3D90DF90238e10c7B52339E5eAe4a7",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "AgentAlreadyEntered",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "AlreadyInitialized",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "CommitmentAlreadyUsed",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "DrawTooEarly",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "HasherNotSet",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "IncorrectEntryFee",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidProof",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "LotteryEnded",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "MaxTicketsReached",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "MerkleTreeFull",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoTickets",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotDrawManager",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotRegisteredAgent",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotWinner",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NullifierAlreadyUsed",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ReentrancyGuardReentrantCall",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "RoundNotClaimable",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "RoundNotOpen",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "vrfRequestId",
+          "type": "uint256"
+        }
+      ],
+      "name": "DrawRequested",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "nullifierHash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "PrizeClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "newRoundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "RoundAdvanced",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "commitment",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint32",
+          "name": "leafIndex",
+          "type": "uint32"
+        }
+      ],
+      "name": "TicketPurchased",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint32",
+          "name": "winnerIndex",
+          "type": "uint32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "prizeAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "WinnerSelected",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "ROOT_HISTORY_SIZE",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "TREE_DEPTH",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ZERO_VALUE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "agentEnteredRound",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "agentRegistry",
+      "outputs": [
+        {
+          "internalType": "contract IAgentRegistry",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[2]",
+          "name": "proofA",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[2][2]",
+          "name": "proofB",
+          "type": "uint256[2][2]"
+        },
+        {
+          "internalType": "uint256[2]",
+          "name": "proofC",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "publicInputs",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "claimPrize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "claimVerifier",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "commitmentUsed",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "creator",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "creatorFeeRate",
+      "outputs": [
+        {
+          "internalType": "uint16",
+          "name": "",
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "currentRootIndex",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "currentRound",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "drawInterval",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "drawManager",
+      "outputs": [
+        {
+          "internalType": "contract IDrawManager",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "eligibilityVerifier",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[2]",
+          "name": "proofA",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[2][2]",
+          "name": "proofB",
+          "type": "uint256[2][2]"
+        },
+        {
+          "internalType": "uint256[2]",
+          "name": "proofC",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "eligibilityPublicInputs",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[2]",
+          "name": "ticketProofA",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[2][2]",
+          "name": "ticketProofB",
+          "type": "uint256[2][2]"
+        },
+        {
+          "internalType": "uint256[2]",
+          "name": "ticketProofC",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "ticketPublicInputs",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "enterWithProof",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "entryFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "factory",
+      "outputs": [
+        {
+          "internalType": "contract ILotteryFactory",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "filledSubtrees",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCreator",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentRound",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getDrawInterval",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getEntryFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getLastRoot",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMaxTickets",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRoundState",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "prizePool",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint32",
+              "name": "ticketCount",
+              "type": "uint32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "merkleRoot",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "winnerIndex",
+              "type": "uint32"
+            },
+            {
+              "internalType": "bool",
+              "name": "claimed",
+              "type": "bool"
+            },
+            {
+              "internalType": "enum ILottery.RoundStatus",
+              "name": "status",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint64",
+              "name": "startedAt",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "drawnAt",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct ILottery.RoundState",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "hasher",
+      "outputs": [
+        {
+          "internalType": "contract IPoseidonT3",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initialRoot",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_entryFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_maxTickets",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_drawInterval",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_maxRounds",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint16",
+          "name": "_creatorFeeRate",
+          "type": "uint16"
+        },
+        {
+          "internalType": "address",
+          "name": "_creator",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_agentRegistry",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_drawManager",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_prizePool",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_factory",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_eligibilityVerifier",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_ticketVerifier",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_claimVerifier",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_hasher",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "root",
+          "type": "uint256"
+        }
+      ],
+      "name": "isKnownRoot",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "isRoundDrawable",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxRounds",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxTickets",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "nextLeafIndex",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "nullifierUsed",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "prizePool",
+      "outputs": [
+        {
+          "internalType": "contract IPrizePool",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "roots",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "rounds",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "prizePool",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint32",
+          "name": "ticketCount",
+          "type": "uint32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "merkleRoot",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "winnerIndex",
+          "type": "uint32"
+        },
+        {
+          "internalType": "bool",
+          "name": "claimed",
+          "type": "bool"
+        },
+        {
+          "internalType": "enum ILottery.RoundStatus",
+          "name": "status",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint64",
+          "name": "startedAt",
+          "type": "uint64"
+        },
+        {
+          "internalType": "uint64",
+          "name": "drawnAt",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint32",
+          "name": "winnerIndex",
+          "type": "uint32"
+        }
+      ],
+      "name": "settleDraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ticketVerifier",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "triggerDraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "zeros",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0x4fb04f3e6efc5f5fbb9b4c28b413c073f4fb014e1106c5ba9f43e576d8247da1",
+  "receipt": {
+    "to": null,
+    "from": "0xBfaB70789367F3eF5f9cBE84608b8f62Af557614",
+    "contractAddress": "0xf06be4e85D3D90DF90238e10c7B52339E5eAe4a7",
+    "transactionIndex": 1,
+    "gasUsed": "1752020",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xe970a17a45060a0715ae784ba12c6b2469257e824b7200a92d5380764aae8fb7",
+    "transactionHash": "0x4fb04f3e6efc5f5fbb9b4c28b413c073f4fb014e1106c5ba9f43e576d8247da1",
+    "logs": [],
+    "blockNumber": 132482465,
+    "cumulativeGasUsed": "2239449",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "9db57c04ce3b1a2512aab43e6e768f28",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.24+commit.e11b9ed9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"AgentAlreadyEntered\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"AlreadyInitialized\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"CommitmentAlreadyUsed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"DrawTooEarly\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"HasherNotSet\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"IncorrectEntryFee\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidProof\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"LotteryEnded\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"MaxTicketsReached\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"MerkleTreeFull\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoTickets\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotDrawManager\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotRegisteredAgent\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotWinner\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NullifierAlreadyUsed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"RoundNotClaimable\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"RoundNotOpen\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"vrfRequestId\",\"type\":\"uint256\"}],\"name\":\"DrawRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"nullifierHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"PrizeClaimed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"newRoundId\",\"type\":\"uint256\"}],\"name\":\"RoundAdvanced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"commitment\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint32\",\"name\":\"leafIndex\",\"type\":\"uint32\"}],\"name\":\"TicketPurchased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint32\",\"name\":\"winnerIndex\",\"type\":\"uint32\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"prizeAmount\",\"type\":\"uint256\"}],\"name\":\"WinnerSelected\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"ROOT_HISTORY_SIZE\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"TREE_DEPTH\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ZERO_VALUE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"agentEnteredRound\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"agentRegistry\",\"outputs\":[{\"internalType\":\"contract IAgentRegistry\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[2]\",\"name\":\"proofA\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[2][2]\",\"name\":\"proofB\",\"type\":\"uint256[2][2]\"},{\"internalType\":\"uint256[2]\",\"name\":\"proofC\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[]\",\"name\":\"publicInputs\",\"type\":\"uint256[]\"}],\"name\":\"claimPrize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claimVerifier\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"commitmentUsed\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"creator\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"creatorFeeRate\",\"outputs\":[{\"internalType\":\"uint16\",\"name\":\"\",\"type\":\"uint16\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentRootIndex\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentRound\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"drawInterval\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"drawManager\",\"outputs\":[{\"internalType\":\"contract IDrawManager\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"eligibilityVerifier\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[2]\",\"name\":\"proofA\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[2][2]\",\"name\":\"proofB\",\"type\":\"uint256[2][2]\"},{\"internalType\":\"uint256[2]\",\"name\":\"proofC\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[]\",\"name\":\"eligibilityPublicInputs\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[2]\",\"name\":\"ticketProofA\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[2][2]\",\"name\":\"ticketProofB\",\"type\":\"uint256[2][2]\"},{\"internalType\":\"uint256[2]\",\"name\":\"ticketProofC\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[]\",\"name\":\"ticketPublicInputs\",\"type\":\"uint256[]\"}],\"name\":\"enterWithProof\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"entryFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"factory\",\"outputs\":[{\"internalType\":\"contract ILotteryFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"filledSubtrees\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getCreator\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getCurrentRound\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDrawInterval\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getEntryFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getLastRoot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMaxTickets\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getRoundState\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"prizePool\",\"type\":\"uint256\"},{\"internalType\":\"uint32\",\"name\":\"ticketCount\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"merkleRoot\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"winnerIndex\",\"type\":\"uint32\"},{\"internalType\":\"bool\",\"name\":\"claimed\",\"type\":\"bool\"},{\"internalType\":\"enum ILottery.RoundStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint64\",\"name\":\"startedAt\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"drawnAt\",\"type\":\"uint64\"}],\"internalType\":\"struct ILottery.RoundState\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"hasher\",\"outputs\":[{\"internalType\":\"contract IPoseidonT3\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"initialRoot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_entryFee\",\"type\":\"uint256\"},{\"internalType\":\"uint32\",\"name\":\"_maxTickets\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"_drawInterval\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"_maxRounds\",\"type\":\"uint32\"},{\"internalType\":\"uint16\",\"name\":\"_creatorFeeRate\",\"type\":\"uint16\"},{\"internalType\":\"address\",\"name\":\"_creator\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_agentRegistry\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_drawManager\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_prizePool\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_factory\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_eligibilityVerifier\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_ticketVerifier\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_claimVerifier\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_hasher\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"root\",\"type\":\"uint256\"}],\"name\":\"isKnownRoot\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isRoundDrawable\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"maxRounds\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"maxTickets\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nextLeafIndex\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"nullifierUsed\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"prizePool\",\"outputs\":[{\"internalType\":\"contract IPrizePool\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"roots\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"rounds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"prizePool\",\"type\":\"uint256\"},{\"internalType\":\"uint32\",\"name\":\"ticketCount\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"merkleRoot\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"winnerIndex\",\"type\":\"uint32\"},{\"internalType\":\"bool\",\"name\":\"claimed\",\"type\":\"bool\"},{\"internalType\":\"enum ILottery.RoundStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint64\",\"name\":\"startedAt\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"drawnAt\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"internalType\":\"uint32\",\"name\":\"winnerIndex\",\"type\":\"uint32\"}],\"name\":\"settleDraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ticketVerifier\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"triggerDraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"zeros\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"details\":\"Deployed as an EIP-1167 minimal proxy clone. Each lottery runs independent      rounds with its own Merkle tree. Agents enter by submitting ZK proofs of      eligibility and ticket commitments. VRF selects the winner. The winner      claims by proving ticket ownership via a Merkle inclusion proof.      State machine per round:        Open \\u2192 Drawing \\u2192 Claimable \\u2192 Settled \\u2192 (next round auto-opens)\",\"errors\":{\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}]},\"kind\":\"dev\",\"methods\":{\"constructor\":{\"details\":\"Lock the implementation so only clones (via the factory) can be initialized.\"},\"settleDraw(uint256,uint32)\":{\"params\":{\"roundId\":\"The round being settled\",\"winnerIndex\":\"The winning ticket index\"}}},\"title\":\"Lottery\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getLastRoot()\":{\"notice\":\"Get the current Merkle root\"},\"initialize(uint256,uint32,uint32,uint32,uint16,address,address,address,address,address,address,address,address,address)\":{\"notice\":\"Initialize the lottery (called once by factory after cloning)\"},\"isKnownRoot(uint256)\":{\"notice\":\"Check if a root exists in the history\"},\"settleDraw(uint256,uint32)\":{\"notice\":\"Callback from DrawManager after VRF fulfillment\"}},\"notice\":\"Individual lottery instance with ZK-private ticket commitments.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/core/Lottery.sol\":\"Lottery\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.5.0) (utils/ReentrancyGuard.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {StorageSlot} from \\\"./StorageSlot.sol\\\";\\n\\n/**\\n * @dev Contract module that helps prevent reentrant calls to a function.\\n *\\n * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier\\n * available, which can be applied to functions to make sure there are no nested\\n * (reentrant) calls to them.\\n *\\n * Note that because there is a single `nonReentrant` guard, functions marked as\\n * `nonReentrant` may not call one another. This can be worked around by making\\n * those functions `private`, and then adding `external` `nonReentrant` entry\\n * points to them.\\n *\\n * TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,\\n * consider using {ReentrancyGuardTransient} instead.\\n *\\n * TIP: If you would like to learn more about reentrancy and alternative ways\\n * to protect against it, check out our blog post\\n * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\\n *\\n * IMPORTANT: Deprecated. This storage-based reentrancy guard will be removed and replaced\\n * by the {ReentrancyGuardTransient} variant in v6.0.\\n *\\n * @custom:stateless\\n */\\nabstract contract ReentrancyGuard {\\n    using StorageSlot for bytes32;\\n\\n    // keccak256(abi.encode(uint256(keccak256(\\\"openzeppelin.storage.ReentrancyGuard\\\")) - 1)) & ~bytes32(uint256(0xff))\\n    bytes32 private constant REENTRANCY_GUARD_STORAGE =\\n        0x9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00;\\n\\n    // Booleans are more expensive than uint256 or any type that takes up a full\\n    // word because each write operation emits an extra SLOAD to first read the\\n    // slot's contents, replace the bits taken up by the boolean, and then write\\n    // back. This is the compiler's defense against contract upgrades and\\n    // pointer aliasing, and it cannot be disabled.\\n\\n    // The values being non-zero value makes deployment a bit more expensive,\\n    // but in exchange the refund on every call to nonReentrant will be lower in\\n    // amount. Since refunds are capped to a percentage of the total\\n    // transaction's gas, it is best to keep them low in cases like this one, to\\n    // increase the likelihood of the full refund coming into effect.\\n    uint256 private constant NOT_ENTERED = 1;\\n    uint256 private constant ENTERED = 2;\\n\\n    /**\\n     * @dev Unauthorized reentrant call.\\n     */\\n    error ReentrancyGuardReentrantCall();\\n\\n    constructor() {\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Prevents a contract from calling itself, directly or indirectly.\\n     * Calling a `nonReentrant` function from another `nonReentrant`\\n     * function is not supported. It is possible to prevent this from happening\\n     * by making the `nonReentrant` function external, and making it call a\\n     * `private` function that does the actual work.\\n     */\\n    modifier nonReentrant() {\\n        _nonReentrantBefore();\\n        _;\\n        _nonReentrantAfter();\\n    }\\n\\n    /**\\n     * @dev A `view` only version of {nonReentrant}. Use to block view functions\\n     * from being called, preventing reading from inconsistent contract state.\\n     *\\n     * CAUTION: This is a \\\"view\\\" modifier and does not change the reentrancy\\n     * status. Use it only on view functions. For payable or non-payable functions,\\n     * use the standard {nonReentrant} modifier instead.\\n     */\\n    modifier nonReentrantView() {\\n        _nonReentrantBeforeView();\\n        _;\\n    }\\n\\n    function _nonReentrantBeforeView() private view {\\n        if (_reentrancyGuardEntered()) {\\n            revert ReentrancyGuardReentrantCall();\\n        }\\n    }\\n\\n    function _nonReentrantBefore() private {\\n        // On the first call to nonReentrant, _status will be NOT_ENTERED\\n        _nonReentrantBeforeView();\\n\\n        // Any calls to nonReentrant after this point will fail\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = ENTERED;\\n    }\\n\\n    function _nonReentrantAfter() private {\\n        // By storing the original value once again, a refund is triggered (see\\n        // https://eips.ethereum.org/EIPS/eip-2200)\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Returns true if the reentrancy guard is currently set to \\\"entered\\\", which indicates there is a\\n     * `nonReentrant` function in the call stack.\\n     */\\n    function _reentrancyGuardEntered() internal view returns (bool) {\\n        return _reentrancyGuardStorageSlot().getUint256Slot().value == ENTERED;\\n    }\\n\\n    function _reentrancyGuardStorageSlot() internal pure virtual returns (bytes32) {\\n        return REENTRANCY_GUARD_STORAGE;\\n    }\\n}\\n\",\"keccak256\":\"0xa516cbf1c7d15d3517c2d668601ce016c54395bf5171918a14e2686977465f53\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/StorageSlot.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.1.0) (utils/StorageSlot.sol)\\n// This file was procedurally generated from scripts/generate/templates/StorageSlot.js.\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Library for reading and writing primitive types to specific storage slots.\\n *\\n * Storage slots are often used to avoid storage conflict when dealing with upgradeable contracts.\\n * This library helps with reading and writing to such slots without the need for inline assembly.\\n *\\n * The functions in this library return Slot structs that contain a `value` member that can be used to read or write.\\n *\\n * Example usage to set ERC-1967 implementation slot:\\n * ```solidity\\n * contract ERC1967 {\\n *     // Define the slot. Alternatively, use the SlotDerivation library to derive the slot.\\n *     bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;\\n *\\n *     function _getImplementation() internal view returns (address) {\\n *         return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;\\n *     }\\n *\\n *     function _setImplementation(address newImplementation) internal {\\n *         require(newImplementation.code.length > 0);\\n *         StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;\\n *     }\\n * }\\n * ```\\n *\\n * TIP: Consider using this library along with {SlotDerivation}.\\n */\\nlibrary StorageSlot {\\n    struct AddressSlot {\\n        address value;\\n    }\\n\\n    struct BooleanSlot {\\n        bool value;\\n    }\\n\\n    struct Bytes32Slot {\\n        bytes32 value;\\n    }\\n\\n    struct Uint256Slot {\\n        uint256 value;\\n    }\\n\\n    struct Int256Slot {\\n        int256 value;\\n    }\\n\\n    struct StringSlot {\\n        string value;\\n    }\\n\\n    struct BytesSlot {\\n        bytes value;\\n    }\\n\\n    /**\\n     * @dev Returns an `AddressSlot` with member `value` located at `slot`.\\n     */\\n    function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `BooleanSlot` with member `value` located at `slot`.\\n     */\\n    function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.\\n     */\\n    function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Uint256Slot` with member `value` located at `slot`.\\n     */\\n    function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Int256Slot` with member `value` located at `slot`.\\n     */\\n    function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `StringSlot` with member `value` located at `slot`.\\n     */\\n    function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `StringSlot` representation of the string storage pointer `store`.\\n     */\\n    function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := store.slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `BytesSlot` with member `value` located at `slot`.\\n     */\\n    function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.\\n     */\\n    function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := store.slot\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xcf74f855663ce2ae00ed8352666b7935f6cddea2932fdf2c3ecd30a9b1cd0e97\",\"license\":\"MIT\"},\"contracts/core/Lottery.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\nimport {ReentrancyGuard} from \\\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\\\";\\nimport {ILottery} from \\\"../interfaces/ILottery.sol\\\";\\nimport {IAgentRegistry} from \\\"../interfaces/IAgentRegistry.sol\\\";\\nimport {IDrawManager} from \\\"../interfaces/IDrawManager.sol\\\";\\nimport {IPrizePool} from \\\"../interfaces/IPrizePool.sol\\\";\\nimport {ILotteryFactory} from \\\"../interfaces/ILotteryFactory.sol\\\";\\nimport {IGroth16Verifier5, IGroth16Verifier2, IGroth16Verifier6} from \\\"../interfaces/IGroth16Verifier.sol\\\";\\nimport {MerkleTreeWithHistory} from \\\"../libraries/MerkleTreeWithHistory.sol\\\";\\n\\n/// @title Lottery\\n/// @notice Individual lottery instance with ZK-private ticket commitments.\\n/// @dev Deployed as an EIP-1167 minimal proxy clone. Each lottery runs independent\\n///      rounds with its own Merkle tree. Agents enter by submitting ZK proofs of\\n///      eligibility and ticket commitments. VRF selects the winner. The winner\\n///      claims by proving ticket ownership via a Merkle inclusion proof.\\n///\\n///      State machine per round:\\n///        Open \\u2192 Drawing \\u2192 Claimable \\u2192 Settled \\u2192 (next round auto-opens)\\ncontract Lottery is ILottery, MerkleTreeWithHistory, ReentrancyGuard {\\n    // Immutable config (set once via initialize, since this is a clone)\\n    uint256 public entryFee;\\n    uint32 public maxTickets;\\n    uint32 public drawInterval; // seconds between round start and draw eligibility\\n    uint32 public maxRounds;    // 0 = infinite\\n    uint16 public creatorFeeRate;\\n    address public creator;\\n\\n    // External contracts\\n    IAgentRegistry public agentRegistry;\\n    IDrawManager public drawManager;\\n    IPrizePool public prizePool;\\n    ILotteryFactory public factory;\\n\\n    // ZK verifier contracts\\n    address public eligibilityVerifier;\\n    address public ticketVerifier;\\n    address public claimVerifier;\\n\\n    // Round state\\n    uint256 public currentRound;\\n    mapping(uint256 => RoundState) public rounds;\\n\\n    // Nullifier tracking (prevents double-claims)\\n    mapping(bytes32 => bool) public nullifierUsed;\\n\\n    // Per-round commitment tracking (prevents duplicate commitments)\\n    mapping(uint256 => mapping(bytes32 => bool)) public commitmentUsed;\\n\\n    // Agent entry tracking (max 1 ticket per agent per round)\\n    mapping(uint256 => mapping(bytes32 => bool)) public agentEnteredRound;\\n\\n    bool private initialized;\\n\\n    error AlreadyInitialized();\\n    error NotRegisteredAgent();\\n    error RoundNotOpen();\\n    error RoundNotClaimable();\\n    error IncorrectEntryFee();\\n    error MaxTicketsReached();\\n    error DrawTooEarly();\\n    error InvalidProof();\\n    error NullifierAlreadyUsed();\\n    error CommitmentAlreadyUsed();\\n    error AgentAlreadyEntered();\\n    error NotDrawManager();\\n    error LotteryEnded();\\n    error NoTickets();\\n    error NotWinner();\\n\\n    /// @dev Lock the implementation so only clones (via the factory) can be initialized.\\n    constructor() {\\n        initialized = true;\\n    }\\n\\n    /// @notice Initialize the lottery (called once by factory after cloning)\\n    function initialize(\\n        uint256 _entryFee,\\n        uint32 _maxTickets,\\n        uint32 _drawInterval,\\n        uint32 _maxRounds,\\n        uint16 _creatorFeeRate,\\n        address _creator,\\n        address _agentRegistry,\\n        address _drawManager,\\n        address _prizePool,\\n        address _factory,\\n        address _eligibilityVerifier,\\n        address _ticketVerifier,\\n        address _claimVerifier,\\n        address _hasher\\n    ) external {\\n        if (initialized) revert AlreadyInitialized();\\n        initialized = true;\\n\\n        entryFee = _entryFee;\\n        maxTickets = _maxTickets;\\n        drawInterval = _drawInterval;\\n        maxRounds = _maxRounds;\\n        creatorFeeRate = _creatorFeeRate;\\n        creator = _creator;\\n\\n        agentRegistry = IAgentRegistry(_agentRegistry);\\n        drawManager = IDrawManager(_drawManager);\\n        prizePool = IPrizePool(_prizePool);\\n        factory = ILotteryFactory(_factory);\\n\\n        eligibilityVerifier = _eligibilityVerifier;\\n        ticketVerifier = _ticketVerifier;\\n        claimVerifier = _claimVerifier;\\n\\n        // Set up the Poseidon-backed Merkle tree for this clone\\n        _setHasher(_hasher);\\n        _initializeTree();\\n\\n        // Start round 1\\n        currentRound = 1;\\n        rounds[1].status = RoundStatus.Open;\\n        rounds[1].startedAt = uint64(block.timestamp);\\n\\n        emit RoundAdvanced(1);\\n    }\\n\\n    /// @inheritdoc ILottery\\n    function enterWithProof(\\n        uint256[2] calldata proofA,\\n        uint256[2][2] calldata proofB,\\n        uint256[2] calldata proofC,\\n        uint256[] calldata eligibilityPublicInputs,\\n        uint256[2] calldata ticketProofA,\\n        uint256[2][2] calldata ticketProofB,\\n        uint256[2] calldata ticketProofC,\\n        uint256[] calldata ticketPublicInputs\\n    ) external payable override nonReentrant {\\n        if (!agentRegistry.isRegistered(msg.sender)) revert NotRegisteredAgent();\\n        if (msg.value != entryFee) revert IncorrectEntryFee();\\n\\n        uint256 roundId = currentRound;\\n        RoundState storage round = rounds[roundId];\\n\\n        if (round.status != RoundStatus.Open) revert RoundNotOpen();\\n        if (round.ticketCount >= maxTickets) revert MaxTicketsReached();\\n\\n        // Verify eligibility proof\\n        // Public inputs: [lotteryId, minEntryFee, jackpotSize, participantCount, agentCommitment]\\n        if (!_verify5(eligibilityVerifier, proofA, proofB, proofC, eligibilityPublicInputs)) {\\n            revert InvalidProof();\\n        }\\n\\n        // Check agent hasn't already entered this round (using agentCommitment)\\n        bytes32 agentCommitmentHash = bytes32(eligibilityPublicInputs[4]);\\n        if (agentEnteredRound[roundId][agentCommitmentHash]) revert AgentAlreadyEntered();\\n        agentEnteredRound[roundId][agentCommitmentHash] = true;\\n\\n        // Verify ticket commitment proof\\n        // Public inputs: [commitment, lotteryId]\\n        if (!_verify2(ticketVerifier, ticketProofA, ticketProofB, ticketProofC, ticketPublicInputs)) {\\n            revert InvalidProof();\\n        }\\n\\n        bytes32 commitment = bytes32(ticketPublicInputs[0]);\\n        if (commitmentUsed[roundId][commitment]) revert CommitmentAlreadyUsed();\\n        commitmentUsed[roundId][commitment] = true;\\n\\n        // Insert commitment into Merkle tree\\n        uint32 leafIndex = _insert(uint256(commitment));\\n\\n        // Deposit entry fee into prize pool\\n        prizePool.deposit{value: msg.value}(roundId);\\n\\n        round.ticketCount++;\\n        round.prizePool += msg.value;\\n        round.merkleRoot = bytes32(getLastRoot());\\n\\n        emit TicketPurchased(roundId, commitment, leafIndex);\\n    }\\n\\n    /// @inheritdoc ILottery\\n    function triggerDraw() external override {\\n        uint256 roundId = currentRound;\\n        RoundState storage round = rounds[roundId];\\n\\n        if (round.status != RoundStatus.Open) revert RoundNotOpen();\\n        if (round.ticketCount == 0) revert NoTickets();\\n\\n        bool timeElapsed = block.timestamp >= round.startedAt + drawInterval;\\n        bool maxReached = round.ticketCount >= maxTickets;\\n\\n        if (!timeElapsed && !maxReached) revert DrawTooEarly();\\n\\n        round.status = RoundStatus.Drawing;\\n        round.merkleRoot = bytes32(getLastRoot());\\n\\n        uint256 requestId = drawManager.requestDraw(\\n            address(this),\\n            roundId,\\n            round.ticketCount\\n        );\\n\\n        emit DrawRequested(roundId, requestId);\\n    }\\n\\n    /// @notice Callback from DrawManager after VRF fulfillment\\n    /// @param roundId The round being settled\\n    /// @param winnerIndex The winning ticket index\\n    function settleDraw(uint256 roundId, uint32 winnerIndex) external {\\n        if (msg.sender != address(drawManager)) revert NotDrawManager();\\n\\n        RoundState storage round = rounds[roundId];\\n        round.status = RoundStatus.Claimable;\\n        round.winnerIndex = winnerIndex;\\n        round.drawnAt = uint64(block.timestamp);\\n\\n        prizePool.markClaimable(roundId);\\n\\n        emit WinnerSelected(roundId, winnerIndex, round.prizePool);\\n    }\\n\\n    /// @inheritdoc ILottery\\n    function claimPrize(\\n        uint256[2] calldata proofA,\\n        uint256[2][2] calldata proofB,\\n        uint256[2] calldata proofC,\\n        uint256[] calldata publicInputs\\n    ) external override nonReentrant {\\n        // Public inputs: [root, nullifierHash, lotteryId, roundId, recipient, leafIndex]\\n        uint256 roundId = publicInputs[3];\\n        RoundState storage round = rounds[roundId];\\n\\n        if (round.status != RoundStatus.Claimable) revert RoundNotClaimable();\\n\\n        // The proof binds the claimed ticket's position; only the VRF-drawn\\n        // winner can claim.\\n        if (publicInputs[5] != round.winnerIndex) revert NotWinner();\\n\\n        bytes32 nullifierHash = bytes32(publicInputs[1]);\\n        if (nullifierUsed[nullifierHash]) revert NullifierAlreadyUsed();\\n\\n        // Verify the Merkle root is known\\n        uint256 root = publicInputs[0];\\n        if (!isKnownRoot(root)) revert InvalidProof();\\n\\n        // Verify claim proof\\n        if (!_verify6(claimVerifier, proofA, proofB, proofC, publicInputs)) {\\n            revert InvalidProof();\\n        }\\n\\n        nullifierUsed[nullifierHash] = true;\\n        round.claimed = true;\\n        round.status = RoundStatus.Settled;\\n\\n        address recipient = address(uint160(publicInputs[4]));\\n        prizePool.payPrize(roundId, recipient);\\n\\n        emit PrizeClaimed(roundId, nullifierHash, recipient, round.prizePool);\\n\\n        // Advance to next round if applicable\\n        _advanceRound();\\n    }\\n\\n    function _advanceRound() internal {\\n        if (maxRounds > 0 && currentRound >= maxRounds) {\\n            return; // Lottery is finished\\n        }\\n\\n        uint256 nextRoundId = currentRound + 1;\\n        currentRound = nextRoundId;\\n\\n        rounds[nextRoundId].status = RoundStatus.Open;\\n        rounds[nextRoundId].startedAt = uint64(block.timestamp);\\n\\n        // Reset Merkle tree for the new round\\n        _resetTree();\\n\\n        emit RoundAdvanced(nextRoundId);\\n    }\\n\\n    /// @dev Verify a proof against a 5-public-input verifier (eligibility, claim).\\n    ///      Converts the dynamic public inputs to the fixed-size array the\\n    ///      snarkjs-generated verifier expects. A malformed input reverting in\\n    ///      the verifier is treated as an invalid proof, not a failed tx.\\n    function _verify5(\\n        address verifier,\\n        uint256[2] calldata a,\\n        uint256[2][2] calldata b,\\n        uint256[2] calldata c,\\n        uint256[] calldata publicInputs\\n    ) internal view returns (bool) {\\n        if (publicInputs.length != 5) return false;\\n        uint256[5] memory fixedInputs;\\n        for (uint256 i = 0; i < 5; i++) fixedInputs[i] = publicInputs[i];\\n\\n        try IGroth16Verifier5(verifier).verifyProof(a, b, c, fixedInputs) returns (bool ok) {\\n            return ok;\\n        } catch {\\n            return false;\\n        }\\n    }\\n\\n    /// @dev Verify a proof against a 6-public-input verifier (claim).\\n    function _verify6(\\n        address verifier,\\n        uint256[2] calldata a,\\n        uint256[2][2] calldata b,\\n        uint256[2] calldata c,\\n        uint256[] calldata publicInputs\\n    ) internal view returns (bool) {\\n        if (publicInputs.length != 6) return false;\\n        uint256[6] memory fixedInputs;\\n        for (uint256 i = 0; i < 6; i++) fixedInputs[i] = publicInputs[i];\\n\\n        try IGroth16Verifier6(verifier).verifyProof(a, b, c, fixedInputs) returns (bool ok) {\\n            return ok;\\n        } catch {\\n            return false;\\n        }\\n    }\\n\\n    /// @dev Verify a proof against a 2-public-input verifier (ticket).\\n    function _verify2(\\n        address verifier,\\n        uint256[2] calldata a,\\n        uint256[2][2] calldata b,\\n        uint256[2] calldata c,\\n        uint256[] calldata publicInputs\\n    ) internal view returns (bool) {\\n        if (publicInputs.length != 2) return false;\\n        uint256[2] memory fixedInputs = [publicInputs[0], publicInputs[1]];\\n\\n        try IGroth16Verifier2(verifier).verifyProof(a, b, c, fixedInputs) returns (bool ok) {\\n            return ok;\\n        } catch {\\n            return false;\\n        }\\n    }\\n\\n    // --- View functions ---\\n\\n    /// @inheritdoc ILottery\\n    function getCurrentRound() external view override returns (uint256) {\\n        return currentRound;\\n    }\\n\\n    /// @inheritdoc ILottery\\n    function getRoundState(uint256 roundId) external view override returns (RoundState memory) {\\n        return rounds[roundId];\\n    }\\n\\n    /// @inheritdoc ILottery\\n    function getEntryFee() external view override returns (uint256) {\\n        return entryFee;\\n    }\\n\\n    /// @inheritdoc ILottery\\n    function getMaxTickets() external view override returns (uint32) {\\n        return maxTickets;\\n    }\\n\\n    function getDrawInterval() external view returns (uint32) {\\n        return drawInterval;\\n    }\\n\\n    function getCreator() external view returns (address) {\\n        return creator;\\n    }\\n\\n    function isRoundDrawable() external view returns (bool) {\\n        RoundState storage round = rounds[currentRound];\\n        if (round.status != RoundStatus.Open) return false;\\n        if (round.ticketCount == 0) return false;\\n\\n        bool timeElapsed = block.timestamp >= round.startedAt + drawInterval;\\n        bool maxReached = round.ticketCount >= maxTickets;\\n\\n        return timeElapsed || maxReached;\\n    }\\n\\n    receive() external payable {}\\n}\\n\",\"keccak256\":\"0x3193d9975c16102c41a165acccbcb33b18b4d0203454aac6b85c2f4c0851eeab\",\"license\":\"MIT\"},\"contracts/interfaces/IAgentRegistry.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface IAgentRegistry {\\n    struct AgentInfo {\\n        uint256 stake;\\n        uint256 reputation;\\n        uint64 registeredAt;\\n        bool isActive;\\n    }\\n\\n    event AgentRegistered(address indexed agent, uint256 stake);\\n    event AgentDeregistered(address indexed agent, uint256 stakeReturned);\\n    event AgentSlashed(address indexed agent, uint256 amount, bytes32 reason);\\n    event ReputationUpdated(address indexed agent, uint256 newReputation);\\n\\n    function registerAgent() external payable;\\n    function deregisterAgent() external;\\n    function slash(address agent, uint256 amount, bytes32 reason) external;\\n    function incrementReputation(address agent, uint256 amount) external;\\n    function isRegistered(address agent) external view returns (bool);\\n    function getAgentInfo(address agent) external view returns (AgentInfo memory);\\n    function getMinStake() external view returns (uint256);\\n    function getAgentCount() external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xcee3be3aec766e05ad344101c6b2a6f48305b014c2cdf860698461cf2fd3760c\",\"license\":\"MIT\"},\"contracts/interfaces/IDrawManager.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface IDrawManager {\\n    event DrawRequested(\\n        uint256 indexed requestId,\\n        address indexed lottery,\\n        uint256 roundId,\\n        uint32 ticketCount\\n    );\\n\\n    event DrawFulfilled(\\n        uint256 indexed requestId,\\n        address indexed lottery,\\n        uint256 roundId,\\n        uint256 randomWord,\\n        uint32 winnerIndex\\n    );\\n\\n    function requestDraw(\\n        address lottery,\\n        uint256 roundId,\\n        uint32 ticketCount\\n    ) external returns (uint256 requestId);\\n}\\n\",\"keccak256\":\"0x93e755a017abe1d82f70b4ed17471637e99138453a78097c8806c80fdf652065\",\"license\":\"MIT\"},\"contracts/interfaces/IGroth16Verifier.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\n/// @notice snarkjs-generated Groth16 verifiers expose a `verifyProof` whose last\\n///         argument is a FIXED-size public-signals array (its length = the number\\n///         of public inputs of that circuit). These typed interfaces match the\\n///         generated contracts so the Lottery can call them directly.\\n\\n/// Eligibility and claim circuits: 5 public inputs.\\ninterface IGroth16Verifier5 {\\n    function verifyProof(\\n        uint256[2] calldata a,\\n        uint256[2][2] calldata b,\\n        uint256[2] calldata c,\\n        uint256[5] calldata input\\n    ) external view returns (bool);\\n}\\n\\n/// Ticket circuit: 2 public inputs.\\ninterface IGroth16Verifier2 {\\n    function verifyProof(\\n        uint256[2] calldata a,\\n        uint256[2][2] calldata b,\\n        uint256[2] calldata c,\\n        uint256[2] calldata input\\n    ) external view returns (bool);\\n}\\n\\n/// Claim circuit: 6 public inputs (root, nullifierHash, lotteryId, roundId,\\n/// recipient, leafIndex).\\ninterface IGroth16Verifier6 {\\n    function verifyProof(\\n        uint256[2] calldata a,\\n        uint256[2][2] calldata b,\\n        uint256[2] calldata c,\\n        uint256[6] calldata input\\n    ) external view returns (bool);\\n}\\n\",\"keccak256\":\"0xd295ba64d39df2f0e80909a961a43f7e183889f74be1b97281be3996b58b5133\",\"license\":\"MIT\"},\"contracts/interfaces/ILottery.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface ILottery {\\n    enum RoundStatus {\\n        Open,\\n        Drawing,\\n        Claimable,\\n        Settled\\n    }\\n\\n    struct RoundState {\\n        uint256 prizePool;\\n        uint32 ticketCount;\\n        bytes32 merkleRoot;\\n        uint32 winnerIndex;\\n        bool claimed;\\n        RoundStatus status;\\n        uint64 startedAt;\\n        uint64 drawnAt;\\n    }\\n\\n    event TicketPurchased(\\n        uint256 indexed roundId,\\n        bytes32 indexed commitment,\\n        uint32 leafIndex\\n    );\\n\\n    event DrawRequested(uint256 indexed roundId, uint256 vrfRequestId);\\n\\n    event WinnerSelected(\\n        uint256 indexed roundId,\\n        uint32 winnerIndex,\\n        uint256 prizeAmount\\n    );\\n\\n    event PrizeClaimed(\\n        uint256 indexed roundId,\\n        bytes32 nullifierHash,\\n        address recipient,\\n        uint256 amount\\n    );\\n\\n    event RoundAdvanced(uint256 indexed newRoundId);\\n\\n    function enterWithProof(\\n        uint256[2] calldata proofA,\\n        uint256[2][2] calldata proofB,\\n        uint256[2] calldata proofC,\\n        uint256[] calldata eligibilityPublicInputs,\\n        uint256[2] calldata ticketProofA,\\n        uint256[2][2] calldata ticketProofB,\\n        uint256[2] calldata ticketProofC,\\n        uint256[] calldata ticketPublicInputs\\n    ) external payable;\\n\\n    function triggerDraw() external;\\n\\n    function claimPrize(\\n        uint256[2] calldata proofA,\\n        uint256[2][2] calldata proofB,\\n        uint256[2] calldata proofC,\\n        uint256[] calldata publicInputs\\n    ) external;\\n\\n    function settleDraw(uint256 roundId, uint32 winnerIndex) external;\\n\\n    function getCurrentRound() external view returns (uint256);\\n    function getRoundState(uint256 roundId) external view returns (RoundState memory);\\n    function getEntryFee() external view returns (uint256);\\n    function getMaxTickets() external view returns (uint32);\\n}\\n\",\"keccak256\":\"0xdd1b3013ba341e427af1809873fcc611d2ab3233499406c6f00989006009082b\",\"license\":\"MIT\"},\"contracts/interfaces/ILotteryFactory.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface ILotteryFactory {\\n    struct LotteryConfig {\\n        uint256 entryFee;\\n        uint32 maxTickets;\\n        uint32 drawInterval;\\n        uint32 maxRounds;    // 0 = infinite\\n        uint16 creatorFeeRate; // basis points (e.g., 300 = 3%)\\n    }\\n\\n    event LotteryCreated(\\n        address indexed lottery,\\n        address indexed creator,\\n        uint256 entryFee,\\n        uint32 maxTickets,\\n        uint32 drawInterval\\n    );\\n\\n    event ProtocolFeeRateUpdated(uint16 newRate);\\n    event ImplementationUpdated(address newImplementation);\\n\\n    function createLottery(LotteryConfig calldata config) external returns (address);\\n    function getLotteries(uint256 offset, uint256 limit) external view returns (address[] memory);\\n    function getLotteryCount() external view returns (uint256);\\n    function isLottery(address addr) external view returns (bool);\\n    function getProtocolFeeRate() external view returns (uint16);\\n}\\n\",\"keccak256\":\"0xe867e0d3c869628e80229596ef5fc31e1dac8dd8946704d22656f626ab747b6e\",\"license\":\"MIT\"},\"contracts/interfaces/IPoseidonT3.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\n/// @title IPoseidonT3\\n/// @notice Interface for a Poseidon(2) hasher over BN254.\\n/// @dev Implemented by the contract generated from circomlib's\\n///      `poseidonContract.createCode(2)` \\u2014 its output matches the Poseidon\\n///      used inside the Circom circuits exactly, so on-chain Merkle roots agree\\n///      with proofs. Deployed once and shared by all lotteries.\\ninterface IPoseidonT3 {\\n    function poseidon(uint256[2] calldata input) external view returns (uint256);\\n}\\n\",\"keccak256\":\"0x7d5fbe38fdf88d3ae58cf79181b172135c933deac2ba989e512bd1384a9dcf96\",\"license\":\"MIT\"},\"contracts/interfaces/IPrizePool.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface IPrizePool {\\n    event Deposited(address indexed lottery, uint256 roundId, uint256 amount);\\n    event PrizePaid(address indexed lottery, uint256 roundId, address recipient, uint256 amount);\\n    event FeesPaid(address indexed lottery, uint256 roundId, address creator, uint256 creatorFee, uint256 protocolFee);\\n    event UnclaimedRedistributed(address indexed lottery, uint256 fromRound, uint256 toRound, uint256 amount);\\n\\n    function deposit(uint256 roundId) external payable;\\n    function markClaimable(uint256 roundId) external;\\n    function payPrize(uint256 roundId, address recipient) external;\\n    function redistributeUnclaimed(uint256 fromRound, uint256 toRound) external;\\n    function getBalance(address lottery, uint256 roundId) external view returns (uint256);\\n    function getPrizeAmount(address lottery, uint256 roundId) external view returns (uint256);\\n}\\n\",\"keccak256\":\"0x3ee236cbb594aa13fdf0b772ccfd7ba8282a51622a27096bea458b59b8a4bac2\",\"license\":\"MIT\"},\"contracts/libraries/MerkleTreeWithHistory.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\nimport {IPoseidonT3} from \\\"../interfaces/IPoseidonT3.sol\\\";\\n\\n/// @title MerkleTreeWithHistory\\n/// @notice Incremental Merkle tree with Poseidon hashing and root history.\\n/// @dev Based on the Tornado Cash / Semaphore incremental Merkle tree pattern.\\n///      Hashing is delegated to an external Poseidon(2) contract whose output\\n///      matches the Circom circuits, so proofs verify against on-chain roots.\\n///\\n///      Clone-safe: EIP-1167 clones do not run this constructor, so all tree\\n///      state is initialized in `_initializeTree()`, which the inheriting\\n///      contract calls from its `initialize()`.\\nabstract contract MerkleTreeWithHistory {\\n    uint32 public constant TREE_DEPTH = 20;\\n    uint32 public constant ROOT_HISTORY_SIZE = 30;\\n    uint256 public constant ZERO_VALUE = 0;\\n\\n    IPoseidonT3 public hasher;\\n\\n    uint32 public nextLeafIndex;\\n    uint256[ROOT_HISTORY_SIZE] public roots;\\n    uint32 public currentRootIndex;\\n\\n    // filledSubtrees[i] holds the latest hash on the left edge at level i\\n    uint256[TREE_DEPTH] public filledSubtrees;\\n    // zeros[i] holds the zero-subtree hash at level i\\n    uint256[TREE_DEPTH] public zeros;\\n    // root of a fully-empty tree (used to reset each round cheaply)\\n    uint256 public initialRoot;\\n\\n    error MerkleTreeFull();\\n    error HasherNotSet();\\n\\n    function _setHasher(address _hasher) internal {\\n        hasher = IPoseidonT3(_hasher);\\n    }\\n\\n    function _hashLeftRight(uint256 left, uint256 right) internal view returns (uint256) {\\n        return hasher.poseidon([left, right]);\\n    }\\n\\n    /// @notice Precompute the zero hashes and the empty-tree root. Call once,\\n    ///         after the hasher is set, from the inheriting contract's init.\\n    function _initializeTree() internal {\\n        if (address(hasher) == address(0)) revert HasherNotSet();\\n\\n        uint256 currentZero = ZERO_VALUE;\\n        for (uint32 i = 0; i < TREE_DEPTH; i++) {\\n            zeros[i] = currentZero;\\n            filledSubtrees[i] = currentZero;\\n            currentZero = _hashLeftRight(currentZero, currentZero);\\n        }\\n\\n        initialRoot = currentZero;\\n        roots[0] = currentZero;\\n        currentRootIndex = 0;\\n        nextLeafIndex = 0;\\n    }\\n\\n    /// @notice Reset the tree to empty for a new round. Cheap \\u2014 reuses the\\n    ///         precomputed zeros, no hashing.\\n    function _resetTree() internal {\\n        for (uint32 i = 0; i < TREE_DEPTH; i++) {\\n            filledSubtrees[i] = zeros[i];\\n        }\\n        nextLeafIndex = 0;\\n        currentRootIndex = 0;\\n        roots[0] = initialRoot;\\n    }\\n\\n    /// @notice Insert a leaf into the tree\\n    /// @param leaf The leaf value to insert\\n    /// @return index The index of the inserted leaf\\n    function _insert(uint256 leaf) internal returns (uint32 index) {\\n        uint32 _nextLeafIndex = nextLeafIndex;\\n        if (_nextLeafIndex >= uint32(2) ** TREE_DEPTH) revert MerkleTreeFull();\\n\\n        uint32 currentIndex = _nextLeafIndex;\\n        uint256 currentHash = leaf;\\n        uint256 left;\\n        uint256 right;\\n\\n        for (uint32 i = 0; i < TREE_DEPTH; i++) {\\n            if (currentIndex % 2 == 0) {\\n                left = currentHash;\\n                right = zeros[i];\\n                filledSubtrees[i] = currentHash;\\n            } else {\\n                left = filledSubtrees[i];\\n                right = currentHash;\\n            }\\n\\n            currentHash = _hashLeftRight(left, right);\\n            currentIndex /= 2;\\n        }\\n\\n        uint32 newRootIndex = (currentRootIndex + 1) % ROOT_HISTORY_SIZE;\\n        currentRootIndex = newRootIndex;\\n        roots[newRootIndex] = currentHash;\\n        nextLeafIndex = _nextLeafIndex + 1;\\n\\n        return _nextLeafIndex;\\n    }\\n\\n    /// @notice Check if a root exists in the history\\n    function isKnownRoot(uint256 root) public view returns (bool) {\\n        if (root == 0) return false;\\n\\n        uint32 i = currentRootIndex;\\n        do {\\n            if (roots[i] == root) return true;\\n            if (i == 0) {\\n                i = ROOT_HISTORY_SIZE - 1;\\n            } else {\\n                i--;\\n            }\\n        } while (i != currentRootIndex);\\n\\n        return false;\\n    }\\n\\n    /// @notice Get the current Merkle root\\n    function getLastRoot() public view returns (uint256) {\\n        return roots[currentRootIndex];\\n    }\\n}\\n\",\"keccak256\":\"0x6d1e90055a20b7a4b7f08fca5c8bf2f464c4e5743e17fec4cb198ba9c1d3a84e\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608080604052346100475760017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055600160ff196058541617605855611de5908161004d8239f35b600080fdfe61010080604052600436101561001e575b50361561001c57600080fd5b005b600060c05260c0513560e01c90816302d05d3f146115e957508063072ea61c146102c25780630be4f422146115c05780630d1cfcae146115965780630ee2cb101461156c5780631faf969b1461154457806340782b8c146115285780634e3d9002146114ec578063533b062a146112bb5780635f64c5251461127f57806362c95aa114610c35578063719ce73e146112555780637ecf686d14611222578063825d2ab7146110825780638a17355c14610d425780638a19c8bc14610bec5780638c65c81f14610ca957806390eeb02b14610c8457806394200c1614610b30578063948231fb14610c5a5780639b89470314610c35578063a14ea2b814610c0b578063a32bf59714610bec578063a6232a9314610bc4578063a93539d014610b9a578063b2942d2a14610b7b578063ba70f75714610b57578063bc06c4cc14610b30578063c076cd4014610a12578063c2b40ae4146109e6578063c45a0155146109bc578063c642e7bf14610864578063cd87a3b414610847578063d22ffc7614610331578063df3942931461030b578063e12e19a0146102e1578063e586a4f0146102c2578063e829558814610296578063ec73295914610278578063ed33639f1461024d578063f1650536146102305763f178e47c146101ff5738610010565b3461022a57602036600319011261022a57600435601481101561022a57602090810154604051908152f35b60c05180fd5b3461022a5760c05136600319011261022a57602060405160148152f35b3461022a5760c05136600319011261022a5760c051546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602060405160c0518152f35b3461022a57602036600319011261022a57600435601481101561022a5760209060340154604051908152f35b3461022a5760c05136600319011261022a576020604954604051908152f35b3461022a5760c05136600319011261022a576051546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602061ffff604a5460601c16604051908152f35b61024036600319011261022a573660441161022a573660c41161022a5761010436811161022a57356001600160401b039081811161022a57610377903690600401611624565b91366101641161022a57366101e41161022a5761022436811161022a573590811161022a576103aa903690600401611624565b90916103b46118b8565b604c5460405163c3c5a54760e01b81523360048201526024956020926001600160a01b039290849082908a90829087165afa90811561069c5760c0519161081a575b50156108085760495434036107f657605354938460c0515260548452604060c051209160ff600384015460281c1660048110156107df576107cd576001978884019263ffffffff928385541684604a541611156107bb5761045c81838960505416611b35565b1561078057600410156107a457608001358760c0515260578752604060c051208160c05152875260ff604060c051205416610792578760c0515260578752604060c051209060c051528652604060c051209760ff19988a8a8254161790556104c981838860515416611c3d565b1561078057156107695735968660c0515260568652604060c051208860c05152865260ff604060c051205416610757578660c0515260568652604060c051208860c05152865288604060c05120918254161790558060c0515460a01c1693621000008510156107455760c05188919086908b5b6106c0575b5050601f5491601e84610555818616611d08565b160663ffffffff199384868316911617601f55601e8110156106a9578b015561057d86611d08565b60c051805463ffffffff60a01b191660a09290921b63ffffffff60a01b16919091179055604e5416803b1561022a576040519063b6b55f2560e01b8252886004830152818c8160c0519334905af1801561069c57610686575b5082549180831681811461066f578a01169116179055805434810180911161065a5781557fe563efe5ba64e2275583b2b29291dff841239d89300b6180f7f5a6c2e525eb739291906002610628611887565b910155604051908152a37f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005560c05180f35b87634e487b7160e01b60005260116004526000fd5b8b634e487b7160e01b60c05152601160045260c051fd5b61068f90611781565b60c05161022a578a6105d6565b6040513d60c051823e3d90fd5b8c634e487b7160e01b60c05152603260045260c051fd5b60149391939182868316101561073e57848d1661072157809282101561070a578c637fffffff6106fc8c83968a95878060340154930155611d1d565b96821c16920116909161053c565b8d634e487b7160e01b60c05152603260045260c051fd5b918110156106a957848c637fffffff6106fc8295858e0154611d1d565b9350610541565b6040516377ae67b360e11b8152600490fd5b604051635be00f0f60e11b8152600490fd5b89634e487b7160e01b60c05152603260045260c051fd5b6040516309bde33960e01b8152600490fd5b604051631c3948c360e21b8152600490fd5b8a634e487b7160e01b60c05152603260045260c051fd5b6040516304039ccf60e21b8152600490fd5b60405163402bc00760e01b8152600490fd5b89634e487b7160e01b60c05152602160045260c051fd5b604051630440523d60e41b8152600490fd5b604051637b5b95df60e11b8152600490fd5b61083a9150843d8611610840575b61083281836117e1565b8101906118a0565b886103f6565b503d610828565b3461022a5760c05136600319011261022a576020604051601e8152f35b3461022a5760208060031936011261022a57604051610882816117aa565b60c051815260c0518282015260c051604082015260c051606082015260c051608082015260c05160a082015260c05160c082015260e060c05191015260043560c0515260548152604060c05120604051906108dc826117aa565b8054825263ffffffff806001830154169380840194855260036002840154936040860194855201549160608501958184168752608086019160ff85851c161515835260ff8560281c169260a088019160048510156109a4576101009960e0988a9783610994978b9988526001600160401b03809d8c8260c0819f019d60301c168d52019c60701c168c52604051809e5190525116908c01525160408b01525116606089015251151560808801525160a0870190611667565b511660c0840152511660e0820152f35b634e487b7160e01b60c051526021600452602460c051fd5b3461022a5760c05136600319011261022a57604f546040516001600160a01b039091168152602090f35b3461022a57602036600319011261022a57600435601e81101561022a5760209060010154604051908152f35b3461022a57604036600319011261022a57600435610a2e611654565b604d546001600160a01b039081163303610b1e578260c051526054602052604060c0512090600382016502000000000063ffffffff82549516946001600160401b0360701b4260701b169075ffffffffffffffff0000000000000000ff00ffffffff1916861717179055604e5416803b1561022a5760405190637b69115960e11b82528460048301528160248160c0519360c051905af1801561069c57610b08575b507f8c17f0de235a3019f52462670805916bb9c425c287b490bd27f171e25bd803f5916040915482519182526020820152a260c05180f35b610b1190611781565b60c05161022a5783610ad0565b604051639655cabb60e01b8152600490fd5b3461022a5760c05136600319011261022a576020604a5463ffffffff60405191831c168152f35b3461022a5760c05136600319011261022a576020610b73611887565b604051908152f35b3461022a5760c05136600319011261022a576020604854604051908152f35b3461022a5760c05136600319011261022a576052546040516001600160a01b039091168152602090f35b3461022a57602036600319011261022a576020610be2600435611802565b6040519015158152f35b3461022a5760c05136600319011261022a576020605354604051908152f35b3461022a5760c05136600319011261022a576050546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602063ffffffff604a5416604051908152f35b3461022a5760c05136600319011261022a57604d546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602063ffffffff601f5416604051908152f35b3461022a57602036600319011261022a5760043560c051526054602052610100604060c0512080549063ffffffff90816001820154169160036002830154920154916001600160401b0393604051958652602086015260408501528116606084015260ff8160201c1615156080840152610d2c60a0840160ff8360281c16611667565b818160301c1660c084015260701c1660e0820152f35b3461022a576101c036600319011261022a57610d5c611654565b63ffffffff604435166044350361107d5763ffffffff606435166064350361107d5761ffff608435166084350361022a576001600160a01b0360e081905260a435908116810361107d5760c43560e0518116810361107d5760e43560e0518116810361107d576101043560e0518116810361107d57610124359160e0518316830361107d57610144359360e0518516850361107d57610164359560e0518716870361107d57610184359760e0518916890361107d576101a43560a05260e05160a0511660a0510361107d5760585460ff811661106c5760019060ff191617605855600435604955604a5463ffffffff61ffff60601b60843560601b169216906dffffffffffffffffffffffffffff19161767ffffffff0000000060443560201b16176bffffffff000000000000000060643560401b161717604a556bffffffffffffffffffffffff60a01b60805260e05116608051604b541617604b5560e05116608051604c541617604c5560e05116608051604d541617604d5560e05116608051604e541617604e5560e05116608051604f541617604f5560e05116608051605054161760505560e05116608051605154161760515560e05116608051605254161760525560c0515460e05160a0511660805182161760c0515560e05160a051169060c05116171561105a5760c051805b60148063ffffffff84161015610fa357821015610f8b576001610f828263ffffffff93856034015580856020015580611d1d565b92011690610f4e565b634e487b7160e01b60c051526032600452602460c051fd5b5060488190556001908155601f805463ffffffff1916905560c08051805463ffffffff60a01b19168155605383905582905260546020818152825160408082206003908101805465ff000000000019169055959091529190529051200180546dffffffffffffffff00000000000019164260301b6dffffffffffffffff0000000000001617905560017f023811fd72d20a3eb734785eed809172b5c9c24019d493039c70ef9c276d4d9760c05160c051a260c05180f35b6040516394e2873f60e01b8152600490fd5b60405162dc149f60e41b8152600490fd5b600080fd5b3461022a5760c05136600319011261022a576053548060c05152602060548152604060c0512090600382019182549260ff8460281c1660048110156109a4576107cd5763ffffffff9384600184015416948515611210576001600160401b0390604a54916110f98284891c16828660301c1661168a565b1642109182611204575b50506111f25765ff00000000001916650100000000001790556002611126611887565b910155604d5460405163017f076f60e41b815230600482015260248101859052604481019390935260c051829184916064918391906001600160a01b03165af1801561069c5760c051906111a5575b7fa87d18931b669b94d135986745ba30491257a77c255767cdd6796f697c1172f19250604051908152a260c05180f35b508082813d83116111eb575b6111bb81836117e1565b8101031261107d577fa87d18931b669b94d135986745ba30491257a77c255767cdd6796f697c1172f19151611175565b503d6111b1565b604051630313ce3760e41b8152600490fd5b16861090508780611103565b6040516366f3ef9b60e01b8152600490fd5b3461022a57602036600319011261022a5760043560c051526055602052602060ff604060c0512054166040519015158152f35b3461022a5760c05136600319011261022a57604e546040516001600160a01b039091168152602090f35b3461022a5761128d3661160e565b9060c051526056602052604060c051209060c05152602052602060ff604060c0512054166040519015158152f35b3461022a5761012036600319011261022a573660441161022a573660c41161022a5761010436811161022a57356001600160401b03811161022a57611304903690600401611624565b9061130d6118b8565b8160031015610f8b576060810135918260c051526054602052604060c05120906003820192835460ff8160281c1660048110156109a4576002036114da578260051015610f8b5763ffffffff1660a0820135036114c8578160011015610f8b576020810135918260c05152605560205260ff604060c0512054166114b6578015610f8b5761139b8235611802565b156107805760018060a01b03946113b782848860525416611924565b15610780578360c051526055602052604060c05120600160ff198254161790556503010000000065ffff000000001982541617905560041015610f8b576080849101351692604e541692833b1561022a5760405193631e86c19160e11b85528560048601528160248601528460448160c0519360c051905af192831561069c577fefd8c87ce9bf2c923a4ee1df7912cb71456c0c53a6e06cadb104b93aa2909f72946060946114a7575b50549060405192835260208301526040820152a261147d611a33565b60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005560c05180f35b6114b090611781565b86611461565b604051636569570160e11b8152600490fd5b6040516330c6392160e11b8152600490fd5b6040516389c4725560e01b8152600490fd5b3461022a576114fa3661160e565b9060c051526057602052604060c051209060c05152602052602060ff604060c0512054166040519015158152f35b3461022a5760c05136600319011261022a576020610be26116bb565b3461022a5760c05136600319011261022a57602063ffffffff604a5460401c16604051908152f35b3461022a5760c05136600319011261022a57604b546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57604c546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602063ffffffff60c0515460a01c16604051908152f35b3461022a5760c05136600319011261022a57604b546001600160a01b03168152602090f35b604090600319011261107d576004359060243590565b9181601f8401121561107d578235916001600160401b03831161107d576020808501948460051b01011161107d57565b6024359063ffffffff8216820361107d57565b9060048210156116745752565b634e487b7160e01b600052602160045260246000fd5b9190916001600160401b03808094169116019182116116a557565b634e487b7160e01b600052601160045260246000fd5b60535460009081526054602052604081209060038201549160ff8360281c16600481101561174757611741576001015463ffffffff90811691821561173a57506001600160401b0361171b604a549482848760201c169160301c1661168a565b1642109283159361172d575b50505090565b1611159050388080611727565b9250505090565b50905090565b634e487b7160e01b83526021600452602483fd5b919081101561176b5760051b0190565b634e487b7160e01b600052603260045260246000fd5b6001600160401b03811161179457604052565b634e487b7160e01b600052604160045260246000fd5b61010081019081106001600160401b0382111761179457604052565b604081019081106001600160401b0382111761179457604052565b90601f801991011681019081106001600160401b0382111761179457604052565b80156118815763ffffffff9182601f5416918260015b1561186e575b600093601e81101561185a578281600101541461184f578516806118455750601d93611818565b6000190193611818565b505050915050600190565b634e487b7160e01b85526032600452602485fd5b808585160361181e575050915050600090565b50600090565b63ffffffff601f5416601e81101561176b576001015490565b9081602091031261107d5751801515810361107d5790565b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0060028154146118e85760029055565b604051633ee5aeb560e01b8152600490fd5b60446000915b6002831061190d57505050565b600190604081818581943701920192019190611900565b9060069060068403611a2a576040519360c085018581106001600160401b038211176117945760409593955260c036843760005b858110611a085750505060405192839163f398789b60e01b83526040600480850137611986604484016118fa565b604060c480850137600061010484015b8382106119ee57506020946101c493508492506001600160a01b031690505afa600091816119cd575b506119ca5750600090565b90565b6119e791925060203d6020116108405761083281836117e1565b90386119bf565b825181528694506020928301926001929092019101611996565b80611a19600192848699979961175b565b358160051b88015201949294611958565b50505050600090565b63ffffffff80604a5460401c168015159081611b28575b50611b255760535490600190600183018093116116a55760538390556000838152605460209081526040822060030180546dffffffffffffffffff000000000019164260301b6dffffffffffffffff0000000000001617905590929083825b611af9575b5050825463ffffffff60a01b191683555050601f805463ffffffff191690556048546001557f023811fd72d20a3eb734785eed809172b5c9c24019d493039c70ef9c276d4d979080a2565b6014808583161015611b1f5781101561185a576034810154828201558201831682611aa9565b50611aae565b50565b9050605354101538611a4a565b9060059060058403611a2a576040519360a085018581106001600160401b038211176117945760409593955260a036843760005b858110611bf4575050506040519283916334baeab960e01b83526040600480850137611b97604484016118fa565b604060c480850137600061010484015b838210611bda57506020946101a493508492506001600160a01b031690505afa600091816119cd57506119ca5750600090565b825181528694506020928301926001929092019101611ba7565b80611c05600192848699979961175b565b3581861b88015201949294611b69565b6000915b60028310611c2657505050565b600190825181526020809101920192019190611c19565b9060029260028103611a2a57604090815192611c58846117c6565b811561176b57803584526001916001101561176b57602090810135908401528151637ae4eb4f60e11b81529485939291908261012460048701376000610164604487015b838310611ce5575050505050602093611cc76101449385936101e460c4860137610104840190611c15565b6001600160a01b03165afa600091816119cd57506119ca5750600090565b858097985081818488999498959697983701920192019091889695949392611c9c565b90600163ffffffff809316019182116116a557565b611d60604460209260018060a01b03600054169460405191611d3e836117c6565b8252848201526040516314d2f97b60e11b815294859384926004840190611c15565b5afa908115611da357600091611d74575090565b90506020813d602011611d9b575b81611d8f602093836117e1565b8101031261107d575190565b3d9150611d82565b6040513d6000823e3d90fdfea26469706673582212204bd9e1e6d6888d1e49a4a946056d4028a7dc29ac12169aeba52d4126c43d656c64736f6c63430008180033",
+  "deployedBytecode": "0x61010080604052600436101561001e575b50361561001c57600080fd5b005b600060c05260c0513560e01c90816302d05d3f146115e957508063072ea61c146102c25780630be4f422146115c05780630d1cfcae146115965780630ee2cb101461156c5780631faf969b1461154457806340782b8c146115285780634e3d9002146114ec578063533b062a146112bb5780635f64c5251461127f57806362c95aa114610c35578063719ce73e146112555780637ecf686d14611222578063825d2ab7146110825780638a17355c14610d425780638a19c8bc14610bec5780638c65c81f14610ca957806390eeb02b14610c8457806394200c1614610b30578063948231fb14610c5a5780639b89470314610c35578063a14ea2b814610c0b578063a32bf59714610bec578063a6232a9314610bc4578063a93539d014610b9a578063b2942d2a14610b7b578063ba70f75714610b57578063bc06c4cc14610b30578063c076cd4014610a12578063c2b40ae4146109e6578063c45a0155146109bc578063c642e7bf14610864578063cd87a3b414610847578063d22ffc7614610331578063df3942931461030b578063e12e19a0146102e1578063e586a4f0146102c2578063e829558814610296578063ec73295914610278578063ed33639f1461024d578063f1650536146102305763f178e47c146101ff5738610010565b3461022a57602036600319011261022a57600435601481101561022a57602090810154604051908152f35b60c05180fd5b3461022a5760c05136600319011261022a57602060405160148152f35b3461022a5760c05136600319011261022a5760c051546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602060405160c0518152f35b3461022a57602036600319011261022a57600435601481101561022a5760209060340154604051908152f35b3461022a5760c05136600319011261022a576020604954604051908152f35b3461022a5760c05136600319011261022a576051546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602061ffff604a5460601c16604051908152f35b61024036600319011261022a573660441161022a573660c41161022a5761010436811161022a57356001600160401b039081811161022a57610377903690600401611624565b91366101641161022a57366101e41161022a5761022436811161022a573590811161022a576103aa903690600401611624565b90916103b46118b8565b604c5460405163c3c5a54760e01b81523360048201526024956020926001600160a01b039290849082908a90829087165afa90811561069c5760c0519161081a575b50156108085760495434036107f657605354938460c0515260548452604060c051209160ff600384015460281c1660048110156107df576107cd576001978884019263ffffffff928385541684604a541611156107bb5761045c81838960505416611b35565b1561078057600410156107a457608001358760c0515260578752604060c051208160c05152875260ff604060c051205416610792578760c0515260578752604060c051209060c051528652604060c051209760ff19988a8a8254161790556104c981838860515416611c3d565b1561078057156107695735968660c0515260568652604060c051208860c05152865260ff604060c051205416610757578660c0515260568652604060c051208860c05152865288604060c05120918254161790558060c0515460a01c1693621000008510156107455760c05188919086908b5b6106c0575b5050601f5491601e84610555818616611d08565b160663ffffffff199384868316911617601f55601e8110156106a9578b015561057d86611d08565b60c051805463ffffffff60a01b191660a09290921b63ffffffff60a01b16919091179055604e5416803b1561022a576040519063b6b55f2560e01b8252886004830152818c8160c0519334905af1801561069c57610686575b5082549180831681811461066f578a01169116179055805434810180911161065a5781557fe563efe5ba64e2275583b2b29291dff841239d89300b6180f7f5a6c2e525eb739291906002610628611887565b910155604051908152a37f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005560c05180f35b87634e487b7160e01b60005260116004526000fd5b8b634e487b7160e01b60c05152601160045260c051fd5b61068f90611781565b60c05161022a578a6105d6565b6040513d60c051823e3d90fd5b8c634e487b7160e01b60c05152603260045260c051fd5b60149391939182868316101561073e57848d1661072157809282101561070a578c637fffffff6106fc8c83968a95878060340154930155611d1d565b96821c16920116909161053c565b8d634e487b7160e01b60c05152603260045260c051fd5b918110156106a957848c637fffffff6106fc8295858e0154611d1d565b9350610541565b6040516377ae67b360e11b8152600490fd5b604051635be00f0f60e11b8152600490fd5b89634e487b7160e01b60c05152603260045260c051fd5b6040516309bde33960e01b8152600490fd5b604051631c3948c360e21b8152600490fd5b8a634e487b7160e01b60c05152603260045260c051fd5b6040516304039ccf60e21b8152600490fd5b60405163402bc00760e01b8152600490fd5b89634e487b7160e01b60c05152602160045260c051fd5b604051630440523d60e41b8152600490fd5b604051637b5b95df60e11b8152600490fd5b61083a9150843d8611610840575b61083281836117e1565b8101906118a0565b886103f6565b503d610828565b3461022a5760c05136600319011261022a576020604051601e8152f35b3461022a5760208060031936011261022a57604051610882816117aa565b60c051815260c0518282015260c051604082015260c051606082015260c051608082015260c05160a082015260c05160c082015260e060c05191015260043560c0515260548152604060c05120604051906108dc826117aa565b8054825263ffffffff806001830154169380840194855260036002840154936040860194855201549160608501958184168752608086019160ff85851c161515835260ff8560281c169260a088019160048510156109a4576101009960e0988a9783610994978b9988526001600160401b03809d8c8260c0819f019d60301c168d52019c60701c168c52604051809e5190525116908c01525160408b01525116606089015251151560808801525160a0870190611667565b511660c0840152511660e0820152f35b634e487b7160e01b60c051526021600452602460c051fd5b3461022a5760c05136600319011261022a57604f546040516001600160a01b039091168152602090f35b3461022a57602036600319011261022a57600435601e81101561022a5760209060010154604051908152f35b3461022a57604036600319011261022a57600435610a2e611654565b604d546001600160a01b039081163303610b1e578260c051526054602052604060c0512090600382016502000000000063ffffffff82549516946001600160401b0360701b4260701b169075ffffffffffffffff0000000000000000ff00ffffffff1916861717179055604e5416803b1561022a5760405190637b69115960e11b82528460048301528160248160c0519360c051905af1801561069c57610b08575b507f8c17f0de235a3019f52462670805916bb9c425c287b490bd27f171e25bd803f5916040915482519182526020820152a260c05180f35b610b1190611781565b60c05161022a5783610ad0565b604051639655cabb60e01b8152600490fd5b3461022a5760c05136600319011261022a576020604a5463ffffffff60405191831c168152f35b3461022a5760c05136600319011261022a576020610b73611887565b604051908152f35b3461022a5760c05136600319011261022a576020604854604051908152f35b3461022a5760c05136600319011261022a576052546040516001600160a01b039091168152602090f35b3461022a57602036600319011261022a576020610be2600435611802565b6040519015158152f35b3461022a5760c05136600319011261022a576020605354604051908152f35b3461022a5760c05136600319011261022a576050546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602063ffffffff604a5416604051908152f35b3461022a5760c05136600319011261022a57604d546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602063ffffffff601f5416604051908152f35b3461022a57602036600319011261022a5760043560c051526054602052610100604060c0512080549063ffffffff90816001820154169160036002830154920154916001600160401b0393604051958652602086015260408501528116606084015260ff8160201c1615156080840152610d2c60a0840160ff8360281c16611667565b818160301c1660c084015260701c1660e0820152f35b3461022a576101c036600319011261022a57610d5c611654565b63ffffffff604435166044350361107d5763ffffffff606435166064350361107d5761ffff608435166084350361022a576001600160a01b0360e081905260a435908116810361107d5760c43560e0518116810361107d5760e43560e0518116810361107d576101043560e0518116810361107d57610124359160e0518316830361107d57610144359360e0518516850361107d57610164359560e0518716870361107d57610184359760e0518916890361107d576101a43560a05260e05160a0511660a0510361107d5760585460ff811661106c5760019060ff191617605855600435604955604a5463ffffffff61ffff60601b60843560601b169216906dffffffffffffffffffffffffffff19161767ffffffff0000000060443560201b16176bffffffff000000000000000060643560401b161717604a556bffffffffffffffffffffffff60a01b60805260e05116608051604b541617604b5560e05116608051604c541617604c5560e05116608051604d541617604d5560e05116608051604e541617604e5560e05116608051604f541617604f5560e05116608051605054161760505560e05116608051605154161760515560e05116608051605254161760525560c0515460e05160a0511660805182161760c0515560e05160a051169060c05116171561105a5760c051805b60148063ffffffff84161015610fa357821015610f8b576001610f828263ffffffff93856034015580856020015580611d1d565b92011690610f4e565b634e487b7160e01b60c051526032600452602460c051fd5b5060488190556001908155601f805463ffffffff1916905560c08051805463ffffffff60a01b19168155605383905582905260546020818152825160408082206003908101805465ff000000000019169055959091529190529051200180546dffffffffffffffff00000000000019164260301b6dffffffffffffffff0000000000001617905560017f023811fd72d20a3eb734785eed809172b5c9c24019d493039c70ef9c276d4d9760c05160c051a260c05180f35b6040516394e2873f60e01b8152600490fd5b60405162dc149f60e41b8152600490fd5b600080fd5b3461022a5760c05136600319011261022a576053548060c05152602060548152604060c0512090600382019182549260ff8460281c1660048110156109a4576107cd5763ffffffff9384600184015416948515611210576001600160401b0390604a54916110f98284891c16828660301c1661168a565b1642109182611204575b50506111f25765ff00000000001916650100000000001790556002611126611887565b910155604d5460405163017f076f60e41b815230600482015260248101859052604481019390935260c051829184916064918391906001600160a01b03165af1801561069c5760c051906111a5575b7fa87d18931b669b94d135986745ba30491257a77c255767cdd6796f697c1172f19250604051908152a260c05180f35b508082813d83116111eb575b6111bb81836117e1565b8101031261107d577fa87d18931b669b94d135986745ba30491257a77c255767cdd6796f697c1172f19151611175565b503d6111b1565b604051630313ce3760e41b8152600490fd5b16861090508780611103565b6040516366f3ef9b60e01b8152600490fd5b3461022a57602036600319011261022a5760043560c051526055602052602060ff604060c0512054166040519015158152f35b3461022a5760c05136600319011261022a57604e546040516001600160a01b039091168152602090f35b3461022a5761128d3661160e565b9060c051526056602052604060c051209060c05152602052602060ff604060c0512054166040519015158152f35b3461022a5761012036600319011261022a573660441161022a573660c41161022a5761010436811161022a57356001600160401b03811161022a57611304903690600401611624565b9061130d6118b8565b8160031015610f8b576060810135918260c051526054602052604060c05120906003820192835460ff8160281c1660048110156109a4576002036114da578260051015610f8b5763ffffffff1660a0820135036114c8578160011015610f8b576020810135918260c05152605560205260ff604060c0512054166114b6578015610f8b5761139b8235611802565b156107805760018060a01b03946113b782848860525416611924565b15610780578360c051526055602052604060c05120600160ff198254161790556503010000000065ffff000000001982541617905560041015610f8b576080849101351692604e541692833b1561022a5760405193631e86c19160e11b85528560048601528160248601528460448160c0519360c051905af192831561069c577fefd8c87ce9bf2c923a4ee1df7912cb71456c0c53a6e06cadb104b93aa2909f72946060946114a7575b50549060405192835260208301526040820152a261147d611a33565b60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005560c05180f35b6114b090611781565b86611461565b604051636569570160e11b8152600490fd5b6040516330c6392160e11b8152600490fd5b6040516389c4725560e01b8152600490fd5b3461022a576114fa3661160e565b9060c051526057602052604060c051209060c05152602052602060ff604060c0512054166040519015158152f35b3461022a5760c05136600319011261022a576020610be26116bb565b3461022a5760c05136600319011261022a57602063ffffffff604a5460401c16604051908152f35b3461022a5760c05136600319011261022a57604b546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57604c546040516001600160a01b039091168152602090f35b3461022a5760c05136600319011261022a57602063ffffffff60c0515460a01c16604051908152f35b3461022a5760c05136600319011261022a57604b546001600160a01b03168152602090f35b604090600319011261107d576004359060243590565b9181601f8401121561107d578235916001600160401b03831161107d576020808501948460051b01011161107d57565b6024359063ffffffff8216820361107d57565b9060048210156116745752565b634e487b7160e01b600052602160045260246000fd5b9190916001600160401b03808094169116019182116116a557565b634e487b7160e01b600052601160045260246000fd5b60535460009081526054602052604081209060038201549160ff8360281c16600481101561174757611741576001015463ffffffff90811691821561173a57506001600160401b0361171b604a549482848760201c169160301c1661168a565b1642109283159361172d575b50505090565b1611159050388080611727565b9250505090565b50905090565b634e487b7160e01b83526021600452602483fd5b919081101561176b5760051b0190565b634e487b7160e01b600052603260045260246000fd5b6001600160401b03811161179457604052565b634e487b7160e01b600052604160045260246000fd5b61010081019081106001600160401b0382111761179457604052565b604081019081106001600160401b0382111761179457604052565b90601f801991011681019081106001600160401b0382111761179457604052565b80156118815763ffffffff9182601f5416918260015b1561186e575b600093601e81101561185a578281600101541461184f578516806118455750601d93611818565b6000190193611818565b505050915050600190565b634e487b7160e01b85526032600452602485fd5b808585160361181e575050915050600090565b50600090565b63ffffffff601f5416601e81101561176b576001015490565b9081602091031261107d5751801515810361107d5790565b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0060028154146118e85760029055565b604051633ee5aeb560e01b8152600490fd5b60446000915b6002831061190d57505050565b600190604081818581943701920192019190611900565b9060069060068403611a2a576040519360c085018581106001600160401b038211176117945760409593955260c036843760005b858110611a085750505060405192839163f398789b60e01b83526040600480850137611986604484016118fa565b604060c480850137600061010484015b8382106119ee57506020946101c493508492506001600160a01b031690505afa600091816119cd575b506119ca5750600090565b90565b6119e791925060203d6020116108405761083281836117e1565b90386119bf565b825181528694506020928301926001929092019101611996565b80611a19600192848699979961175b565b358160051b88015201949294611958565b50505050600090565b63ffffffff80604a5460401c168015159081611b28575b50611b255760535490600190600183018093116116a55760538390556000838152605460209081526040822060030180546dffffffffffffffffff000000000019164260301b6dffffffffffffffff0000000000001617905590929083825b611af9575b5050825463ffffffff60a01b191683555050601f805463ffffffff191690556048546001557f023811fd72d20a3eb734785eed809172b5c9c24019d493039c70ef9c276d4d979080a2565b6014808583161015611b1f5781101561185a576034810154828201558201831682611aa9565b50611aae565b50565b9050605354101538611a4a565b9060059060058403611a2a576040519360a085018581106001600160401b038211176117945760409593955260a036843760005b858110611bf4575050506040519283916334baeab960e01b83526040600480850137611b97604484016118fa565b604060c480850137600061010484015b838210611bda57506020946101a493508492506001600160a01b031690505afa600091816119cd57506119ca5750600090565b825181528694506020928301926001929092019101611ba7565b80611c05600192848699979961175b565b3581861b88015201949294611b69565b6000915b60028310611c2657505050565b600190825181526020809101920192019190611c19565b9060029260028103611a2a57604090815192611c58846117c6565b811561176b57803584526001916001101561176b57602090810135908401528151637ae4eb4f60e11b81529485939291908261012460048701376000610164604487015b838310611ce5575050505050602093611cc76101449385936101e460c4860137610104840190611c15565b6001600160a01b03165afa600091816119cd57506119ca5750600090565b858097985081818488999498959697983701920192019091889695949392611c9c565b90600163ffffffff809316019182116116a557565b611d60604460209260018060a01b03600054169460405191611d3e836117c6565b8252848201526040516314d2f97b60e11b815294859384926004840190611c15565b5afa908115611da357600091611d74575090565b90506020813d602011611d9b575b81611d8f602093836117e1565b8101031261107d575190565b3d9150611d82565b6040513d6000823e3d90fdfea26469706673582212204bd9e1e6d6888d1e49a4a946056d4028a7dc29ac12169aeba52d4126c43d656c64736f6c63430008180033",
+  "devdoc": {
+    "details": "Deployed as an EIP-1167 minimal proxy clone. Each lottery runs independent      rounds with its own Merkle tree. Agents enter by submitting ZK proofs of      eligibility and ticket commitments. VRF selects the winner. The winner      claims by proving ticket ownership via a Merkle inclusion proof.      State machine per round:        Open → Drawing → Claimable → Settled → (next round auto-opens)",
+    "errors": {
+      "ReentrancyGuardReentrantCall()": [
+        {
+          "details": "Unauthorized reentrant call."
+        }
+      ]
+    },
+    "kind": "dev",
+    "methods": {
+      "constructor": {
+        "details": "Lock the implementation so only clones (via the factory) can be initialized."
+      },
+      "settleDraw(uint256,uint32)": {
+        "params": {
+          "roundId": "The round being settled",
+          "winnerIndex": "The winning ticket index"
+        }
+      }
+    },
+    "title": "Lottery",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getLastRoot()": {
+        "notice": "Get the current Merkle root"
+      },
+      "initialize(uint256,uint32,uint32,uint32,uint16,address,address,address,address,address,address,address,address,address)": {
+        "notice": "Initialize the lottery (called once by factory after cloning)"
+      },
+      "isKnownRoot(uint256)": {
+        "notice": "Check if a root exists in the history"
+      },
+      "settleDraw(uint256,uint32)": {
+        "notice": "Callback from DrawManager after VRF fulfillment"
+      }
+    },
+    "notice": "Individual lottery instance with ZK-private ticket commitments.",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 1939,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "hasher",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_contract(IPoseidonT3)1837"
+      },
+      {
+        "astId": 1941,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "nextLeafIndex",
+        "offset": 20,
+        "slot": "0",
+        "type": "t_uint32"
+      },
+      {
+        "astId": 1945,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "roots",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_array(t_uint256)30_storage"
+      },
+      {
+        "astId": 1947,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "currentRootIndex",
+        "offset": 0,
+        "slot": "31",
+        "type": "t_uint32"
+      },
+      {
+        "astId": 1951,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "filledSubtrees",
+        "offset": 0,
+        "slot": "32",
+        "type": "t_array(t_uint256)20_storage"
+      },
+      {
+        "astId": 1955,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "zeros",
+        "offset": 0,
+        "slot": "52",
+        "type": "t_array(t_uint256)20_storage"
+      },
+      {
+        "astId": 1957,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "initialRoot",
+        "offset": 0,
+        "slot": "72",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 265,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "entryFee",
+        "offset": 0,
+        "slot": "73",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 267,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "maxTickets",
+        "offset": 0,
+        "slot": "74",
+        "type": "t_uint32"
+      },
+      {
+        "astId": 269,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "drawInterval",
+        "offset": 4,
+        "slot": "74",
+        "type": "t_uint32"
+      },
+      {
+        "astId": 271,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "maxRounds",
+        "offset": 8,
+        "slot": "74",
+        "type": "t_uint32"
+      },
+      {
+        "astId": 273,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "creatorFeeRate",
+        "offset": 12,
+        "slot": "74",
+        "type": "t_uint16"
+      },
+      {
+        "astId": 275,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "creator",
+        "offset": 0,
+        "slot": "75",
+        "type": "t_address"
+      },
+      {
+        "astId": 278,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "agentRegistry",
+        "offset": 0,
+        "slot": "76",
+        "type": "t_contract(IAgentRegistry)1490"
+      },
+      {
+        "astId": 281,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "drawManager",
+        "offset": 0,
+        "slot": "77",
+        "type": "t_contract(IDrawManager)1526"
+      },
+      {
+        "astId": 284,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "prizePool",
+        "offset": 0,
+        "slot": "78",
+        "type": "t_contract(IPrizePool)1922"
+      },
+      {
+        "astId": 287,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "factory",
+        "offset": 0,
+        "slot": "79",
+        "type": "t_contract(ILotteryFactory)1824"
+      },
+      {
+        "astId": 289,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "eligibilityVerifier",
+        "offset": 0,
+        "slot": "80",
+        "type": "t_address"
+      },
+      {
+        "astId": 291,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "ticketVerifier",
+        "offset": 0,
+        "slot": "81",
+        "type": "t_address"
+      },
+      {
+        "astId": 293,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "claimVerifier",
+        "offset": 0,
+        "slot": "82",
+        "type": "t_address"
+      },
+      {
+        "astId": 295,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "currentRound",
+        "offset": 0,
+        "slot": "83",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 300,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "rounds",
+        "offset": 0,
+        "slot": "84",
+        "type": "t_mapping(t_uint256,t_struct(RoundState)1628_storage)"
+      },
+      {
+        "astId": 304,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "nullifierUsed",
+        "offset": 0,
+        "slot": "85",
+        "type": "t_mapping(t_bytes32,t_bool)"
+      },
+      {
+        "astId": 310,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "commitmentUsed",
+        "offset": 0,
+        "slot": "86",
+        "type": "t_mapping(t_uint256,t_mapping(t_bytes32,t_bool))"
+      },
+      {
+        "astId": 316,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "agentEnteredRound",
+        "offset": 0,
+        "slot": "87",
+        "type": "t_mapping(t_uint256,t_mapping(t_bytes32,t_bool))"
+      },
+      {
+        "astId": 318,
+        "contract": "contracts/core/Lottery.sol:Lottery",
+        "label": "initialized",
+        "offset": 0,
+        "slot": "88",
+        "type": "t_bool"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_uint256)20_storage": {
+        "base": "t_uint256",
+        "encoding": "inplace",
+        "label": "uint256[20]",
+        "numberOfBytes": "640"
+      },
+      "t_array(t_uint256)30_storage": {
+        "base": "t_uint256",
+        "encoding": "inplace",
+        "label": "uint256[30]",
+        "numberOfBytes": "960"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_contract(IAgentRegistry)1490": {
+        "encoding": "inplace",
+        "label": "contract IAgentRegistry",
+        "numberOfBytes": "20"
+      },
+      "t_contract(IDrawManager)1526": {
+        "encoding": "inplace",
+        "label": "contract IDrawManager",
+        "numberOfBytes": "20"
+      },
+      "t_contract(ILotteryFactory)1824": {
+        "encoding": "inplace",
+        "label": "contract ILotteryFactory",
+        "numberOfBytes": "20"
+      },
+      "t_contract(IPoseidonT3)1837": {
+        "encoding": "inplace",
+        "label": "contract IPoseidonT3",
+        "numberOfBytes": "20"
+      },
+      "t_contract(IPrizePool)1922": {
+        "encoding": "inplace",
+        "label": "contract IPrizePool",
+        "numberOfBytes": "20"
+      },
+      "t_enum(RoundStatus)1610": {
+        "encoding": "inplace",
+        "label": "enum ILottery.RoundStatus",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_bytes32,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_mapping(t_uint256,t_mapping(t_bytes32,t_bool))": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => mapping(bytes32 => bool))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_bytes32,t_bool)"
+      },
+      "t_mapping(t_uint256,t_struct(RoundState)1628_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct ILottery.RoundState)",
+        "numberOfBytes": "32",
+        "value": "t_struct(RoundState)1628_storage"
+      },
+      "t_struct(RoundState)1628_storage": {
+        "encoding": "inplace",
+        "label": "struct ILottery.RoundState",
+        "members": [
+          {
+            "astId": 1612,
+            "contract": "contracts/core/Lottery.sol:Lottery",
+            "label": "prizePool",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 1614,
+            "contract": "contracts/core/Lottery.sol:Lottery",
+            "label": "ticketCount",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 1616,
+            "contract": "contracts/core/Lottery.sol:Lottery",
+            "label": "merkleRoot",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_bytes32"
+          },
+          {
+            "astId": 1618,
+            "contract": "contracts/core/Lottery.sol:Lottery",
+            "label": "winnerIndex",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 1620,
+            "contract": "contracts/core/Lottery.sol:Lottery",
+            "label": "claimed",
+            "offset": 4,
+            "slot": "3",
+            "type": "t_bool"
+          },
+          {
+            "astId": 1623,
+            "contract": "contracts/core/Lottery.sol:Lottery",
+            "label": "status",
+            "offset": 5,
+            "slot": "3",
+            "type": "t_enum(RoundStatus)1610"
+          },
+          {
+            "astId": 1625,
+            "contract": "contracts/core/Lottery.sol:Lottery",
+            "label": "startedAt",
+            "offset": 6,
+            "slot": "3",
+            "type": "t_uint64"
+          },
+          {
+            "astId": 1627,
+            "contract": "contracts/core/Lottery.sol:Lottery",
+            "label": "drawnAt",
+            "offset": 14,
+            "slot": "3",
+            "type": "t_uint64"
+          }
+        ],
+        "numberOfBytes": "128"
+      },
+      "t_uint16": {
+        "encoding": "inplace",
+        "label": "uint16",
+        "numberOfBytes": "2"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      },
+      "t_uint32": {
+        "encoding": "inplace",
+        "label": "uint32",
+        "numberOfBytes": "4"
+      },
+      "t_uint64": {
+        "encoding": "inplace",
+        "label": "uint64",
+        "numberOfBytes": "8"
+      }
+    }
+  }
+}

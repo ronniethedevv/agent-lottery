@@ -1,0 +1,1059 @@
+{
+  "address": "0x754Cea18147a799e751bf2260a3f6409DDaD1952",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_implementation",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_agentRegistry",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_drawManager",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_prizePool",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_eligibilityVerifier",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_ticketVerifier",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_claimVerifier",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_poseidonHasher",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "CreatorFeeRateTooHigh",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "DrawIntervalOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "EnforcedPause",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "EntryFeeOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ExpectedPause",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "FailedDeployment",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ImplementationNotSet",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "needed",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "MaxTicketsTooLow",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotRegisteredAgent",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newImplementation",
+          "type": "address"
+        }
+      ],
+      "name": "ImplementationUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "lottery",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "creator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "entryFee",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint32",
+          "name": "maxTickets",
+          "type": "uint32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint32",
+          "name": "drawInterval",
+          "type": "uint32"
+        }
+      ],
+      "name": "LotteryCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferStarted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Paused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint16",
+          "name": "newRate",
+          "type": "uint16"
+        }
+      ],
+      "name": "ProtocolFeeRateUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Unpaused",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "agentRegistry",
+      "outputs": [
+        {
+          "internalType": "contract IAgentRegistry",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "claimVerifier",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "entryFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint32",
+              "name": "maxTickets",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "drawInterval",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "maxRounds",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint16",
+              "name": "creatorFeeRate",
+              "type": "uint16"
+            }
+          ],
+          "internalType": "struct ILotteryFactory.LotteryConfig",
+          "name": "config",
+          "type": "tuple"
+        }
+      ],
+      "name": "createLottery",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "drawManager",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "eligibilityVerifier",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "limit",
+          "type": "uint256"
+        }
+      ],
+      "name": "getLotteries",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getLotteryCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getProtocolFeeRate",
+      "outputs": [
+        {
+          "internalType": "uint16",
+          "name": "",
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "implementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "isLottery",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "lotteries",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "lotteryExists",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxDrawInterval",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxEntryFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "minDrawInterval",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "minEntryFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paused",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pendingOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "poseidonHasher",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "prizePool",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "protocolFeeRate",
+      "outputs": [
+        {
+          "internalType": "uint16",
+          "name": "",
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_min",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_max",
+          "type": "uint32"
+        }
+      ],
+      "name": "setDrawIntervalBounds",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_min",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_max",
+          "type": "uint256"
+        }
+      ],
+      "name": "setEntryFeeBounds",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_implementation",
+          "type": "address"
+        }
+      ],
+      "name": "setImplementation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "_rate",
+          "type": "uint16"
+        }
+      ],
+      "name": "setProtocolFeeRate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_eligibility",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_ticket",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_claim",
+          "type": "address"
+        }
+      ],
+      "name": "setVerifiers",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ticketVerifier",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x82547d4aabab7499092b96dae576c802adbbc128807e1cc3082f9d5e457c355a",
+  "receipt": {
+    "to": null,
+    "from": "0xBfaB70789367F3eF5f9cBE84608b8f62Af557614",
+    "contractAddress": "0x754Cea18147a799e751bf2260a3f6409DDaD1952",
+    "transactionIndex": 1,
+    "gasUsed": "1246315",
+    "logsBloom": "0x00000000400000000000000000000000000000000000000000800000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000004000000000000020000000000000000000800000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000001000000001000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x8d6907e739decaa047628e3bde279ca33c80452e44f3b9be64753c3746a3b7c8",
+    "transactionHash": "0x82547d4aabab7499092b96dae576c802adbbc128807e1cc3082f9d5e457c355a",
+    "logs": [
+      {
+        "transactionIndex": 1,
+        "blockNumber": 132482511,
+        "transactionHash": "0x82547d4aabab7499092b96dae576c802adbbc128807e1cc3082f9d5e457c355a",
+        "address": "0x754Cea18147a799e751bf2260a3f6409DDaD1952",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000bfab70789367f3ef5f9cbe84608b8f62af557614"
+        ],
+        "data": "0x",
+        "logIndex": 2,
+        "blockHash": "0x8d6907e739decaa047628e3bde279ca33c80452e44f3b9be64753c3746a3b7c8"
+      }
+    ],
+    "blockNumber": 132482511,
+    "cumulativeGasUsed": "1291537",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xf06be4e85D3D90DF90238e10c7B52339E5eAe4a7",
+    "0x7972f63Be9a3383b4aa79E100470Db9e55Ab3cc6",
+    "0x0ffF8a824654297dEaAa518095da72853f648f31",
+    "0xC5E4B3d31139bd95070238E84f7E2Eac504d68c3",
+    "0x29D43320C1713531131aE9cc690Edfc42CF6F815",
+    "0xaf29E15A626a153a9f9812d776E220e99d410934",
+    "0x570E114f3A78903640b3611C1e729De418977945",
+    "0x740591941f08F4874Deb87b32835CAa48AE6B3c9"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "ae90a05cb3beddea1e390946d0a5327f",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.24+commit.e11b9ed9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_implementation\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_agentRegistry\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_drawManager\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_prizePool\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_eligibilityVerifier\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_ticketVerifier\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_claimVerifier\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_poseidonHasher\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"CreatorFeeRateTooHigh\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"DrawIntervalOutOfBounds\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"EnforcedPause\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"EntryFeeOutOfBounds\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ExpectedPause\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"FailedDeployment\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ImplementationNotSet\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"needed\",\"type\":\"uint256\"}],\"name\":\"InsufficientBalance\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"MaxTicketsTooLow\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotRegisteredAgent\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"newImplementation\",\"type\":\"address\"}],\"name\":\"ImplementationUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"lottery\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"entryFee\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint32\",\"name\":\"maxTickets\",\"type\":\"uint32\"},{\"indexed\":false,\"internalType\":\"uint32\",\"name\":\"drawInterval\",\"type\":\"uint32\"}],\"name\":\"LotteryCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint16\",\"name\":\"newRate\",\"type\":\"uint16\"}],\"name\":\"ProtocolFeeRateUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"acceptOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"agentRegistry\",\"outputs\":[{\"internalType\":\"contract IAgentRegistry\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claimVerifier\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"entryFee\",\"type\":\"uint256\"},{\"internalType\":\"uint32\",\"name\":\"maxTickets\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"drawInterval\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"maxRounds\",\"type\":\"uint32\"},{\"internalType\":\"uint16\",\"name\":\"creatorFeeRate\",\"type\":\"uint16\"}],\"internalType\":\"struct ILotteryFactory.LotteryConfig\",\"name\":\"config\",\"type\":\"tuple\"}],\"name\":\"createLottery\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"drawManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"eligibilityVerifier\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"limit\",\"type\":\"uint256\"}],\"name\":\"getLotteries\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getLotteryCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getProtocolFeeRate\",\"outputs\":[{\"internalType\":\"uint16\",\"name\":\"\",\"type\":\"uint16\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"implementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"isLottery\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"lotteries\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"lotteryExists\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"maxDrawInterval\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"maxEntryFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"minDrawInterval\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"minEntryFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pendingOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"poseidonHasher\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"prizePool\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"protocolFeeRate\",\"outputs\":[{\"internalType\":\"uint16\",\"name\":\"\",\"type\":\"uint16\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"_min\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"_max\",\"type\":\"uint32\"}],\"name\":\"setDrawIntervalBounds\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_min\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_max\",\"type\":\"uint256\"}],\"name\":\"setEntryFeeBounds\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_implementation\",\"type\":\"address\"}],\"name\":\"setImplementation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"_rate\",\"type\":\"uint16\"}],\"name\":\"setProtocolFeeRate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_eligibility\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_ticket\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_claim\",\"type\":\"address\"}],\"name\":\"setVerifiers\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ticketVerifier\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Only registered agents can create lotteries. Each lottery is a clone of a      fixed implementation contract. The factory tracks all deployed lotteries      and enforces global configuration bounds.\",\"errors\":{\"EnforcedPause()\":[{\"details\":\"The operation failed because the contract is paused.\"}],\"ExpectedPause()\":[{\"details\":\"The operation failed because the contract is not paused.\"}],\"FailedDeployment()\":[{\"details\":\"The deployment failed.\"}],\"InsufficientBalance(uint256,uint256)\":[{\"details\":\"The ETH balance of the account is not enough to perform the operation.\"}],\"OwnableInvalidOwner(address)\":[{\"details\":\"The owner is not a valid owner account. (eg. `address(0)`)\"}],\"OwnableUnauthorizedAccount(address)\":[{\"details\":\"The caller account is not authorized to perform an operation.\"}]},\"events\":{\"Paused(address)\":{\"details\":\"Emitted when the pause is triggered by `account`.\"},\"Unpaused(address)\":{\"details\":\"Emitted when the pause is lifted by `account`.\"}},\"kind\":\"dev\",\"methods\":{\"acceptOwnership()\":{\"details\":\"The new owner accepts the ownership transfer.\"},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"paused()\":{\"details\":\"Returns true if the contract is paused, and false otherwise.\"},\"pendingOwner()\":{\"details\":\"Returns the address of the pending owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one. Can only be called by the current owner. Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer.\"}},\"title\":\"LotteryFactory\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Creates and manages lottery instances via EIP-1167 minimal proxy clones.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/core/LotteryFactory.sol\":\"LotteryFactory\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * The initial owner is set to the address provided by the deployer. This can\\n * later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    /**\\n     * @dev The caller account is not authorized to perform an operation.\\n     */\\n    error OwnableUnauthorizedAccount(address account);\\n\\n    /**\\n     * @dev The owner is not a valid owner account. (eg. `address(0)`)\\n     */\\n    error OwnableInvalidOwner(address owner);\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.\\n     */\\n    constructor(address initialOwner) {\\n        if (initialOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(initialOwner);\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        if (owner() != _msgSender()) {\\n            revert OwnableUnauthorizedAccount(_msgSender());\\n        }\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby disabling any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        if (newOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb\",\"license\":\"MIT\"},\"@openzeppelin/contracts/access/Ownable2Step.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.1.0) (access/Ownable2Step.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Ownable} from \\\"./Ownable.sol\\\";\\n\\n/**\\n * @dev Contract module which provides access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * This extension of the {Ownable} contract includes a two-step mechanism to transfer\\n * ownership, where the new owner must call {acceptOwnership} in order to replace the\\n * old one. This can help prevent common mistakes, such as transfers of ownership to\\n * incorrect accounts, or to contracts that are unable to interact with the\\n * permission system.\\n *\\n * The initial owner is specified at deployment time in the constructor for `Ownable`. This\\n * can later be changed with {transferOwnership} and {acceptOwnership}.\\n *\\n * This module is used through inheritance. It will make available all functions\\n * from parent (Ownable).\\n */\\nabstract contract Ownable2Step is Ownable {\\n    address private _pendingOwner;\\n\\n    event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Returns the address of the pending owner.\\n     */\\n    function pendingOwner() public view virtual returns (address) {\\n        return _pendingOwner;\\n    }\\n\\n    /**\\n     * @dev Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one.\\n     * Can only be called by the current owner.\\n     *\\n     * Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer.\\n     */\\n    function transferOwnership(address newOwner) public virtual override onlyOwner {\\n        _pendingOwner = newOwner;\\n        emit OwnershipTransferStarted(owner(), newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`) and deletes any pending owner.\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual override {\\n        delete _pendingOwner;\\n        super._transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev The new owner accepts the ownership transfer.\\n     */\\n    function acceptOwnership() public virtual {\\n        address sender = _msgSender();\\n        if (pendingOwner() != sender) {\\n            revert OwnableUnauthorizedAccount(sender);\\n        }\\n        _transferOwnership(sender);\\n    }\\n}\\n\",\"keccak256\":\"0xdcad8898fda432696597752e8ec361b87d85c82cb258115427af006dacf7128c\",\"license\":\"MIT\"},\"@openzeppelin/contracts/proxy/Clones.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.5.0) (proxy/Clones.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Create2} from \\\"../utils/Create2.sol\\\";\\nimport {Errors} from \\\"../utils/Errors.sol\\\";\\n\\n/**\\n * @dev https://eips.ethereum.org/EIPS/eip-1167[ERC-1167] is a standard for\\n * deploying minimal proxy contracts, also known as \\\"clones\\\".\\n *\\n * > To simply and cheaply clone contract functionality in an immutable way, this standard specifies\\n * > a minimal bytecode implementation that delegates all calls to a known, fixed address.\\n *\\n * The library includes functions to deploy a proxy using either `create` (traditional deployment) or `create2`\\n * (salted deterministic deployment). It also includes functions to predict the addresses of clones deployed using the\\n * deterministic method.\\n */\\nlibrary Clones {\\n    error CloneArgumentsTooLong();\\n\\n    /**\\n     * @dev Deploys and returns the address of a clone that mimics the behavior of `implementation`.\\n     *\\n     * This function uses the create opcode, which should never revert.\\n     *\\n     * WARNING: This function does not check if `implementation` has code. A clone that points to an address\\n     * without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they\\n     * have no effect and leave the clone uninitialized, allowing a third party to initialize it later.\\n     */\\n    function clone(address implementation) internal returns (address instance) {\\n        return clone(implementation, 0);\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Clones-clone-address-}[clone], but with a `value` parameter to send native currency\\n     * to the new contract.\\n     *\\n     * WARNING: This function does not check if `implementation` has code. A clone that points to an address\\n     * without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they\\n     * have no effect and leave the clone uninitialized, allowing a third party to initialize it later.\\n     *\\n     * NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)\\n     * to always have enough balance for new deployments. Consider exposing this function under a payable method.\\n     */\\n    function clone(address implementation, uint256 value) internal returns (address instance) {\\n        if (address(this).balance < value) {\\n            revert Errors.InsufficientBalance(address(this).balance, value);\\n        }\\n        assembly (\\\"memory-safe\\\") {\\n            // Cleans the upper 96 bits of the `implementation` word, then packs the first 3 bytes\\n            // of the `implementation` address with the bytecode before the address.\\n            mstore(0x00, or(shr(232, shl(96, implementation)), 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000))\\n            // Packs the remaining 17 bytes of `implementation` with the bytecode after the address.\\n            mstore(0x20, or(shl(120, implementation), 0x5af43d82803e903d91602b57fd5bf3))\\n            instance := create(value, 0x09, 0x37)\\n        }\\n        if (instance == address(0)) {\\n            revert Errors.FailedDeployment();\\n        }\\n    }\\n\\n    /**\\n     * @dev Deploys and returns the address of a clone that mimics the behavior of `implementation`.\\n     *\\n     * This function uses the create2 opcode and a `salt` to deterministically deploy\\n     * the clone. Using the same `implementation` and `salt` multiple times will revert, since\\n     * the clones cannot be deployed twice at the same address.\\n     *\\n     * WARNING: This function does not check if `implementation` has code. A clone that points to an address\\n     * without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they\\n     * have no effect and leave the clone uninitialized, allowing a third party to initialize it later.\\n     */\\n    function cloneDeterministic(address implementation, bytes32 salt) internal returns (address instance) {\\n        return cloneDeterministic(implementation, salt, 0);\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Clones-cloneDeterministic-address-bytes32-}[cloneDeterministic], but with\\n     * a `value` parameter to send native currency to the new contract.\\n     *\\n     * WARNING: This function does not check if `implementation` has code. A clone that points to an address\\n     * without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they\\n     * have no effect and leave the clone uninitialized, allowing a third party to initialize it later.\\n     *\\n     * NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)\\n     * to always have enough balance for new deployments. Consider exposing this function under a payable method.\\n     */\\n    function cloneDeterministic(\\n        address implementation,\\n        bytes32 salt,\\n        uint256 value\\n    ) internal returns (address instance) {\\n        if (address(this).balance < value) {\\n            revert Errors.InsufficientBalance(address(this).balance, value);\\n        }\\n        assembly (\\\"memory-safe\\\") {\\n            // Cleans the upper 96 bits of the `implementation` word, then packs the first 3 bytes\\n            // of the `implementation` address with the bytecode before the address.\\n            mstore(0x00, or(shr(232, shl(96, implementation)), 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000))\\n            // Packs the remaining 17 bytes of `implementation` with the bytecode after the address.\\n            mstore(0x20, or(shl(120, implementation), 0x5af43d82803e903d91602b57fd5bf3))\\n            instance := create2(value, 0x09, 0x37, salt)\\n        }\\n        if (instance == address(0)) {\\n            revert Errors.FailedDeployment();\\n        }\\n    }\\n\\n    /**\\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministic}.\\n     */\\n    function predictDeterministicAddress(\\n        address implementation,\\n        bytes32 salt,\\n        address deployer\\n    ) internal pure returns (address predicted) {\\n        assembly (\\\"memory-safe\\\") {\\n            let ptr := mload(0x40)\\n            mstore(add(ptr, 0x38), deployer)\\n            mstore(add(ptr, 0x24), 0x5af43d82803e903d91602b57fd5bf3ff)\\n            mstore(add(ptr, 0x14), implementation)\\n            mstore(ptr, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73)\\n            mstore(add(ptr, 0x58), salt)\\n            mstore(add(ptr, 0x78), keccak256(add(ptr, 0x0c), 0x37))\\n            predicted := and(keccak256(add(ptr, 0x43), 0x55), 0xffffffffffffffffffffffffffffffffffffffff)\\n        }\\n    }\\n\\n    /**\\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministic}.\\n     */\\n    function predictDeterministicAddress(\\n        address implementation,\\n        bytes32 salt\\n    ) internal view returns (address predicted) {\\n        return predictDeterministicAddress(implementation, salt, address(this));\\n    }\\n\\n    /**\\n     * @dev Deploys and returns the address of a clone that mimics the behavior of `implementation` with custom\\n     * immutable arguments. These are provided through `args` and cannot be changed after deployment. To\\n     * access the arguments within the implementation, use {fetchCloneArgs}.\\n     *\\n     * This function uses the create opcode, which should never revert.\\n     *\\n     * WARNING: This function does not check if `implementation` has code. A clone that points to an address\\n     * without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they\\n     * have no effect and leave the clone uninitialized, allowing a third party to initialize it later.\\n     */\\n    function cloneWithImmutableArgs(address implementation, bytes memory args) internal returns (address instance) {\\n        return cloneWithImmutableArgs(implementation, args, 0);\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Clones-cloneWithImmutableArgs-address-bytes-}[cloneWithImmutableArgs], but with a `value`\\n     * parameter to send native currency to the new contract.\\n     *\\n     * WARNING: This function does not check if `implementation` has code. A clone that points to an address\\n     * without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they\\n     * have no effect and leave the clone uninitialized, allowing a third party to initialize it later.\\n     *\\n     * NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)\\n     * to always have enough balance for new deployments. Consider exposing this function under a payable method.\\n     */\\n    function cloneWithImmutableArgs(\\n        address implementation,\\n        bytes memory args,\\n        uint256 value\\n    ) internal returns (address instance) {\\n        if (address(this).balance < value) {\\n            revert Errors.InsufficientBalance(address(this).balance, value);\\n        }\\n        bytes memory bytecode = _cloneCodeWithImmutableArgs(implementation, args);\\n        assembly (\\\"memory-safe\\\") {\\n            instance := create(value, add(bytecode, 0x20), mload(bytecode))\\n        }\\n        if (instance == address(0)) {\\n            revert Errors.FailedDeployment();\\n        }\\n    }\\n\\n    /**\\n     * @dev Deploys and returns the address of a clone that mimics the behavior of `implementation` with custom\\n     * immutable arguments. These are provided through `args` and cannot be changed after deployment. To\\n     * access the arguments within the implementation, use {fetchCloneArgs}.\\n     *\\n     * This function uses the create2 opcode and a `salt` to deterministically deploy the clone. Using the same\\n     * `implementation`, `args` and `salt` multiple times will revert, since the clones cannot be deployed twice\\n     * at the same address.\\n     *\\n     * WARNING: This function does not check if `implementation` has code. A clone that points to an address\\n     * without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they\\n     * have no effect and leave the clone uninitialized, allowing a third party to initialize it later.\\n     */\\n    function cloneDeterministicWithImmutableArgs(\\n        address implementation,\\n        bytes memory args,\\n        bytes32 salt\\n    ) internal returns (address instance) {\\n        return cloneDeterministicWithImmutableArgs(implementation, args, salt, 0);\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-}[cloneDeterministicWithImmutableArgs],\\n     * but with a `value` parameter to send native currency to the new contract.\\n     *\\n     * WARNING: This function does not check if `implementation` has code. A clone that points to an address\\n     * without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they\\n     * have no effect and leave the clone uninitialized, allowing a third party to initialize it later.\\n     *\\n     * NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)\\n     * to always have enough balance for new deployments. Consider exposing this function under a payable method.\\n     */\\n    function cloneDeterministicWithImmutableArgs(\\n        address implementation,\\n        bytes memory args,\\n        bytes32 salt,\\n        uint256 value\\n    ) internal returns (address instance) {\\n        bytes memory bytecode = _cloneCodeWithImmutableArgs(implementation, args);\\n        return Create2.deploy(value, salt, bytecode);\\n    }\\n\\n    /**\\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministicWithImmutableArgs}.\\n     */\\n    function predictDeterministicAddressWithImmutableArgs(\\n        address implementation,\\n        bytes memory args,\\n        bytes32 salt,\\n        address deployer\\n    ) internal pure returns (address predicted) {\\n        bytes memory bytecode = _cloneCodeWithImmutableArgs(implementation, args);\\n        return Create2.computeAddress(salt, keccak256(bytecode), deployer);\\n    }\\n\\n    /**\\n     * @dev Computes the address of a clone deployed using {Clones-cloneDeterministicWithImmutableArgs}.\\n     */\\n    function predictDeterministicAddressWithImmutableArgs(\\n        address implementation,\\n        bytes memory args,\\n        bytes32 salt\\n    ) internal view returns (address predicted) {\\n        return predictDeterministicAddressWithImmutableArgs(implementation, args, salt, address(this));\\n    }\\n\\n    /**\\n     * @dev Get the immutable args attached to a clone.\\n     *\\n     * - If `instance` is a clone that was deployed using `clone` or `cloneDeterministic`, this\\n     *   function will return an empty array.\\n     * - If `instance` is a clone that was deployed using `cloneWithImmutableArgs` or\\n     *   `cloneDeterministicWithImmutableArgs`, this function will return the args array used at\\n     *   creation.\\n     * - If `instance` is NOT a clone deployed using this library, the behavior is undefined. This\\n     *   function should only be used to check addresses that are known to be clones.\\n     */\\n    function fetchCloneArgs(address instance) internal view returns (bytes memory) {\\n        bytes memory result = new bytes(instance.code.length - 0x2d); // revert if length is too short\\n        assembly (\\\"memory-safe\\\") {\\n            extcodecopy(instance, add(result, 0x20), 0x2d, mload(result))\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Helper that prepares the initcode of the proxy with immutable args.\\n     *\\n     * An assembly variant of this function requires copying the `args` array, which can be efficiently done using\\n     * `mcopy`. Unfortunately, that opcode is not available before cancun. A pure solidity implementation using\\n     * abi.encodePacked is more expensive but also more portable and easier to review.\\n     *\\n     * NOTE: https://eips.ethereum.org/EIPS/eip-170[EIP-170] limits the length of the contract code to 24576 bytes.\\n     * With the proxy code taking 45 bytes, that limits the length of the immutable args to 24531 bytes.\\n     */\\n    function _cloneCodeWithImmutableArgs(\\n        address implementation,\\n        bytes memory args\\n    ) private pure returns (bytes memory) {\\n        if (args.length > 0x5fd3) revert CloneArgumentsTooLong();\\n        return\\n            abi.encodePacked(\\n                hex\\\"61\\\",\\n                uint16(args.length + 0x2d),\\n                hex\\\"3d81600a3d39f3363d3d373d3d3d363d73\\\",\\n                implementation,\\n                hex\\\"5af43d82803e903d91602b57fd5bf3\\\",\\n                args\\n            );\\n    }\\n}\\n\",\"keccak256\":\"0x5a1847c0c6b92d60711f04cba9eaff572ae1f657cff1b8ca4ba065bcdbd68d8b\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n\\n    function _contextSuffixLength() internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n}\\n\",\"keccak256\":\"0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Create2.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.5.0) (utils/Create2.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Errors} from \\\"./Errors.sol\\\";\\nimport {LowLevelCall} from \\\"./LowLevelCall.sol\\\";\\n\\n/**\\n * @dev Helper to make usage of the `CREATE2` EVM opcode easier and safer.\\n * `CREATE2` can be used to compute in advance the address where a smart\\n * contract will be deployed, which allows for interesting new mechanisms known\\n * as 'counterfactual interactions'.\\n *\\n * See the https://eips.ethereum.org/EIPS/eip-1014#motivation[EIP] for more\\n * information.\\n */\\nlibrary Create2 {\\n    /**\\n     * @dev There's no code to deploy.\\n     */\\n    error Create2EmptyBytecode();\\n\\n    /**\\n     * @dev Deploys a contract using `CREATE2`. The address where the contract\\n     * will be deployed can be known in advance via {computeAddress}.\\n     *\\n     * The bytecode for a contract can be obtained from Solidity with\\n     * `type(contractName).creationCode`.\\n     *\\n     * Requirements:\\n     *\\n     * - `bytecode` must not be empty.\\n     * - `salt` must have not been used for `bytecode` already.\\n     * - the factory must have a balance of at least `amount`.\\n     * - if `amount` is non-zero, `bytecode` must have a `payable` constructor.\\n     */\\n    function deploy(uint256 amount, bytes32 salt, bytes memory bytecode) internal returns (address addr) {\\n        if (address(this).balance < amount) {\\n            revert Errors.InsufficientBalance(address(this).balance, amount);\\n        }\\n        if (bytecode.length == 0) {\\n            revert Create2EmptyBytecode();\\n        }\\n        assembly (\\\"memory-safe\\\") {\\n            addr := create2(amount, add(bytecode, 0x20), mload(bytecode), salt)\\n        }\\n        if (addr == address(0)) {\\n            if (LowLevelCall.returnDataSize() == 0) {\\n                revert Errors.FailedDeployment();\\n            } else {\\n                LowLevelCall.bubbleRevert();\\n            }\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the address where a contract will be stored if deployed via {deploy}. Any change in the\\n     * `bytecodeHash` or `salt` will result in a new destination address.\\n     */\\n    function computeAddress(bytes32 salt, bytes32 bytecodeHash) internal view returns (address) {\\n        return computeAddress(salt, bytecodeHash, address(this));\\n    }\\n\\n    /**\\n     * @dev Returns the address where a contract will be stored if deployed via {deploy} from a contract located at\\n     * `deployer`. If `deployer` is this contract's address, returns the same value as {computeAddress}.\\n     */\\n    function computeAddress(bytes32 salt, bytes32 bytecodeHash, address deployer) internal pure returns (address addr) {\\n        assembly (\\\"memory-safe\\\") {\\n            let ptr := mload(0x40) // Get free memory pointer\\n\\n            // |                     | \\u2193 ptr ...  \\u2193 ptr + 0x0B (start) ...  \\u2193 ptr + 0x20 ...  \\u2193 ptr + 0x40 ...   |\\n            // |---------------------|---------------------------------------------------------------------------|\\n            // | bytecodeHash        |                                                        CCCCCCCCCCCCC...CC |\\n            // | salt                |                                      BBBBBBBBBBBBB...BB                   |\\n            // | deployer            | 000000...0000AAAAAAAAAAAAAAAAAAA...AA                                     |\\n            // | 0xFF                |            FF                                                             |\\n            // |---------------------|---------------------------------------------------------------------------|\\n            // | memory              | 000000...00FFAAAAAAAAAAAAAAAAAAA...AABBBBBBBBBBBBB...BBCCCCCCCCCCCCC...CC |\\n            // | keccak(start, 0x55) |            \\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191\\u2191 |\\n\\n            mstore(add(ptr, 0x40), bytecodeHash)\\n            mstore(add(ptr, 0x20), salt)\\n            mstore(ptr, deployer) // Right-aligned with 12 preceding garbage bytes\\n            let start := add(ptr, 0x0b) // The hashed data starts at the final garbage byte which we will set to 0xff\\n            mstore8(start, 0xff)\\n            addr := and(keccak256(start, 0x55), 0xffffffffffffffffffffffffffffffffffffffff)\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xe06ddfff69f3ba154d92102d9a85db2780e045303a587360cf12195216e851ca\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Errors.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.1.0) (utils/Errors.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Collection of common custom errors used in multiple contracts\\n *\\n * IMPORTANT: Backwards compatibility is not guaranteed in future versions of the library.\\n * It is recommended to avoid relying on the error API for critical functionality.\\n *\\n * _Available since v5.1._\\n */\\nlibrary Errors {\\n    /**\\n     * @dev The ETH balance of the account is not enough to perform the operation.\\n     */\\n    error InsufficientBalance(uint256 balance, uint256 needed);\\n\\n    /**\\n     * @dev A call to an address target failed. The target may have reverted.\\n     */\\n    error FailedCall();\\n\\n    /**\\n     * @dev The deployment failed.\\n     */\\n    error FailedDeployment();\\n\\n    /**\\n     * @dev A necessary precompile is missing.\\n     */\\n    error MissingPrecompile(address);\\n}\\n\",\"keccak256\":\"0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/LowLevelCall.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.6.0) (utils/LowLevelCall.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Library of low level call functions that implement different calling strategies to deal with the return data.\\n *\\n * WARNING: Using this library requires an advanced understanding of Solidity and how the EVM works. It is recommended\\n * to use the {Address} library instead.\\n */\\nlibrary LowLevelCall {\\n    /// @dev Performs a Solidity function call using a low level `call` and ignoring the return data.\\n    function callNoReturn(address target, bytes memory data) internal returns (bool success) {\\n        return callNoReturn(target, 0, data);\\n    }\\n\\n    /// @dev Same as {callNoReturn-address-bytes}, but allows specifying the value to be sent in the call.\\n    function callNoReturn(address target, uint256 value, bytes memory data) internal returns (bool success) {\\n        assembly (\\\"memory-safe\\\") {\\n            success := call(gas(), target, value, add(data, 0x20), mload(data), 0x00, 0x00)\\n        }\\n    }\\n\\n    /// @dev Performs a Solidity function call using a low level `call` and returns the first 64 bytes of the result\\n    /// in the scratch space of memory. Useful for functions that return a tuple with two single-word values.\\n    ///\\n    /// WARNING: Do not assume that the results are zero if `success` is false. Memory can be already allocated\\n    /// and this function doesn't zero it out.\\n    function callReturn64Bytes(\\n        address target,\\n        bytes memory data\\n    ) internal returns (bool success, bytes32 result1, bytes32 result2) {\\n        return callReturn64Bytes(target, 0, data);\\n    }\\n\\n    /// @dev Same as {callReturn64Bytes-address-bytes}, but allows specifying the value to be sent in the call.\\n    function callReturn64Bytes(\\n        address target,\\n        uint256 value,\\n        bytes memory data\\n    ) internal returns (bool success, bytes32 result1, bytes32 result2) {\\n        assembly (\\\"memory-safe\\\") {\\n            success := call(gas(), target, value, add(data, 0x20), mload(data), 0x00, 0x40)\\n            result1 := mload(0x00)\\n            result2 := mload(0x20)\\n        }\\n    }\\n\\n    /// @dev Performs a Solidity function call using a low level `staticcall` and ignoring the return data.\\n    function staticcallNoReturn(address target, bytes memory data) internal view returns (bool success) {\\n        assembly (\\\"memory-safe\\\") {\\n            success := staticcall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x00)\\n        }\\n    }\\n\\n    /// @dev Performs a Solidity function call using a low level `staticcall` and returns the first 64 bytes of the result\\n    /// in the scratch space of memory. Useful for functions that return a tuple with two single-word values.\\n    ///\\n    /// WARNING: Do not assume that the results are zero if `success` is false. Memory can be already allocated\\n    /// and this function doesn't zero it out.\\n    function staticcallReturn64Bytes(\\n        address target,\\n        bytes memory data\\n    ) internal view returns (bool success, bytes32 result1, bytes32 result2) {\\n        assembly (\\\"memory-safe\\\") {\\n            success := staticcall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x40)\\n            result1 := mload(0x00)\\n            result2 := mload(0x20)\\n        }\\n    }\\n\\n    /// @dev Performs a Solidity function call using a low level `delegatecall` and ignoring the return data.\\n    function delegatecallNoReturn(address target, bytes memory data) internal returns (bool success) {\\n        assembly (\\\"memory-safe\\\") {\\n            success := delegatecall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x00)\\n        }\\n    }\\n\\n    /// @dev Performs a Solidity function call using a low level `delegatecall` and returns the first 64 bytes of the result\\n    /// in the scratch space of memory. Useful for functions that return a tuple with two single-word values.\\n    ///\\n    /// WARNING: Do not assume that the results are zero if `success` is false. Memory can be already allocated\\n    /// and this function doesn't zero it out.\\n    function delegatecallReturn64Bytes(\\n        address target,\\n        bytes memory data\\n    ) internal returns (bool success, bytes32 result1, bytes32 result2) {\\n        assembly (\\\"memory-safe\\\") {\\n            success := delegatecall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x40)\\n            result1 := mload(0x00)\\n            result2 := mload(0x20)\\n        }\\n    }\\n\\n    /// @dev Returns the size of the return data buffer.\\n    function returnDataSize() internal pure returns (uint256 size) {\\n        assembly (\\\"memory-safe\\\") {\\n            size := returndatasize()\\n        }\\n    }\\n\\n    /// @dev Returns a buffer containing the return data from the last call.\\n    function returnData() internal pure returns (bytes memory result) {\\n        assembly (\\\"memory-safe\\\") {\\n            result := mload(0x40)\\n            mstore(result, returndatasize())\\n            returndatacopy(add(result, 0x20), 0x00, returndatasize())\\n            mstore(0x40, add(result, add(0x20, returndatasize())))\\n        }\\n    }\\n\\n    /// @dev Revert with the return data from the last call.\\n    function bubbleRevert() internal pure {\\n        assembly (\\\"memory-safe\\\") {\\n            let fmp := mload(0x40)\\n            returndatacopy(fmp, 0x00, returndatasize())\\n            revert(fmp, returndatasize())\\n        }\\n    }\\n\\n    function bubbleRevert(bytes memory returndata) internal pure {\\n        assembly (\\\"memory-safe\\\") {\\n            revert(add(returndata, 0x20), mload(returndata))\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x6ba3db1346fc75a832aa6cd075e12f6f1fa172fa2122a020f324c319fe5be75e\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Pausable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.3.0) (utils/Pausable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which allows children to implement an emergency stop\\n * mechanism that can be triggered by an authorized account.\\n *\\n * This module is used through inheritance. It will make available the\\n * modifiers `whenNotPaused` and `whenPaused`, which can be applied to\\n * the functions of your contract. Note that they will not be pausable by\\n * simply including this module, only once the modifiers are put in place.\\n */\\nabstract contract Pausable is Context {\\n    bool private _paused;\\n\\n    /**\\n     * @dev Emitted when the pause is triggered by `account`.\\n     */\\n    event Paused(address account);\\n\\n    /**\\n     * @dev Emitted when the pause is lifted by `account`.\\n     */\\n    event Unpaused(address account);\\n\\n    /**\\n     * @dev The operation failed because the contract is paused.\\n     */\\n    error EnforcedPause();\\n\\n    /**\\n     * @dev The operation failed because the contract is not paused.\\n     */\\n    error ExpectedPause();\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is not paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    modifier whenNotPaused() {\\n        _requireNotPaused();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    modifier whenPaused() {\\n        _requirePaused();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns true if the contract is paused, and false otherwise.\\n     */\\n    function paused() public view virtual returns (bool) {\\n        return _paused;\\n    }\\n\\n    /**\\n     * @dev Throws if the contract is paused.\\n     */\\n    function _requireNotPaused() internal view virtual {\\n        if (paused()) {\\n            revert EnforcedPause();\\n        }\\n    }\\n\\n    /**\\n     * @dev Throws if the contract is not paused.\\n     */\\n    function _requirePaused() internal view virtual {\\n        if (!paused()) {\\n            revert ExpectedPause();\\n        }\\n    }\\n\\n    /**\\n     * @dev Triggers stopped state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    function _pause() internal virtual whenNotPaused {\\n        _paused = true;\\n        emit Paused(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Returns to normal state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    function _unpause() internal virtual whenPaused {\\n        _paused = false;\\n        emit Unpaused(_msgSender());\\n    }\\n}\\n\",\"keccak256\":\"0xdb484371dfbb848cb6f5d70464e9ac9b2900e4164ead76bbce4fef0b44bcc68f\",\"license\":\"MIT\"},\"contracts/core/LotteryFactory.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\nimport {Ownable2Step, Ownable} from \\\"@openzeppelin/contracts/access/Ownable2Step.sol\\\";\\nimport {Clones} from \\\"@openzeppelin/contracts/proxy/Clones.sol\\\";\\nimport {Pausable} from \\\"@openzeppelin/contracts/utils/Pausable.sol\\\";\\nimport {ILotteryFactory} from \\\"../interfaces/ILotteryFactory.sol\\\";\\nimport {IAgentRegistry} from \\\"../interfaces/IAgentRegistry.sol\\\";\\n\\n/// @title LotteryFactory\\n/// @notice Creates and manages lottery instances via EIP-1167 minimal proxy clones.\\n/// @dev Only registered agents can create lotteries. Each lottery is a clone of a\\n///      fixed implementation contract. The factory tracks all deployed lotteries\\n///      and enforces global configuration bounds.\\ncontract LotteryFactory is ILotteryFactory, Ownable2Step, Pausable {\\n    using Clones for address;\\n\\n    address public implementation;\\n    IAgentRegistry public agentRegistry;\\n    address public drawManager;\\n    address public prizePool;\\n\\n    // ZK verifier addresses\\n    address public eligibilityVerifier;\\n    address public ticketVerifier;\\n    address public claimVerifier;\\n\\n    // Poseidon(2) hasher shared by every lottery's Merkle tree\\n    address public poseidonHasher;\\n\\n    // Protocol config\\n    uint16 public protocolFeeRate; // basis points\\n\\n    // Lottery bounds\\n    uint256 public minEntryFee;\\n    uint256 public maxEntryFee;\\n    uint32 public minDrawInterval;\\n    uint32 public maxDrawInterval;\\n\\n    // Lottery tracking\\n    address[] public lotteries;\\n    mapping(address => bool) public lotteryExists;\\n\\n    error NotRegisteredAgent();\\n    error EntryFeeOutOfBounds();\\n    error DrawIntervalOutOfBounds();\\n    error MaxTicketsTooLow();\\n    error CreatorFeeRateTooHigh();\\n    error ImplementationNotSet();\\n\\n    constructor(\\n        address _implementation,\\n        address _agentRegistry,\\n        address _drawManager,\\n        address _prizePool,\\n        address _eligibilityVerifier,\\n        address _ticketVerifier,\\n        address _claimVerifier,\\n        address _poseidonHasher\\n    ) Ownable(msg.sender) {\\n        implementation = _implementation;\\n        agentRegistry = IAgentRegistry(_agentRegistry);\\n        drawManager = _drawManager;\\n        prizePool = _prizePool;\\n        eligibilityVerifier = _eligibilityVerifier;\\n        ticketVerifier = _ticketVerifier;\\n        claimVerifier = _claimVerifier;\\n        poseidonHasher = _poseidonHasher;\\n\\n        protocolFeeRate = 200; // 2%\\n        minEntryFee = 0.001 ether;\\n        maxEntryFee = 100 ether;\\n        minDrawInterval = 60;       // 1 minute\\n        maxDrawInterval = 7 days;\\n    }\\n\\n    /// @inheritdoc ILotteryFactory\\n    function createLottery(\\n        LotteryConfig calldata config\\n    ) external override whenNotPaused returns (address) {\\n        if (implementation == address(0)) revert ImplementationNotSet();\\n        if (!agentRegistry.isRegistered(msg.sender)) revert NotRegisteredAgent();\\n        if (config.entryFee < minEntryFee || config.entryFee > maxEntryFee) {\\n            revert EntryFeeOutOfBounds();\\n        }\\n        if (config.drawInterval < minDrawInterval || config.drawInterval > maxDrawInterval) {\\n            revert DrawIntervalOutOfBounds();\\n        }\\n        if (config.maxTickets < 2) revert MaxTicketsTooLow();\\n        if (config.creatorFeeRate > 1000) revert CreatorFeeRateTooHigh(); // max 10%\\n\\n        // Deploy clone with deterministic address\\n        bytes32 salt = keccak256(\\n            abi.encodePacked(msg.sender, lotteries.length, block.timestamp)\\n        );\\n        address lottery = implementation.cloneDeterministic(salt);\\n\\n        // Initialize the lottery\\n        (bool success, ) = lottery.call(\\n            abi.encodeWithSignature(\\n                \\\"initialize(uint256,uint32,uint32,uint32,uint16,address,address,address,address,address,address,address,address,address)\\\",\\n                config.entryFee,\\n                config.maxTickets,\\n                config.drawInterval,\\n                config.maxRounds,\\n                config.creatorFeeRate,\\n                msg.sender,\\n                address(agentRegistry),\\n                drawManager,\\n                prizePool,\\n                address(this),\\n                eligibilityVerifier,\\n                ticketVerifier,\\n                claimVerifier,\\n                poseidonHasher\\n            )\\n        );\\n        require(success, \\\"Lottery initialization failed\\\");\\n\\n        lotteries.push(lottery);\\n        lotteryExists[lottery] = true;\\n\\n        emit LotteryCreated(\\n            lottery,\\n            msg.sender,\\n            config.entryFee,\\n            config.maxTickets,\\n            config.drawInterval\\n        );\\n\\n        return lottery;\\n    }\\n\\n    /// @inheritdoc ILotteryFactory\\n    function getLotteries(\\n        uint256 offset,\\n        uint256 limit\\n    ) external view override returns (address[] memory) {\\n        uint256 total = lotteries.length;\\n        if (offset >= total) return new address[](0);\\n\\n        uint256 end = offset + limit;\\n        if (end > total) end = total;\\n        uint256 count = end - offset;\\n\\n        address[] memory result = new address[](count);\\n        for (uint256 i = 0; i < count; i++) {\\n            result[i] = lotteries[offset + i];\\n        }\\n        return result;\\n    }\\n\\n    /// @inheritdoc ILotteryFactory\\n    function getLotteryCount() external view override returns (uint256) {\\n        return lotteries.length;\\n    }\\n\\n    /// @inheritdoc ILotteryFactory\\n    function isLottery(address addr) external view override returns (bool) {\\n        return lotteryExists[addr];\\n    }\\n\\n    /// @inheritdoc ILotteryFactory\\n    function getProtocolFeeRate() external view override returns (uint16) {\\n        return protocolFeeRate;\\n    }\\n\\n    // --- Admin ---\\n\\n    function setImplementation(address _implementation) external onlyOwner {\\n        implementation = _implementation;\\n        emit ImplementationUpdated(_implementation);\\n    }\\n\\n    function setProtocolFeeRate(uint16 _rate) external onlyOwner {\\n        protocolFeeRate = _rate;\\n        emit ProtocolFeeRateUpdated(_rate);\\n    }\\n\\n    function setEntryFeeBounds(uint256 _min, uint256 _max) external onlyOwner {\\n        minEntryFee = _min;\\n        maxEntryFee = _max;\\n    }\\n\\n    function setDrawIntervalBounds(uint32 _min, uint32 _max) external onlyOwner {\\n        minDrawInterval = _min;\\n        maxDrawInterval = _max;\\n    }\\n\\n    function setVerifiers(\\n        address _eligibility,\\n        address _ticket,\\n        address _claim\\n    ) external onlyOwner {\\n        eligibilityVerifier = _eligibility;\\n        ticketVerifier = _ticket;\\n        claimVerifier = _claim;\\n    }\\n\\n    function pause() external onlyOwner {\\n        _pause();\\n    }\\n\\n    function unpause() external onlyOwner {\\n        _unpause();\\n    }\\n}\\n\",\"keccak256\":\"0xb662bcf973a024a7b1362d98076e84fe0148d2900297cd07fac90fddf1f5fb80\",\"license\":\"MIT\"},\"contracts/interfaces/IAgentRegistry.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface IAgentRegistry {\\n    struct AgentInfo {\\n        uint256 stake;\\n        uint256 reputation;\\n        uint64 registeredAt;\\n        bool isActive;\\n    }\\n\\n    event AgentRegistered(address indexed agent, uint256 stake);\\n    event AgentDeregistered(address indexed agent, uint256 stakeReturned);\\n    event AgentSlashed(address indexed agent, uint256 amount, bytes32 reason);\\n    event ReputationUpdated(address indexed agent, uint256 newReputation);\\n\\n    function registerAgent() external payable;\\n    function deregisterAgent() external;\\n    function slash(address agent, uint256 amount, bytes32 reason) external;\\n    function incrementReputation(address agent, uint256 amount) external;\\n    function isRegistered(address agent) external view returns (bool);\\n    function getAgentInfo(address agent) external view returns (AgentInfo memory);\\n    function getMinStake() external view returns (uint256);\\n    function getAgentCount() external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xcee3be3aec766e05ad344101c6b2a6f48305b014c2cdf860698461cf2fd3760c\",\"license\":\"MIT\"},\"contracts/interfaces/ILotteryFactory.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface ILotteryFactory {\\n    struct LotteryConfig {\\n        uint256 entryFee;\\n        uint32 maxTickets;\\n        uint32 drawInterval;\\n        uint32 maxRounds;    // 0 = infinite\\n        uint16 creatorFeeRate; // basis points (e.g., 300 = 3%)\\n    }\\n\\n    event LotteryCreated(\\n        address indexed lottery,\\n        address indexed creator,\\n        uint256 entryFee,\\n        uint32 maxTickets,\\n        uint32 drawInterval\\n    );\\n\\n    event ProtocolFeeRateUpdated(uint16 newRate);\\n    event ImplementationUpdated(address newImplementation);\\n\\n    function createLottery(LotteryConfig calldata config) external returns (address);\\n    function getLotteries(uint256 offset, uint256 limit) external view returns (address[] memory);\\n    function getLotteryCount() external view returns (uint256);\\n    function isLottery(address addr) external view returns (bool);\\n    function getProtocolFeeRate() external view returns (uint16);\\n}\\n\",\"keccak256\":\"0xe867e0d3c869628e80229596ef5fc31e1dac8dd8946704d22656f626ab747b6e\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x6080346200020557601f620012af38819003918201601f19168301916001600160401b038311848410176200020a578084926101009460405283398101031262000205576200004e8162000220565b906200005d6020820162000220565b906200006c6040820162000220565b6200007a6060830162000220565b620000886080840162000220565b906200009760a0850162000220565b92620000b460e0620000ac60c0880162000220565b960162000220565b953315620001ec57600180546001600160a01b03199081169091556000805433928116831782556040519a92916001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09080a3600280546001600160a01b03199081166001600160a01b0393841617909155600380548216938316939093179092556004805483169382169390931790925560058054821693831693909317909255600680548316938216939093179092556007805482169383169390931790925560088054909216928116929092179055600980546001600160b01b0319169290911691909117601960a31b17905566038d7ea4c68000600a5568056bc75e2d63100000600b55600c80546001600160401b03191666093a800000003c1790556110799081620002368239f35b604051631e4fbdf760e01b815260006004820152602490fd5b600080fd5b634e487b7160e01b600052604160045260246000fd5b51906001600160a01b0382168203620002055756fe6040608081526004908136101561001557600080fd5b600091823560e01c9081630b434a5414610d7d5781630d1cfcae14610d545781631398e07614610d135781632e551c3514610c9f5781632f9aa1fe14610c80578163331b6ab314610c575781633f4ba83a14610be757816358f8588014610bc15781635c392b3b14610b965781635c60da1b14610b6d5781635c975abb14610b465781635d392fd414610b215781636850e54a1461069b5781636f05e6d81461067a578163715018a614610615578163719ce73e146105ec57816376e5b862146105cd57816379ba50971461054a5781638456cb59146104e957816386b2f739146104ca5781638aff7de6146104a45781638da5cb5b1461047c57816391778d24146103fe578163948231fb146103d25750806399a6a31c14610371578063a14ea2b814610349578063a93539d014610321578063be345453146102e4578063d784d42614610276578063e12e19a01461024e578063e30c397814610226578063f2fde38b146101b65763f7fab94f1461018e57600080fd5b346101b257816003193601126101b25760209061ffff60095460a01c169051908152f35b5080fd5b8234610223576020366003190112610223576101d0610e26565b6101d8610ff6565b600180546001600160a01b0319166001600160a01b0392831690811790915582549091167f38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e227008380a380f35b80fd5b50346101b257816003193601126101b25760015490516001600160a01b039091168152602090f35b50346101b257816003193601126101b25760075490516001600160a01b039091168152602090f35b50346101b25760203660031901126101b25760207f310ba5f1d2ed074b51e2eccd052a47ae9ab7c6b800d1fca3db3999d6a592ca03916102b4610e26565b6102bc610ff6565b600280546001600160a01b0319166001600160a01b039290921691821790559051908152a180f35b50346101b25760203660031901126101b25760209160ff9082906001600160a01b0361030e610e26565b168152600e855220541690519015158152f35b50346101b257816003193601126101b25760085490516001600160a01b039091168152602090f35b50346101b257816003193601126101b25760065490516001600160a01b039091168152602090f35b50346101b25761038961038336610e41565b90610f01565b815192839260208080860192818752855180945286019401925b8281106103b257505050500390f35b83516001600160a01b0316855286955093810193928101926001016103a3565b9050346103fa57826003193601126103fa575490516001600160a01b03909116815260209150f35b8280fd5b833461022357606036600319011261022357610418610e26565b6001600160a01b039060243582811690819003610478576044359280841680940361047457610445610ff6565b6bffffffffffffffffffffffff60a01b9216826006541617600655816007541617600755600854161760085580f35b8480fd5b8380fd5b5050346101b257816003193601126101b257905490516001600160a01b039091168152602090f35b5050346101b257816003193601126101b257600c549051602091821c63ffffffff168152f35b5050346101b257816003193601126101b257602090600b549051908152f35b5050346101b257816003193601126101b25760207f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a25891610527610ff6565b61052f611022565b6001805460ff60a01b1916600160a01b17905551338152a180f35b919050346103fa57826003193601126103fa57600154916001600160a01b039133838516036105b65750506001600160a01b031991821660015582543392811683178455167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08380a380f35b60249250519063118cdaa760e01b82523390820152fd5b5050346101b257816003193601126101b257602090600a549051908152f35b5050346101b257816003193601126101b25760055490516001600160a01b039091168152602090f35b833461022357806003193601126102235761062e610ff6565b600180546001600160a01b03199081169091558154908116825581906001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b83346102235761068936610e41565b90610692610ff6565b600a55600b5580f35b919050346103fa5760a03660031901126103fa576106b7611022565b6002546001600160a01b039390929084841615610b12578460035416948351809663c3c5a54760e01b825233858301528160246020998a935afa908115610b08578391610ad2575b5015610ac257600a548335108015610ab6575b610aa65761071e610e8f565b600c549063ffffffff808316911610908115610a89575b50610a7957600263ffffffff610749610ea2565b1610610a69576103e861ffff61075d610eb5565b1611610a5957600d5494845190878201963360601b8852603483015242605483015260548252608082019667ffffffffffffffff92808910848a1117610a3457888852519020608882901c62ffffff16763d602d80600a3d3981f3363d3d373d3d3d363d7300000017855260789190911b6effffffffffffffffffffffffffffff19166e5af43d82803e903d91602b57fd5bf31788526037600985f5828116968715610a4b575061080c610ea2565b610814610e8f565b60643563ffffffff8116809103610a47578a8894938a938893610835610eb5565b856003541690868a5416928760055416948860065416968960075416988a600854169a600954169b519d8e91632285cd5760e21b9083015235906024015263ffffffff1660448d015263ffffffff1660648c015260848b015261ffff1660a48a01523360c48a015260e4890152610104880152610124870152306101448701526101648601526101848501526101a48401526101c490818401528252610200820182811084821117610a34578752815185928392908b019083905af1903d15610a2e573d908111610a1b57855190610916601f8201601f19168a0183610e57565b815283883d92013e5b156109d857600d54680100000000000000008110156109c5579061094b82600187959401600d55610dd9565b819291549060031b9188831b921b1916179055848152600e865220600160ff1982541617905563ffffffff61097e610ea2565b81610987610e8f565b9185519435855216868401521682820152827fa86bd766ed8b84e0e25ecd760872e06b16ef17ed8de4d372c72c4494951065ef60603393a351908152f35b634e487b7160e01b835260418452602483fd5b835162461bcd60e51b8152808401879052601d60248201527f4c6f747465727920696e697469616c697a6174696f6e206661696c65640000006044820152606490fd5b634e487b7160e01b845260418552602484fd5b5061091f565b634e487b7160e01b865260418752602486fd5b8680fd5b63b06ebf3d60e01b81528590fd5b835163d0b9c07360e01b81528390fd5b8351638a28b1c160e01b81528390fd5b8351630200660b60e31b81528390fd5b905063ffffffff80610a99610e8f565b92891c1691161138610735565b835163033fec6b60e11b81528390fd5b50600b54833511610712565b8351637b5b95df60e11b81528390fd5b90508681813d8311610b01575b610ae98183610e57565b810103126103fa575180151581036103fa57386106ff565b503d610adf565b85513d85823e3d90fd5b5090516340dde93560e01b8152fd5b5050346101b257816003193601126101b25760209063ffffffff600c54169051908152f35b5050346101b257816003193601126101b25760209060ff60015460a01c1690519015158152f35b5050346101b257816003193601126101b25760025490516001600160a01b039091168152602090f35b5050346101b25760203660031901126101b25760209160ff9082906001600160a01b0361030e610e26565b5050346101b257816003193601126101b25760209061ffff60095460a01c169051908152f35b9050346103fa57826003193601126103fa57610c01610ff6565b6001549060ff8260a01c1615610c49575060ff60a01b1916600155513381527f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa90602090a180f35b8251638dfc202b60e01b8152fd5b5050346101b257816003193601126101b25760095490516001600160a01b039091168152602090f35b5050346101b257816003193601126101b257602090600d549051908152f35b9050346103fa5760203660031901126103fa573561ffff8116808203610478577f1b89f70e2fb3771e6a9f5cd2d2ad3439b823b67e0e69bdeb89b7d68a35fdd5c992602092610cec610ff6565b6009805461ffff60a01b191660a09290921b61ffff60a01b1691909117905551908152a180f35b9050346103fa5760203660031901126103fa573591600d548310156102235750610d3e602092610dd9565b905491519160018060a01b039160031b1c168152f35b5050346101b257816003193601126101b25760035490516001600160a01b039091168152602090f35b919050346103fa573660031901126101b2573563ffffffff908181168091036103fa5760243591821682036103fa57610db4610ff6565b67ffffffff00000000600c549260201b169167ffffffffffffffff19161717600c5580f35b600d54811015610e1057600d6000527fd7b6990105719101dabeb77144f2a3385c8033acd3af97e9423a695e81ad1eb50190600090565b634e487b7160e01b600052603260045260246000fd5b600435906001600160a01b0382168203610e3c57565b600080fd5b6040906003190112610e3c576004359060243590565b90601f8019910116810190811067ffffffffffffffff821117610e7957604052565b634e487b7160e01b600052604160045260246000fd5b60443563ffffffff81168103610e3c5790565b60243563ffffffff81168103610e3c5790565b60843561ffff81168103610e3c5790565b67ffffffffffffffff8111610e795760051b60200190565b91908201809211610eeb57565b634e487b7160e01b600052601160045260246000fd5b600d549182821015610fca57610f179082610ede565b91808311610fc2575b50808203918211610eeb57610f3482610ec6565b91610f426040519384610e57565b808352610f4e81610ec6565b602090601f1901368583013760009260005b838110610f6f57505050505090565b610f81610f7c8284610ede565b610dd9565b90548751831015610fae5760039190911b1c6001600160a01b0316600582901b8701840152600101610f60565b634e487b7160e01b87526032600452602487fd5b915038610f20565b5050506040516020810181811067ffffffffffffffff821117610e795760405260008152600036813790565b6000546001600160a01b0316330361100a57565b60405163118cdaa760e01b8152336004820152602490fd5b60ff60015460a01c1661103157565b60405163d93c066560e01b8152600490fdfea26469706673582212204c732730bfc27ebfd1ad2a2a1a6b6d1c27bbf46ab1eec29295e6a03191f8fb3564736f6c63430008180033",
+  "deployedBytecode": "0x6040608081526004908136101561001557600080fd5b600091823560e01c9081630b434a5414610d7d5781630d1cfcae14610d545781631398e07614610d135781632e551c3514610c9f5781632f9aa1fe14610c80578163331b6ab314610c575781633f4ba83a14610be757816358f8588014610bc15781635c392b3b14610b965781635c60da1b14610b6d5781635c975abb14610b465781635d392fd414610b215781636850e54a1461069b5781636f05e6d81461067a578163715018a614610615578163719ce73e146105ec57816376e5b862146105cd57816379ba50971461054a5781638456cb59146104e957816386b2f739146104ca5781638aff7de6146104a45781638da5cb5b1461047c57816391778d24146103fe578163948231fb146103d25750806399a6a31c14610371578063a14ea2b814610349578063a93539d014610321578063be345453146102e4578063d784d42614610276578063e12e19a01461024e578063e30c397814610226578063f2fde38b146101b65763f7fab94f1461018e57600080fd5b346101b257816003193601126101b25760209061ffff60095460a01c169051908152f35b5080fd5b8234610223576020366003190112610223576101d0610e26565b6101d8610ff6565b600180546001600160a01b0319166001600160a01b0392831690811790915582549091167f38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e227008380a380f35b80fd5b50346101b257816003193601126101b25760015490516001600160a01b039091168152602090f35b50346101b257816003193601126101b25760075490516001600160a01b039091168152602090f35b50346101b25760203660031901126101b25760207f310ba5f1d2ed074b51e2eccd052a47ae9ab7c6b800d1fca3db3999d6a592ca03916102b4610e26565b6102bc610ff6565b600280546001600160a01b0319166001600160a01b039290921691821790559051908152a180f35b50346101b25760203660031901126101b25760209160ff9082906001600160a01b0361030e610e26565b168152600e855220541690519015158152f35b50346101b257816003193601126101b25760085490516001600160a01b039091168152602090f35b50346101b257816003193601126101b25760065490516001600160a01b039091168152602090f35b50346101b25761038961038336610e41565b90610f01565b815192839260208080860192818752855180945286019401925b8281106103b257505050500390f35b83516001600160a01b0316855286955093810193928101926001016103a3565b9050346103fa57826003193601126103fa575490516001600160a01b03909116815260209150f35b8280fd5b833461022357606036600319011261022357610418610e26565b6001600160a01b039060243582811690819003610478576044359280841680940361047457610445610ff6565b6bffffffffffffffffffffffff60a01b9216826006541617600655816007541617600755600854161760085580f35b8480fd5b8380fd5b5050346101b257816003193601126101b257905490516001600160a01b039091168152602090f35b5050346101b257816003193601126101b257600c549051602091821c63ffffffff168152f35b5050346101b257816003193601126101b257602090600b549051908152f35b5050346101b257816003193601126101b25760207f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a25891610527610ff6565b61052f611022565b6001805460ff60a01b1916600160a01b17905551338152a180f35b919050346103fa57826003193601126103fa57600154916001600160a01b039133838516036105b65750506001600160a01b031991821660015582543392811683178455167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08380a380f35b60249250519063118cdaa760e01b82523390820152fd5b5050346101b257816003193601126101b257602090600a549051908152f35b5050346101b257816003193601126101b25760055490516001600160a01b039091168152602090f35b833461022357806003193601126102235761062e610ff6565b600180546001600160a01b03199081169091558154908116825581906001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b83346102235761068936610e41565b90610692610ff6565b600a55600b5580f35b919050346103fa5760a03660031901126103fa576106b7611022565b6002546001600160a01b039390929084841615610b12578460035416948351809663c3c5a54760e01b825233858301528160246020998a935afa908115610b08578391610ad2575b5015610ac257600a548335108015610ab6575b610aa65761071e610e8f565b600c549063ffffffff808316911610908115610a89575b50610a7957600263ffffffff610749610ea2565b1610610a69576103e861ffff61075d610eb5565b1611610a5957600d5494845190878201963360601b8852603483015242605483015260548252608082019667ffffffffffffffff92808910848a1117610a3457888852519020608882901c62ffffff16763d602d80600a3d3981f3363d3d373d3d3d363d7300000017855260789190911b6effffffffffffffffffffffffffffff19166e5af43d82803e903d91602b57fd5bf31788526037600985f5828116968715610a4b575061080c610ea2565b610814610e8f565b60643563ffffffff8116809103610a47578a8894938a938893610835610eb5565b856003541690868a5416928760055416948860065416968960075416988a600854169a600954169b519d8e91632285cd5760e21b9083015235906024015263ffffffff1660448d015263ffffffff1660648c015260848b015261ffff1660a48a01523360c48a015260e4890152610104880152610124870152306101448701526101648601526101848501526101a48401526101c490818401528252610200820182811084821117610a34578752815185928392908b019083905af1903d15610a2e573d908111610a1b57855190610916601f8201601f19168a0183610e57565b815283883d92013e5b156109d857600d54680100000000000000008110156109c5579061094b82600187959401600d55610dd9565b819291549060031b9188831b921b1916179055848152600e865220600160ff1982541617905563ffffffff61097e610ea2565b81610987610e8f565b9185519435855216868401521682820152827fa86bd766ed8b84e0e25ecd760872e06b16ef17ed8de4d372c72c4494951065ef60603393a351908152f35b634e487b7160e01b835260418452602483fd5b835162461bcd60e51b8152808401879052601d60248201527f4c6f747465727920696e697469616c697a6174696f6e206661696c65640000006044820152606490fd5b634e487b7160e01b845260418552602484fd5b5061091f565b634e487b7160e01b865260418752602486fd5b8680fd5b63b06ebf3d60e01b81528590fd5b835163d0b9c07360e01b81528390fd5b8351638a28b1c160e01b81528390fd5b8351630200660b60e31b81528390fd5b905063ffffffff80610a99610e8f565b92891c1691161138610735565b835163033fec6b60e11b81528390fd5b50600b54833511610712565b8351637b5b95df60e11b81528390fd5b90508681813d8311610b01575b610ae98183610e57565b810103126103fa575180151581036103fa57386106ff565b503d610adf565b85513d85823e3d90fd5b5090516340dde93560e01b8152fd5b5050346101b257816003193601126101b25760209063ffffffff600c54169051908152f35b5050346101b257816003193601126101b25760209060ff60015460a01c1690519015158152f35b5050346101b257816003193601126101b25760025490516001600160a01b039091168152602090f35b5050346101b25760203660031901126101b25760209160ff9082906001600160a01b0361030e610e26565b5050346101b257816003193601126101b25760209061ffff60095460a01c169051908152f35b9050346103fa57826003193601126103fa57610c01610ff6565b6001549060ff8260a01c1615610c49575060ff60a01b1916600155513381527f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa90602090a180f35b8251638dfc202b60e01b8152fd5b5050346101b257816003193601126101b25760095490516001600160a01b039091168152602090f35b5050346101b257816003193601126101b257602090600d549051908152f35b9050346103fa5760203660031901126103fa573561ffff8116808203610478577f1b89f70e2fb3771e6a9f5cd2d2ad3439b823b67e0e69bdeb89b7d68a35fdd5c992602092610cec610ff6565b6009805461ffff60a01b191660a09290921b61ffff60a01b1691909117905551908152a180f35b9050346103fa5760203660031901126103fa573591600d548310156102235750610d3e602092610dd9565b905491519160018060a01b039160031b1c168152f35b5050346101b257816003193601126101b25760035490516001600160a01b039091168152602090f35b919050346103fa573660031901126101b2573563ffffffff908181168091036103fa5760243591821682036103fa57610db4610ff6565b67ffffffff00000000600c549260201b169167ffffffffffffffff19161717600c5580f35b600d54811015610e1057600d6000527fd7b6990105719101dabeb77144f2a3385c8033acd3af97e9423a695e81ad1eb50190600090565b634e487b7160e01b600052603260045260246000fd5b600435906001600160a01b0382168203610e3c57565b600080fd5b6040906003190112610e3c576004359060243590565b90601f8019910116810190811067ffffffffffffffff821117610e7957604052565b634e487b7160e01b600052604160045260246000fd5b60443563ffffffff81168103610e3c5790565b60243563ffffffff81168103610e3c5790565b60843561ffff81168103610e3c5790565b67ffffffffffffffff8111610e795760051b60200190565b91908201809211610eeb57565b634e487b7160e01b600052601160045260246000fd5b600d549182821015610fca57610f179082610ede565b91808311610fc2575b50808203918211610eeb57610f3482610ec6565b91610f426040519384610e57565b808352610f4e81610ec6565b602090601f1901368583013760009260005b838110610f6f57505050505090565b610f81610f7c8284610ede565b610dd9565b90548751831015610fae5760039190911b1c6001600160a01b0316600582901b8701840152600101610f60565b634e487b7160e01b87526032600452602487fd5b915038610f20565b5050506040516020810181811067ffffffffffffffff821117610e795760405260008152600036813790565b6000546001600160a01b0316330361100a57565b60405163118cdaa760e01b8152336004820152602490fd5b60ff60015460a01c1661103157565b60405163d93c066560e01b8152600490fdfea26469706673582212204c732730bfc27ebfd1ad2a2a1a6b6d1c27bbf46ab1eec29295e6a03191f8fb3564736f6c63430008180033",
+  "devdoc": {
+    "details": "Only registered agents can create lotteries. Each lottery is a clone of a      fixed implementation contract. The factory tracks all deployed lotteries      and enforces global configuration bounds.",
+    "errors": {
+      "EnforcedPause()": [
+        {
+          "details": "The operation failed because the contract is paused."
+        }
+      ],
+      "ExpectedPause()": [
+        {
+          "details": "The operation failed because the contract is not paused."
+        }
+      ],
+      "FailedDeployment()": [
+        {
+          "details": "The deployment failed."
+        }
+      ],
+      "InsufficientBalance(uint256,uint256)": [
+        {
+          "details": "The ETH balance of the account is not enough to perform the operation."
+        }
+      ],
+      "OwnableInvalidOwner(address)": [
+        {
+          "details": "The owner is not a valid owner account. (eg. `address(0)`)"
+        }
+      ],
+      "OwnableUnauthorizedAccount(address)": [
+        {
+          "details": "The caller account is not authorized to perform an operation."
+        }
+      ]
+    },
+    "events": {
+      "Paused(address)": {
+        "details": "Emitted when the pause is triggered by `account`."
+      },
+      "Unpaused(address)": {
+        "details": "Emitted when the pause is lifted by `account`."
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "acceptOwnership()": {
+        "details": "The new owner accepts the ownership transfer."
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "paused()": {
+        "details": "Returns true if the contract is paused, and false otherwise."
+      },
+      "pendingOwner()": {
+        "details": "Returns the address of the pending owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one. Can only be called by the current owner. Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer."
+      }
+    },
+    "title": "LotteryFactory",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Creates and manages lottery instances via EIP-1167 minimal proxy clones.",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 8,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 156,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "_pendingOwner",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address"
+      },
+      {
+        "astId": 966,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "_paused",
+        "offset": 20,
+        "slot": "1",
+        "type": "t_bool"
+      },
+      {
+        "astId": 2763,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "implementation",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_address"
+      },
+      {
+        "astId": 2766,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "agentRegistry",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_contract(IAgentRegistry)3840"
+      },
+      {
+        "astId": 2768,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "drawManager",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_address"
+      },
+      {
+        "astId": 2770,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "prizePool",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_address"
+      },
+      {
+        "astId": 2772,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "eligibilityVerifier",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_address"
+      },
+      {
+        "astId": 2774,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "ticketVerifier",
+        "offset": 0,
+        "slot": "7",
+        "type": "t_address"
+      },
+      {
+        "astId": 2776,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "claimVerifier",
+        "offset": 0,
+        "slot": "8",
+        "type": "t_address"
+      },
+      {
+        "astId": 2778,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "poseidonHasher",
+        "offset": 0,
+        "slot": "9",
+        "type": "t_address"
+      },
+      {
+        "astId": 2780,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "protocolFeeRate",
+        "offset": 20,
+        "slot": "9",
+        "type": "t_uint16"
+      },
+      {
+        "astId": 2782,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "minEntryFee",
+        "offset": 0,
+        "slot": "10",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2784,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "maxEntryFee",
+        "offset": 0,
+        "slot": "11",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2786,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "minDrawInterval",
+        "offset": 0,
+        "slot": "12",
+        "type": "t_uint32"
+      },
+      {
+        "astId": 2788,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "maxDrawInterval",
+        "offset": 4,
+        "slot": "12",
+        "type": "t_uint32"
+      },
+      {
+        "astId": 2791,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "lotteries",
+        "offset": 0,
+        "slot": "13",
+        "type": "t_array(t_address)dyn_storage"
+      },
+      {
+        "astId": 2795,
+        "contract": "contracts/core/LotteryFactory.sol:LotteryFactory",
+        "label": "lotteryExists",
+        "offset": 0,
+        "slot": "14",
+        "type": "t_mapping(t_address,t_bool)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_address)dyn_storage": {
+        "base": "t_address",
+        "encoding": "dynamic_array",
+        "label": "address[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_contract(IAgentRegistry)3840": {
+        "encoding": "inplace",
+        "label": "contract IAgentRegistry",
+        "numberOfBytes": "20"
+      },
+      "t_mapping(t_address,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_uint16": {
+        "encoding": "inplace",
+        "label": "uint16",
+        "numberOfBytes": "2"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      },
+      "t_uint32": {
+        "encoding": "inplace",
+        "label": "uint32",
+        "numberOfBytes": "4"
+      }
+    }
+  }
+}

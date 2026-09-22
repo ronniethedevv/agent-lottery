@@ -1,0 +1,39 @@
+{
+  "name": "@agent-lottery/agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "agent-lottery": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli/index.js start",
+    "dev": "tsx src/cli/index.ts start",
+    "clean": "rimraf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agent-lottery/common": "workspace:*",
+    "circomlibjs": "^0.1.7",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.12.0",
+    "js-yaml": "^4.1.0",
+    "level": "^8.0.1",
+    "pino": "^9.1.0",
+    "snarkjs": "^0.7.4"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.12.0",
+    "rimraf": "^5.0.5",
+    "tsx": "^4.10.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  }
+}

@@ -1,0 +1,46 @@
+node_modules/
+dist/
+.env
+.env.local
+.env.production
+
+# Hardhat
+artifacts/
+cache/
+typechain-types/
+packages/contracts/deployments.json
+
+# Agent runtime config (may contain a mnemonic) + local ticket store
+packages/agent/agents.yaml
+packages/agent/data/
+
+# ZK build artifacts
+packages/circuits/build/
+packages/circuits/keys/
+*.ptau
+
+# Next.js
+.next/
+out/
+
+# Prisma
+packages/backend/prisma/migrations/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*

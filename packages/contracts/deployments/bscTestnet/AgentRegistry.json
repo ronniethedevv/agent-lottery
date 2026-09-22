@@ -1,0 +1,805 @@
+{
+  "address": "0x7972f63Be9a3383b4aa79E100470Db9e55Ab3cc6",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_minStake",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_deregistrationCooldown",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "AlreadyRegistered",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "CooldownNotElapsed",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "EnforcedPause",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ExpectedPause",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InsufficientStake",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoDeregistrationRequested",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotRegistered",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ReentrancyGuardReentrantCall",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "SlashAmountExceedsStake",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TransferFailed",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "agent",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stakeReturned",
+          "type": "uint256"
+        }
+      ],
+      "name": "AgentDeregistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "agent",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stake",
+          "type": "uint256"
+        }
+      ],
+      "name": "AgentRegistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "agent",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "reason",
+          "type": "bytes32"
+        }
+      ],
+      "name": "AgentSlashed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferStarted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Paused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "agent",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newReputation",
+          "type": "uint256"
+        }
+      ],
+      "name": "ReputationUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Unpaused",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "agentCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "deregisterAgent",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "deregistrationCooldown",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "deregistrationRequestedAt",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAgentCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "agent",
+          "type": "address"
+        }
+      ],
+      "name": "getAgentInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "stake",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "reputation",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "registeredAt",
+              "type": "uint64"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct IAgentRegistry.AgentInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMinStake",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "agent",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "incrementReputation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "agent",
+          "type": "address"
+        }
+      ],
+      "name": "isRegistered",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "minStake",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paused",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pendingOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "registerAgent",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "requestDeregistration",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_cooldown",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDeregistrationCooldown",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_minStake",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMinStake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "agent",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "reason",
+          "type": "bytes32"
+        }
+      ],
+      "name": "slash",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xffd4c925c2979c573154fa25209a660a44cf7a489c9d560c3485fe484884fba8",
+  "receipt": {
+    "to": null,
+    "from": "0xBfaB70789367F3eF5f9cBE84608b8f62Af557614",
+    "contractAddress": "0x7972f63Be9a3383b4aa79E100470Db9e55Ab3cc6",
+    "transactionIndex": 1,
+    "gasUsed": "797158",
+    "logsBloom": "0x00000000400000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000001000800000000000000000000000000000000020000000000000000000800000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000001000000000000000000000000020000000000040000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x972ba12f6636f56f71437cec2195c430b9380cc6c699eb10ac03aef8bca0f37c",
+    "transactionHash": "0xffd4c925c2979c573154fa25209a660a44cf7a489c9d560c3485fe484884fba8",
+    "logs": [
+      {
+        "transactionIndex": 1,
+        "blockNumber": 132482391,
+        "transactionHash": "0xffd4c925c2979c573154fa25209a660a44cf7a489c9d560c3485fe484884fba8",
+        "address": "0x7972f63Be9a3383b4aa79E100470Db9e55Ab3cc6",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000bfab70789367f3ef5f9cbe84608b8f62af557614"
+        ],
+        "data": "0x",
+        "logIndex": 0,
+        "blockHash": "0x972ba12f6636f56f71437cec2195c430b9380cc6c699eb10ac03aef8bca0f37c"
+      }
+    ],
+    "blockNumber": 132482391,
+    "cumulativeGasUsed": "836876",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "100000000000000000",
+    86400
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "ae90a05cb3beddea1e390946d0a5327f",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.24+commit.e11b9ed9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_minStake\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_deregistrationCooldown\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"AlreadyRegistered\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"CooldownNotElapsed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"EnforcedPause\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ExpectedPause\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InsufficientStake\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoDeregistrationRequested\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotRegistered\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"SlashAmountExceedsStake\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"TransferFailed\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"agent\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"stakeReturned\",\"type\":\"uint256\"}],\"name\":\"AgentDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"agent\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"stake\",\"type\":\"uint256\"}],\"name\":\"AgentRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"agent\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"reason\",\"type\":\"bytes32\"}],\"name\":\"AgentSlashed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"agent\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"newReputation\",\"type\":\"uint256\"}],\"name\":\"ReputationUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"acceptOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"agentCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deregisterAgent\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deregistrationCooldown\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"deregistrationRequestedAt\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAgentCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"agent\",\"type\":\"address\"}],\"name\":\"getAgentInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"stake\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reputation\",\"type\":\"uint256\"},{\"internalType\":\"uint64\",\"name\":\"registeredAt\",\"type\":\"uint64\"},{\"internalType\":\"bool\",\"name\":\"isActive\",\"type\":\"bool\"}],\"internalType\":\"struct IAgentRegistry.AgentInfo\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMinStake\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"agent\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"incrementReputation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"agent\",\"type\":\"address\"}],\"name\":\"isRegistered\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"minStake\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pendingOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"registerAgent\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"requestDeregistration\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_cooldown\",\"type\":\"uint256\"}],\"name\":\"setDeregistrationCooldown\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_minStake\",\"type\":\"uint256\"}],\"name\":\"setMinStake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"agent\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"reason\",\"type\":\"bytes32\"}],\"name\":\"slash\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Agents must stake a minimum amount of BNB to register. Only registered      agents can create or participate in lotteries. Stake can be slashed for      protocol violations.\",\"errors\":{\"EnforcedPause()\":[{\"details\":\"The operation failed because the contract is paused.\"}],\"ExpectedPause()\":[{\"details\":\"The operation failed because the contract is not paused.\"}],\"OwnableInvalidOwner(address)\":[{\"details\":\"The owner is not a valid owner account. (eg. `address(0)`)\"}],\"OwnableUnauthorizedAccount(address)\":[{\"details\":\"The caller account is not authorized to perform an operation.\"}],\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}]},\"events\":{\"Paused(address)\":{\"details\":\"Emitted when the pause is triggered by `account`.\"},\"Unpaused(address)\":{\"details\":\"Emitted when the pause is lifted by `account`.\"}},\"kind\":\"dev\",\"methods\":{\"acceptOwnership()\":{\"details\":\"The new owner accepts the ownership transfer.\"},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"paused()\":{\"details\":\"Returns true if the contract is paused, and false otherwise.\"},\"pendingOwner()\":{\"details\":\"Returns the address of the pending owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one. Can only be called by the current owner. Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer.\"}},\"title\":\"AgentRegistry\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"requestDeregistration()\":{\"notice\":\"Request deregistration. The agent must wait for the cooldown         period before completing deregistration and reclaiming their stake.\"}},\"notice\":\"Manages agent registration, staking, reputation, and Sybil resistance.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/core/AgentRegistry.sol\":\"AgentRegistry\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * The initial owner is set to the address provided by the deployer. This can\\n * later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    /**\\n     * @dev The caller account is not authorized to perform an operation.\\n     */\\n    error OwnableUnauthorizedAccount(address account);\\n\\n    /**\\n     * @dev The owner is not a valid owner account. (eg. `address(0)`)\\n     */\\n    error OwnableInvalidOwner(address owner);\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.\\n     */\\n    constructor(address initialOwner) {\\n        if (initialOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(initialOwner);\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        if (owner() != _msgSender()) {\\n            revert OwnableUnauthorizedAccount(_msgSender());\\n        }\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby disabling any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        if (newOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb\",\"license\":\"MIT\"},\"@openzeppelin/contracts/access/Ownable2Step.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.1.0) (access/Ownable2Step.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Ownable} from \\\"./Ownable.sol\\\";\\n\\n/**\\n * @dev Contract module which provides access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * This extension of the {Ownable} contract includes a two-step mechanism to transfer\\n * ownership, where the new owner must call {acceptOwnership} in order to replace the\\n * old one. This can help prevent common mistakes, such as transfers of ownership to\\n * incorrect accounts, or to contracts that are unable to interact with the\\n * permission system.\\n *\\n * The initial owner is specified at deployment time in the constructor for `Ownable`. This\\n * can later be changed with {transferOwnership} and {acceptOwnership}.\\n *\\n * This module is used through inheritance. It will make available all functions\\n * from parent (Ownable).\\n */\\nabstract contract Ownable2Step is Ownable {\\n    address private _pendingOwner;\\n\\n    event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Returns the address of the pending owner.\\n     */\\n    function pendingOwner() public view virtual returns (address) {\\n        return _pendingOwner;\\n    }\\n\\n    /**\\n     * @dev Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one.\\n     * Can only be called by the current owner.\\n     *\\n     * Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer.\\n     */\\n    function transferOwnership(address newOwner) public virtual override onlyOwner {\\n        _pendingOwner = newOwner;\\n        emit OwnershipTransferStarted(owner(), newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`) and deletes any pending owner.\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual override {\\n        delete _pendingOwner;\\n        super._transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev The new owner accepts the ownership transfer.\\n     */\\n    function acceptOwnership() public virtual {\\n        address sender = _msgSender();\\n        if (pendingOwner() != sender) {\\n            revert OwnableUnauthorizedAccount(sender);\\n        }\\n        _transferOwnership(sender);\\n    }\\n}\\n\",\"keccak256\":\"0xdcad8898fda432696597752e8ec361b87d85c82cb258115427af006dacf7128c\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n\\n    function _contextSuffixLength() internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n}\\n\",\"keccak256\":\"0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Pausable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.3.0) (utils/Pausable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which allows children to implement an emergency stop\\n * mechanism that can be triggered by an authorized account.\\n *\\n * This module is used through inheritance. It will make available the\\n * modifiers `whenNotPaused` and `whenPaused`, which can be applied to\\n * the functions of your contract. Note that they will not be pausable by\\n * simply including this module, only once the modifiers are put in place.\\n */\\nabstract contract Pausable is Context {\\n    bool private _paused;\\n\\n    /**\\n     * @dev Emitted when the pause is triggered by `account`.\\n     */\\n    event Paused(address account);\\n\\n    /**\\n     * @dev Emitted when the pause is lifted by `account`.\\n     */\\n    event Unpaused(address account);\\n\\n    /**\\n     * @dev The operation failed because the contract is paused.\\n     */\\n    error EnforcedPause();\\n\\n    /**\\n     * @dev The operation failed because the contract is not paused.\\n     */\\n    error ExpectedPause();\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is not paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    modifier whenNotPaused() {\\n        _requireNotPaused();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    modifier whenPaused() {\\n        _requirePaused();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns true if the contract is paused, and false otherwise.\\n     */\\n    function paused() public view virtual returns (bool) {\\n        return _paused;\\n    }\\n\\n    /**\\n     * @dev Throws if the contract is paused.\\n     */\\n    function _requireNotPaused() internal view virtual {\\n        if (paused()) {\\n            revert EnforcedPause();\\n        }\\n    }\\n\\n    /**\\n     * @dev Throws if the contract is not paused.\\n     */\\n    function _requirePaused() internal view virtual {\\n        if (!paused()) {\\n            revert ExpectedPause();\\n        }\\n    }\\n\\n    /**\\n     * @dev Triggers stopped state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    function _pause() internal virtual whenNotPaused {\\n        _paused = true;\\n        emit Paused(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Returns to normal state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    function _unpause() internal virtual whenPaused {\\n        _paused = false;\\n        emit Unpaused(_msgSender());\\n    }\\n}\\n\",\"keccak256\":\"0xdb484371dfbb848cb6f5d70464e9ac9b2900e4164ead76bbce4fef0b44bcc68f\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.5.0) (utils/ReentrancyGuard.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {StorageSlot} from \\\"./StorageSlot.sol\\\";\\n\\n/**\\n * @dev Contract module that helps prevent reentrant calls to a function.\\n *\\n * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier\\n * available, which can be applied to functions to make sure there are no nested\\n * (reentrant) calls to them.\\n *\\n * Note that because there is a single `nonReentrant` guard, functions marked as\\n * `nonReentrant` may not call one another. This can be worked around by making\\n * those functions `private`, and then adding `external` `nonReentrant` entry\\n * points to them.\\n *\\n * TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,\\n * consider using {ReentrancyGuardTransient} instead.\\n *\\n * TIP: If you would like to learn more about reentrancy and alternative ways\\n * to protect against it, check out our blog post\\n * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\\n *\\n * IMPORTANT: Deprecated. This storage-based reentrancy guard will be removed and replaced\\n * by the {ReentrancyGuardTransient} variant in v6.0.\\n *\\n * @custom:stateless\\n */\\nabstract contract ReentrancyGuard {\\n    using StorageSlot for bytes32;\\n\\n    // keccak256(abi.encode(uint256(keccak256(\\\"openzeppelin.storage.ReentrancyGuard\\\")) - 1)) & ~bytes32(uint256(0xff))\\n    bytes32 private constant REENTRANCY_GUARD_STORAGE =\\n        0x9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00;\\n\\n    // Booleans are more expensive than uint256 or any type that takes up a full\\n    // word because each write operation emits an extra SLOAD to first read the\\n    // slot's contents, replace the bits taken up by the boolean, and then write\\n    // back. This is the compiler's defense against contract upgrades and\\n    // pointer aliasing, and it cannot be disabled.\\n\\n    // The values being non-zero value makes deployment a bit more expensive,\\n    // but in exchange the refund on every call to nonReentrant will be lower in\\n    // amount. Since refunds are capped to a percentage of the total\\n    // transaction's gas, it is best to keep them low in cases like this one, to\\n    // increase the likelihood of the full refund coming into effect.\\n    uint256 private constant NOT_ENTERED = 1;\\n    uint256 private constant ENTERED = 2;\\n\\n    /**\\n     * @dev Unauthorized reentrant call.\\n     */\\n    error ReentrancyGuardReentrantCall();\\n\\n    constructor() {\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Prevents a contract from calling itself, directly or indirectly.\\n     * Calling a `nonReentrant` function from another `nonReentrant`\\n     * function is not supported. It is possible to prevent this from happening\\n     * by making the `nonReentrant` function external, and making it call a\\n     * `private` function that does the actual work.\\n     */\\n    modifier nonReentrant() {\\n        _nonReentrantBefore();\\n        _;\\n        _nonReentrantAfter();\\n    }\\n\\n    /**\\n     * @dev A `view` only version of {nonReentrant}. Use to block view functions\\n     * from being called, preventing reading from inconsistent contract state.\\n     *\\n     * CAUTION: This is a \\\"view\\\" modifier and does not change the reentrancy\\n     * status. Use it only on view functions. For payable or non-payable functions,\\n     * use the standard {nonReentrant} modifier instead.\\n     */\\n    modifier nonReentrantView() {\\n        _nonReentrantBeforeView();\\n        _;\\n    }\\n\\n    function _nonReentrantBeforeView() private view {\\n        if (_reentrancyGuardEntered()) {\\n            revert ReentrancyGuardReentrantCall();\\n        }\\n    }\\n\\n    function _nonReentrantBefore() private {\\n        // On the first call to nonReentrant, _status will be NOT_ENTERED\\n        _nonReentrantBeforeView();\\n\\n        // Any calls to nonReentrant after this point will fail\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = ENTERED;\\n    }\\n\\n    function _nonReentrantAfter() private {\\n        // By storing the original value once again, a refund is triggered (see\\n        // https://eips.ethereum.org/EIPS/eip-2200)\\n        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Returns true if the reentrancy guard is currently set to \\\"entered\\\", which indicates there is a\\n     * `nonReentrant` function in the call stack.\\n     */\\n    function _reentrancyGuardEntered() internal view returns (bool) {\\n        return _reentrancyGuardStorageSlot().getUint256Slot().value == ENTERED;\\n    }\\n\\n    function _reentrancyGuardStorageSlot() internal pure virtual returns (bytes32) {\\n        return REENTRANCY_GUARD_STORAGE;\\n    }\\n}\\n\",\"keccak256\":\"0xa516cbf1c7d15d3517c2d668601ce016c54395bf5171918a14e2686977465f53\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/StorageSlot.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.1.0) (utils/StorageSlot.sol)\\n// This file was procedurally generated from scripts/generate/templates/StorageSlot.js.\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Library for reading and writing primitive types to specific storage slots.\\n *\\n * Storage slots are often used to avoid storage conflict when dealing with upgradeable contracts.\\n * This library helps with reading and writing to such slots without the need for inline assembly.\\n *\\n * The functions in this library return Slot structs that contain a `value` member that can be used to read or write.\\n *\\n * Example usage to set ERC-1967 implementation slot:\\n * ```solidity\\n * contract ERC1967 {\\n *     // Define the slot. Alternatively, use the SlotDerivation library to derive the slot.\\n *     bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;\\n *\\n *     function _getImplementation() internal view returns (address) {\\n *         return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;\\n *     }\\n *\\n *     function _setImplementation(address newImplementation) internal {\\n *         require(newImplementation.code.length > 0);\\n *         StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;\\n *     }\\n * }\\n * ```\\n *\\n * TIP: Consider using this library along with {SlotDerivation}.\\n */\\nlibrary StorageSlot {\\n    struct AddressSlot {\\n        address value;\\n    }\\n\\n    struct BooleanSlot {\\n        bool value;\\n    }\\n\\n    struct Bytes32Slot {\\n        bytes32 value;\\n    }\\n\\n    struct Uint256Slot {\\n        uint256 value;\\n    }\\n\\n    struct Int256Slot {\\n        int256 value;\\n    }\\n\\n    struct StringSlot {\\n        string value;\\n    }\\n\\n    struct BytesSlot {\\n        bytes value;\\n    }\\n\\n    /**\\n     * @dev Returns an `AddressSlot` with member `value` located at `slot`.\\n     */\\n    function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `BooleanSlot` with member `value` located at `slot`.\\n     */\\n    function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.\\n     */\\n    function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Uint256Slot` with member `value` located at `slot`.\\n     */\\n    function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `Int256Slot` with member `value` located at `slot`.\\n     */\\n    function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `StringSlot` with member `value` located at `slot`.\\n     */\\n    function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `StringSlot` representation of the string storage pointer `store`.\\n     */\\n    function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := store.slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns a `BytesSlot` with member `value` located at `slot`.\\n     */\\n    function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.\\n     */\\n    function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {\\n        assembly (\\\"memory-safe\\\") {\\n            r.slot := store.slot\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xcf74f855663ce2ae00ed8352666b7935f6cddea2932fdf2c3ecd30a9b1cd0e97\",\"license\":\"MIT\"},\"contracts/core/AgentRegistry.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\nimport {Ownable2Step, Ownable} from \\\"@openzeppelin/contracts/access/Ownable2Step.sol\\\";\\nimport {Pausable} from \\\"@openzeppelin/contracts/utils/Pausable.sol\\\";\\nimport {ReentrancyGuard} from \\\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\\\";\\nimport {IAgentRegistry} from \\\"../interfaces/IAgentRegistry.sol\\\";\\n\\n/// @title AgentRegistry\\n/// @notice Manages agent registration, staking, reputation, and Sybil resistance.\\n/// @dev Agents must stake a minimum amount of BNB to register. Only registered\\n///      agents can create or participate in lotteries. Stake can be slashed for\\n///      protocol violations.\\ncontract AgentRegistry is IAgentRegistry, Ownable2Step, Pausable, ReentrancyGuard {\\n    uint256 public minStake;\\n    uint256 public deregistrationCooldown;\\n    uint256 public agentCount;\\n\\n    mapping(address => AgentInfo) private agents;\\n    mapping(address => uint64) public deregistrationRequestedAt;\\n\\n    error InsufficientStake();\\n    error AlreadyRegistered();\\n    error NotRegistered();\\n    error CooldownNotElapsed();\\n    error NoDeregistrationRequested();\\n    error SlashAmountExceedsStake();\\n    error TransferFailed();\\n\\n    constructor(\\n        uint256 _minStake,\\n        uint256 _deregistrationCooldown\\n    ) Ownable(msg.sender) {\\n        minStake = _minStake;\\n        deregistrationCooldown = _deregistrationCooldown;\\n    }\\n\\n    /// @inheritdoc IAgentRegistry\\n    function registerAgent() external payable override whenNotPaused nonReentrant {\\n        if (msg.value < minStake) revert InsufficientStake();\\n        if (agents[msg.sender].isActive) revert AlreadyRegistered();\\n\\n        agents[msg.sender] = AgentInfo({\\n            stake: msg.value,\\n            reputation: 0,\\n            registeredAt: uint64(block.timestamp),\\n            isActive: true\\n        });\\n\\n        agentCount++;\\n        emit AgentRegistered(msg.sender, msg.value);\\n    }\\n\\n    /// @notice Request deregistration. The agent must wait for the cooldown\\n    ///         period before completing deregistration and reclaiming their stake.\\n    function requestDeregistration() external {\\n        if (!agents[msg.sender].isActive) revert NotRegistered();\\n        deregistrationRequestedAt[msg.sender] = uint64(block.timestamp);\\n    }\\n\\n    /// @inheritdoc IAgentRegistry\\n    function deregisterAgent() external override nonReentrant {\\n        AgentInfo storage agent = agents[msg.sender];\\n        if (!agent.isActive) revert NotRegistered();\\n\\n        uint64 requestedAt = deregistrationRequestedAt[msg.sender];\\n        if (requestedAt == 0) revert NoDeregistrationRequested();\\n        if (block.timestamp < requestedAt + deregistrationCooldown) {\\n            revert CooldownNotElapsed();\\n        }\\n\\n        uint256 stakeToReturn = agent.stake;\\n        agent.isActive = false;\\n        agent.stake = 0;\\n        delete deregistrationRequestedAt[msg.sender];\\n\\n        agentCount--;\\n\\n        (bool success, ) = msg.sender.call{value: stakeToReturn}(\\\"\\\");\\n        if (!success) revert TransferFailed();\\n\\n        emit AgentDeregistered(msg.sender, stakeToReturn);\\n    }\\n\\n    /// @inheritdoc IAgentRegistry\\n    function slash(\\n        address agent,\\n        uint256 amount,\\n        bytes32 reason\\n    ) external override onlyOwner {\\n        AgentInfo storage info = agents[agent];\\n        if (!info.isActive) revert NotRegistered();\\n        if (amount > info.stake) revert SlashAmountExceedsStake();\\n\\n        info.stake -= amount;\\n        if (info.stake < minStake) {\\n            info.isActive = false;\\n            agentCount--;\\n        }\\n\\n        // Slashed funds go to the protocol treasury (contract owner)\\n        (bool success, ) = owner().call{value: amount}(\\\"\\\");\\n        if (!success) revert TransferFailed();\\n\\n        emit AgentSlashed(agent, amount, reason);\\n    }\\n\\n    /// @inheritdoc IAgentRegistry\\n    function incrementReputation(\\n        address agent,\\n        uint256 amount\\n    ) external override {\\n        // Only callable by lottery contracts (checked via factory)\\n        AgentInfo storage info = agents[agent];\\n        if (!info.isActive) revert NotRegistered();\\n\\n        info.reputation += amount;\\n        emit ReputationUpdated(agent, info.reputation);\\n    }\\n\\n    /// @inheritdoc IAgentRegistry\\n    function isRegistered(address agent) external view override returns (bool) {\\n        return agents[agent].isActive;\\n    }\\n\\n    /// @inheritdoc IAgentRegistry\\n    function getAgentInfo(address agent) external view override returns (AgentInfo memory) {\\n        return agents[agent];\\n    }\\n\\n    /// @inheritdoc IAgentRegistry\\n    function getMinStake() external view override returns (uint256) {\\n        return minStake;\\n    }\\n\\n    /// @inheritdoc IAgentRegistry\\n    function getAgentCount() external view override returns (uint256) {\\n        return agentCount;\\n    }\\n\\n    // --- Admin functions ---\\n\\n    function setMinStake(uint256 _minStake) external onlyOwner {\\n        minStake = _minStake;\\n    }\\n\\n    function setDeregistrationCooldown(uint256 _cooldown) external onlyOwner {\\n        deregistrationCooldown = _cooldown;\\n    }\\n\\n    function pause() external onlyOwner {\\n        _pause();\\n    }\\n\\n    function unpause() external onlyOwner {\\n        _unpause();\\n    }\\n}\\n\",\"keccak256\":\"0x6371692b79c98b2c9960d4041bd441c0ad34717fe4d2b0401cb3a914bab0e14b\",\"license\":\"MIT\"},\"contracts/interfaces/IAgentRegistry.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\n\\ninterface IAgentRegistry {\\n    struct AgentInfo {\\n        uint256 stake;\\n        uint256 reputation;\\n        uint64 registeredAt;\\n        bool isActive;\\n    }\\n\\n    event AgentRegistered(address indexed agent, uint256 stake);\\n    event AgentDeregistered(address indexed agent, uint256 stakeReturned);\\n    event AgentSlashed(address indexed agent, uint256 amount, bytes32 reason);\\n    event ReputationUpdated(address indexed agent, uint256 newReputation);\\n\\n    function registerAgent() external payable;\\n    function deregisterAgent() external;\\n    function slash(address agent, uint256 amount, bytes32 reason) external;\\n    function incrementReputation(address agent, uint256 amount) external;\\n    function isRegistered(address agent) external view returns (bool);\\n    function getAgentInfo(address agent) external view returns (AgentInfo memory);\\n    function getMinStake() external view returns (uint256);\\n    function getAgentCount() external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xcee3be3aec766e05ad344101c6b2a6f48305b014c2cdf860698461cf2fd3760c\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x6080346100e957601f610cb838819003918201601f19168301916001600160401b038311848410176100ee5780849260409485528339810103126100e9576020815191015133156100d05760018060a01b031991826001541660015560005492339084161760005560405192339060018060a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0600080a360017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055600255600355610bb390816101058239f35b604051631e4fbdf760e01b815260006004820152602490fd5b600080fd5b634e487b7160e01b600052604160045260246000fdfe60406080815260048036101561001457600080fd5b600091823560e01c8063152052b01461097b57806330d10b931461095957806335eb520814610822578063375b3c0a146107935780633f4ba83a146107b257806356a3b5fa146107935780635c975abb1461076c578063715018a614610707578063797ba784146106e857806379ba5097146106675780638456cb59146106065780638c80fd90146105e45780638da5cb5b146105bc57806391cab63e146103c8578063a725370414610474578063b46544e8146103e6578063b7dc1284146103c8578063bd9095df14610366578063c3c5a54714610323578063d847bae2146102e0578063e30c3978146102b3578063f2fde38b146102435763fba2c05a1461011d57600080fd5b3461023f57606036600319011261023f57610136610a22565b9160243590610143610aee565b6001600160a01b039384168086526005602052838620600281018054929692909181871c60ff161561022f5780549081871161021f5786820391821161020c578994859485948486958b9555600254116101f0575b50508254165af16101a7610aa3565b50156101e25750907f7dce14c34812c32c9721d7ee5a5304435a3500ce8d74999d04b9ec07ce4dc44c9181519081526044356020820152a280f35b82516312171d8360e31b8152fd5b60ff60401b191690556102038754610a96565b87553880610198565b634e487b7160e01b8a526011865260248afd5b87516306b663af60e01b81528690fd5b865163aba4733960e01b81528590fd5b8280fd5b83346102b05760203660031901126102b05761025d610a22565b610265610aee565b600180546001600160a01b0319166001600160a01b0392831690811790915582549091167f38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e227008380a380f35b80fd5b8382346102dc57816003193601126102dc5760015490516001600160a01b039091168152602090f35b5080fd5b8382346102dc5760203660031901126102dc5760209167ffffffffffffffff9082906001600160a01b03610312610a22565b168152600685522054169051908152f35b8382346102dc5760203660031901126102dc5760209160ff9060029083906001600160a01b03610351610a22565b168152600586522001548251921c1615158152f35b50903461023f578260031936011261023f57338352600560205260ff60028385200154831c16156103ba575033825260066020528120805467ffffffffffffffff19164267ffffffffffffffff1617905580f35b905163aba4733960e01b8152fd5b50903461023f578260031936011261023f5760209250549051908152f35b503461023f578060031936011261023f576001600160a01b03610407610a22565b169182845260056020528184209060ff6002830154841c161561046657507ffc577563f1b9a0461e24abef1e1fcc0d33d3d881f20b5df6dda59de4aae2c821916001602092019061045b6024358354610a73565b80925551908152a280f35b825163aba4733960e01b8152fd5b503461023f578260031936011261023f5761048d610b3b565b338352600560205280832091600283019283549360ff85851c16156105ac57338652600660205267ffffffffffffffff8487205416801561059c576003546104d491610a73565b421061058c57815468ff00000000000000001990951690558490553384526006602052818420805467ffffffffffffffff19169055805461051490610a96565b81558380808086335af1610526610aa3565b501561057e5750519081527fa92443b93ff32c89ebda9dc8b41cd2259954ba01758b65fccce6bbebe707753c60203392a260017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005580f35b90516312171d8360e31b8152fd5b8351635115ba2f60e11b81528390fd5b845163a793fc4160e01b81528490fd5b835163aba4733960e01b81528390fd5b8382346102dc57816003193601126102dc57905490516001600160a01b039091168152602090f35b5050346102dc5760203660031901126102dc576105ff610aee565b3560025580f35b8382346102dc57816003193601126102dc5760207f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a25891610644610aee565b61064c610b1a565b6001805460ff60a01b1916600160a01b17905551338152a180f35b503461023f578260031936011261023f57600154916001600160a01b039133838516036106d15750506001600160a01b031991821660015582543392811683178455167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08380a380f35b60249250519063118cdaa760e01b82523390820152fd5b8382346102dc57816003193601126102dc576020906003549051908152f35b83346102b057806003193601126102b057610720610aee565b600180546001600160a01b03199081169091558154908116825581906001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b8382346102dc57816003193601126102dc5760209060ff60015460a01c1690519015158152f35b8382346102dc57816003193601126102dc576020906002549051908152f35b50903461023f578260031936011261023f576107cc610aee565b6001549060ff8260a01c1615610814575060ff60a01b1916600155513381527f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa90602090a180f35b8251638dfc202b60e01b8152fd5b50908260031936011261023f57610837610b1a565b61083f610b3b565b600254341061094b57338352600560205260ff60028385200154831c1661093d5767ffffffffffffffff610871610a3d565b90348252602082019085825260028584019382421685526060810193600185523389526005602052878920915182555160018201550192511660ff60401b835492511515861b169168ffffffffffffffffff1916171790558054600019811461092a576001019055513481527fd1b844701695237443dd884ed7193d9c8788f3befd35adc0910472eb166f330660203392a260017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005580f35b634e487b7160e01b845260118252602484fd5b9051630ea075bf60e21b8152fd5b90516378de4a6960e11b8152fd5b5050346102dc5760203660031901126102dc57610974610aee565b3560035580f35b8382346102dc5760203660031901126102dc578060809261099a610a22565b8160606109a5610a3d565b8281528260208201528286820152015260018060a01b03168152600560205220906109ce610a3d565b9082549283835260026001820154916020850192835201549267ffffffffffffffff9160ff60608584019385881685520195851c161515855283519586525160208601525116908301525115156060820152f35b600435906001600160a01b0382168203610a3857565b600080fd5b604051906080820182811067ffffffffffffffff821117610a5d57604052565b634e487b7160e01b600052604160045260246000fd5b91908201809211610a8057565b634e487b7160e01b600052601160045260246000fd5b8015610a80576000190190565b3d15610ae95767ffffffffffffffff903d828111610a5d5760405192601f8201601f19908116603f0116840190811184821017610a5d5760405282523d6000602084013e565b606090565b6000546001600160a01b03163303610b0257565b60405163118cdaa760e01b8152336004820152602490fd5b60ff60015460a01c16610b2957565b60405163d93c066560e01b8152600490fd5b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f006002815414610b6b5760029055565b604051633ee5aeb560e01b8152600490fdfea2646970667358221220de8389deb9f97f5eb927885cf7794bba395977577dd5f306e513de151ccb08c464736f6c63430008180033",
+  "deployedBytecode": "0x60406080815260048036101561001457600080fd5b600091823560e01c8063152052b01461097b57806330d10b931461095957806335eb520814610822578063375b3c0a146107935780633f4ba83a146107b257806356a3b5fa146107935780635c975abb1461076c578063715018a614610707578063797ba784146106e857806379ba5097146106675780638456cb59146106065780638c80fd90146105e45780638da5cb5b146105bc57806391cab63e146103c8578063a725370414610474578063b46544e8146103e6578063b7dc1284146103c8578063bd9095df14610366578063c3c5a54714610323578063d847bae2146102e0578063e30c3978146102b3578063f2fde38b146102435763fba2c05a1461011d57600080fd5b3461023f57606036600319011261023f57610136610a22565b9160243590610143610aee565b6001600160a01b039384168086526005602052838620600281018054929692909181871c60ff161561022f5780549081871161021f5786820391821161020c578994859485948486958b9555600254116101f0575b50508254165af16101a7610aa3565b50156101e25750907f7dce14c34812c32c9721d7ee5a5304435a3500ce8d74999d04b9ec07ce4dc44c9181519081526044356020820152a280f35b82516312171d8360e31b8152fd5b60ff60401b191690556102038754610a96565b87553880610198565b634e487b7160e01b8a526011865260248afd5b87516306b663af60e01b81528690fd5b865163aba4733960e01b81528590fd5b8280fd5b83346102b05760203660031901126102b05761025d610a22565b610265610aee565b600180546001600160a01b0319166001600160a01b0392831690811790915582549091167f38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e227008380a380f35b80fd5b8382346102dc57816003193601126102dc5760015490516001600160a01b039091168152602090f35b5080fd5b8382346102dc5760203660031901126102dc5760209167ffffffffffffffff9082906001600160a01b03610312610a22565b168152600685522054169051908152f35b8382346102dc5760203660031901126102dc5760209160ff9060029083906001600160a01b03610351610a22565b168152600586522001548251921c1615158152f35b50903461023f578260031936011261023f57338352600560205260ff60028385200154831c16156103ba575033825260066020528120805467ffffffffffffffff19164267ffffffffffffffff1617905580f35b905163aba4733960e01b8152fd5b50903461023f578260031936011261023f5760209250549051908152f35b503461023f578060031936011261023f576001600160a01b03610407610a22565b169182845260056020528184209060ff6002830154841c161561046657507ffc577563f1b9a0461e24abef1e1fcc0d33d3d881f20b5df6dda59de4aae2c821916001602092019061045b6024358354610a73565b80925551908152a280f35b825163aba4733960e01b8152fd5b503461023f578260031936011261023f5761048d610b3b565b338352600560205280832091600283019283549360ff85851c16156105ac57338652600660205267ffffffffffffffff8487205416801561059c576003546104d491610a73565b421061058c57815468ff00000000000000001990951690558490553384526006602052818420805467ffffffffffffffff19169055805461051490610a96565b81558380808086335af1610526610aa3565b501561057e5750519081527fa92443b93ff32c89ebda9dc8b41cd2259954ba01758b65fccce6bbebe707753c60203392a260017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005580f35b90516312171d8360e31b8152fd5b8351635115ba2f60e11b81528390fd5b845163a793fc4160e01b81528490fd5b835163aba4733960e01b81528390fd5b8382346102dc57816003193601126102dc57905490516001600160a01b039091168152602090f35b5050346102dc5760203660031901126102dc576105ff610aee565b3560025580f35b8382346102dc57816003193601126102dc5760207f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a25891610644610aee565b61064c610b1a565b6001805460ff60a01b1916600160a01b17905551338152a180f35b503461023f578260031936011261023f57600154916001600160a01b039133838516036106d15750506001600160a01b031991821660015582543392811683178455167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08380a380f35b60249250519063118cdaa760e01b82523390820152fd5b8382346102dc57816003193601126102dc576020906003549051908152f35b83346102b057806003193601126102b057610720610aee565b600180546001600160a01b03199081169091558154908116825581906001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b8382346102dc57816003193601126102dc5760209060ff60015460a01c1690519015158152f35b8382346102dc57816003193601126102dc576020906002549051908152f35b50903461023f578260031936011261023f576107cc610aee565b6001549060ff8260a01c1615610814575060ff60a01b1916600155513381527f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa90602090a180f35b8251638dfc202b60e01b8152fd5b50908260031936011261023f57610837610b1a565b61083f610b3b565b600254341061094b57338352600560205260ff60028385200154831c1661093d5767ffffffffffffffff610871610a3d565b90348252602082019085825260028584019382421685526060810193600185523389526005602052878920915182555160018201550192511660ff60401b835492511515861b169168ffffffffffffffffff1916171790558054600019811461092a576001019055513481527fd1b844701695237443dd884ed7193d9c8788f3befd35adc0910472eb166f330660203392a260017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f005580f35b634e487b7160e01b845260118252602484fd5b9051630ea075bf60e21b8152fd5b90516378de4a6960e11b8152fd5b5050346102dc5760203660031901126102dc57610974610aee565b3560035580f35b8382346102dc5760203660031901126102dc578060809261099a610a22565b8160606109a5610a3d565b8281528260208201528286820152015260018060a01b03168152600560205220906109ce610a3d565b9082549283835260026001820154916020850192835201549267ffffffffffffffff9160ff60608584019385881685520195851c161515855283519586525160208601525116908301525115156060820152f35b600435906001600160a01b0382168203610a3857565b600080fd5b604051906080820182811067ffffffffffffffff821117610a5d57604052565b634e487b7160e01b600052604160045260246000fd5b91908201809211610a8057565b634e487b7160e01b600052601160045260246000fd5b8015610a80576000190190565b3d15610ae95767ffffffffffffffff903d828111610a5d5760405192601f8201601f19908116603f0116840190811184821017610a5d5760405282523d6000602084013e565b606090565b6000546001600160a01b03163303610b0257565b60405163118cdaa760e01b8152336004820152602490fd5b60ff60015460a01c16610b2957565b60405163d93c066560e01b8152600490fd5b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f006002815414610b6b5760029055565b604051633ee5aeb560e01b8152600490fdfea2646970667358221220de8389deb9f97f5eb927885cf7794bba395977577dd5f306e513de151ccb08c464736f6c63430008180033",
+  "devdoc": {
+    "details": "Agents must stake a minimum amount of BNB to register. Only registered      agents can create or participate in lotteries. Stake can be slashed for      protocol violations.",
+    "errors": {
+      "EnforcedPause()": [
+        {
+          "details": "The operation failed because the contract is paused."
+        }
+      ],
+      "ExpectedPause()": [
+        {
+          "details": "The operation failed because the contract is not paused."
+        }
+      ],
+      "OwnableInvalidOwner(address)": [
+        {
+          "details": "The owner is not a valid owner account. (eg. `address(0)`)"
+        }
+      ],
+      "OwnableUnauthorizedAccount(address)": [
+        {
+          "details": "The caller account is not authorized to perform an operation."
+        }
+      ],
+      "ReentrancyGuardReentrantCall()": [
+        {
+          "details": "Unauthorized reentrant call."
+        }
+      ]
+    },
+    "events": {
+      "Paused(address)": {
+        "details": "Emitted when the pause is triggered by `account`."
+      },
+      "Unpaused(address)": {
+        "details": "Emitted when the pause is lifted by `account`."
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "acceptOwnership()": {
+        "details": "The new owner accepts the ownership transfer."
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "paused()": {
+        "details": "Returns true if the contract is paused, and false otherwise."
+      },
+      "pendingOwner()": {
+        "details": "Returns the address of the pending owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one. Can only be called by the current owner. Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer."
+      }
+    },
+    "title": "AgentRegistry",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "requestDeregistration()": {
+        "notice": "Request deregistration. The agent must wait for the cooldown         period before completing deregistration and reclaiming their stake."
+      }
+    },
+    "notice": "Manages agent registration, staking, reputation, and Sybil resistance.",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 8,
+        "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 156,
+        "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+        "label": "_pendingOwner",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address"
+      },
+      {
+        "astId": 966,
+        "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+        "label": "_paused",
+        "offset": 20,
+        "slot": "1",
+        "type": "t_bool"
+      },
+      {
+        "astId": 1324,
+        "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+        "label": "minStake",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 1326,
+        "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+        "label": "deregistrationCooldown",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 1328,
+        "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+        "label": "agentCount",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 1333,
+        "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+        "label": "agents",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_mapping(t_address,t_struct(AgentInfo)3766_storage)"
+      },
+      {
+        "astId": 1337,
+        "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+        "label": "deregistrationRequestedAt",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_mapping(t_address,t_uint64)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_struct(AgentInfo)3766_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => struct IAgentRegistry.AgentInfo)",
+        "numberOfBytes": "32",
+        "value": "t_struct(AgentInfo)3766_storage"
+      },
+      "t_mapping(t_address,t_uint64)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint64)",
+        "numberOfBytes": "32",
+        "value": "t_uint64"
+      },
+      "t_struct(AgentInfo)3766_storage": {
+        "encoding": "inplace",
+        "label": "struct IAgentRegistry.AgentInfo",
+        "members": [
+          {
+            "astId": 3759,
+            "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+            "label": "stake",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 3761,
+            "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+            "label": "reputation",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 3763,
+            "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+            "label": "registeredAt",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint64"
+          },
+          {
+            "astId": 3765,
+            "contract": "contracts/core/AgentRegistry.sol:AgentRegistry",
+            "label": "isActive",
+            "offset": 8,
+            "slot": "2",
+            "type": "t_bool"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      },
+      "t_uint64": {
+        "encoding": "inplace",
+        "label": "uint64",
+        "numberOfBytes": "8"
+      }
+    }
+  }
+}
